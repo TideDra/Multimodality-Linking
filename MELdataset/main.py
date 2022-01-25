@@ -11,7 +11,7 @@ def img_download(img_url, img_name):
     headers = {
         'User-Agent': 'Python/3.7 (718525108@qq.com) requests/2.23'
     }
-    r = requests.get(img_url, headers=headers, stream=False)
+    r = requests.get(img_url, headers=headers, stream=True)
     with open('drive/MyDrive/Images/' + name, 'wb') as file:
         file.write(r.content)
     return name
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     ok_file = open('drive/MyDrive/ok_entities.txt', 'r')
     ok_entities = ok_file.read()[:-1]  # 获得已经爬好的entity条目
     ok_file.close()
-
+    pic_forms = {'jpg', 'jpeg', 'svg', 'png'}
     for file_name in all_files:
         with open('drive/MyDrive/dataset_new/' + file_name, 'r') as f:
             dataset = json.load(f)  # load dataset as dic
@@ -47,7 +47,8 @@ if __name__ == '__main__':
                     data['brief'] = brief
                     img_list = []
                     for index, url in enumerate(imgs_url):
-                        if url.find('commons') != -1 and url.find('webm') == -1:
+                        suffix = url.split('.').pop()
+                        if url.find('commons') != -1 and (suffix in pic_forms):
                             img_list.append(img_download(url, wikidata_id + '_' + str(index)))
                     data['img_list'] = img_list
                     ok_file_wb = open('drive/MyDrive/ok_entities.txt', 'w')  # 这个负责写回已爬好的entity
