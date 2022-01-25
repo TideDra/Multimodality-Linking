@@ -23,7 +23,7 @@ if __name__ == '__main__':
     ok_file = open('drive/MyDrive/ok_entities.txt', 'r')
     ok_entities = ok_file.readlines()  # 获得已经爬好的entity条目
     ok_file.close()
-    ok_file_wb = open('drive/MyDrive/ok_entities.txt', 'w')  # 这个负责写回已爬好的entity
+
     for file_name in all_files:
         with open('drive/MyDrive/dataset_new/' + file_name, 'r') as f:
             dataset = json.load(f)  # load dataset as dic
@@ -31,7 +31,9 @@ if __name__ == '__main__':
             for ind, data in enumerate(dataset.values()):
                 wikidata_id = data['answer']
                 if ind < len(ok_entities) and wikidata_id == ok_entities[ind][:-1]:
+                    ok_file_wb = open('drive/MyDrive/ok_entities.txt', 'a')  # 这个负责写回已爬好的entity
                     ok_file_wb.write(ok_entities[ind])  # 如果当前entity已曾被爬取，则跳过，并记在新的条目里
+                    ok_file_wb.close()
                     continue
                 try:
                     wikidata_json = requests.get(
@@ -51,7 +53,9 @@ if __name__ == '__main__':
                         if url.find('commons') != -1:
                             img_list.append(img_download(url, wikidata_id + '_' + str(index)))
                     data['img_list'] = img_list
+                    ok_file_wb = open('drive/MyDrive/ok_entities.txt', 'a')  # 这个负责写回已爬好的entity
                     ok_file_wb.write(wikidata_id + '\n')
+                    ok_file_wb.close()
                     with open('drive/MyDrive/dataset_new/' + file_name, 'w') as fb:  # 爬好一条保存一次
                         json.dump(dataset, fb)
                         fb.close()
