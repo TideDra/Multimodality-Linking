@@ -10,7 +10,7 @@ def img_download(img_url, img_name):
     headers = {
         'User-Agent': 'Python/3.7 (718525108@qq.com) requests/2.23'
     }
-    r = requests.get(img_url, headers=headers, stream=True)
+    r = requests.get(img_url, headers=headers, stream=False)
     with open('drive/MyDrive/Images/' + name, 'wb') as file:
         file.write(r.content)
     return name
