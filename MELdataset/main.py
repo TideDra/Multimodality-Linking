@@ -4,6 +4,7 @@ import json
 import requests
 import time
 
+
 def img_download(img_url, img_name):
     # download an image from url
     name = img_name + '.' + img_url[len(img_url) - 3:len(img_url)]
@@ -17,33 +18,50 @@ def img_download(img_url, img_name):
 
 
 if __name__ == '__main__':
-    all_files = os.listdir('drive/MyDrive/dataset')
+    all_files = os.listdir('drive/MyDrive/dataset_new')
     t0 = time.time()
+    ok_file = open('drive/MyDrive/ok_entities.txt', 'r')
+    ok_entities = ok_file.readlines()  # 获得已经爬好的entity条目
+    ok_file.close()
+    ok_file_wb = open('drive/MyDrive/ok_entities.txt', 'w')  # 这个负责写回已爬好的entity
     for file_name in all_files:
-        with open('drive/MyDrive/dataset/' + file_name, 'r') as f:
+        with open('drive/MyDrive/dataset_new/' + file_name, 'r') as f:
             dataset = json.load(f)  # load dataset as dic
-            for ind,data in enumerate(dataset.values()):
+            f.close()
+            for ind, data in enumerate(dataset.values()):
                 wikidata_id = data['answer']
-                wikidata_json = requests.get(
-                    'https://www.wikidata.org/w/api.php?action=wbgetentities&ids=' + wikidata_id + '&format=json&props=sitelinks').json()
-                title = wikidata_json['entities'][wikidata_id]['sitelinks']['enwiki']['title']
-                wikipedia_json = requests.get(
-                    'https://en.wikipedia.org/w/api.php?action=query&titles=' + title + '&format=json').json()
-                pageid = ''
-                for value in wikipedia_json['query']['pages'].values():
-                    pageid = value['pageid']
-                page = wikipedia.page(pageid=pageid)
-                brief = page.summary
-                imgs_url = page.images
-                data['brief'] = brief
-                img_list = []
-                for index, url in enumerate(imgs_url):
-                    if url.find('commons') != -1:
-                        img_list.append(img_download(url, wikidata_id + '_' + str(index)))
-                data['img_list'] = img_list
-                if ind%50 == 0:
-                  t1=time.time()
-                  elapsed = str(t1-t0)
-                  print('Processing:'+str(ind)+' of '+str(len(dataset.values()))+' data in '+file_name+' elapsed:'+elapsed)
-            with open('drive/MyDrive/dataset_new/' + file_name, 'w') as fb:
-                json.dump(dataset, fb)
+                if ind < len(ok_entities) and wikidata_id == ok_entities[ind][:-1]:
+                    ok_file_wb.write(ok_entities[ind])  # 如果当前entity已曾被爬取，则跳过，并记在新的条目里
+                    continue
+                try:
+                    wikidata_json = requests.get(
+                        'https://www.wikidata.org/w/api.php?action=wbgetentities&ids=' + wikidata_id + '&format=json&props=sitelinks').json()
+                    title = wikidata_json['entities'][wikidata_id]['sitelinks']['enwiki']['title']
+                    wikipedia_json = requests.get(
+                        'https://en.wikipedia.org/w/api.php?action=query&titles=' + title + '&format=json').json()
+                    pageid = ''
+                    for value in wikipedia_json['query']['pages'].values():
+                        pageid = value['pageid']
+                    page = wikipedia.page(pageid=pageid)
+                    brief = page.summary
+                    imgs_url = page.images
+                    data['brief'] = brief
+                    img_list = []
+                    for index, url in enumerate(imgs_url):
+                        if url.find('commons') != -1:
+                            img_list.append(img_download(url, wikidata_id + '_' + str(index)))
+                    data['img_list'] = img_list
+                    ok_file_wb.write(wikidata_id + '\n')
+                    with open('drive/MyDrive/dataset_new/' + file_name, 'w') as fb:  # 爬好一条保存一次
+                        json.dump(dataset, fb)
+                        fb.close()
+                    if ind % 50 == 0:
+                        t1 = time.time()
+                        elapsed = str(t1 - t0)
+                        print('Processing:' + str(ind) + ' of ' + str(
+                            len(dataset.values())) + ' data in ' + file_name + ' elapsed:' + elapsed)
+                except Exception as e:
+                    print('catch error:', e)  # 若有异常，则记录异常的entity
+                    with open('drive/MyDrive/ErrorEntities/' + file_name, 'a') as ef:
+                        ef.write(wikidata_id + '\n')
+                        ef.close()
