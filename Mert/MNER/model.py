@@ -2,6 +2,7 @@ from turtle import forward
 from torch import nn
 from torchcrf import CRF
 import torch
+from utils import get_W_e2n_
 '''
 encoder要有属性hidden_size
 encoder的最终输出要提供获取文本特征的接口,
@@ -34,10 +35,9 @@ class MertForNERwithESD(nn.Module):
         self.ESD_crf=CRF(num_tags=ESD_num_tags,batch_first=True)
         self.classifier = nn.Linear(encoder.hidden_size,num_tags)
         self.ESD_classifier = nn.Linear(encoder.hidden_size,ESD_num_tags)
-        self.W_e2n = get_W_e2n_()
         self.ratio=ratio
 
-    def forward(self,text_input,img_input,labels,ESD_labels):
+    def forward(self,text_input,img_input,labels,ESD_labels,W_e2n):
         hidden_states = self.encoder(text_input,img_input).text_features
         logits = self.classifier(hidden_states)
         
@@ -47,14 +47,11 @@ class MertForNERwithESD(nn.Module):
         ESD_loss = self.ESD_crf(ESD_logits,ESD_labels,attention_mask=text_input['attention_mask'])
         ESD_loss=-1*ESD_loss
 
-        logits+=torch.bmm(ESD_logits,self.W_e2n)
+        logits+=torch.bmm(ESD_logits,W_e2n)
         loss=self.crf(logits,labels,attention_mask=text_input['attention_mask'])
         loss = -1*loss
 
         total_loss=loss+self.ratio*ESD_loss
         return logits,total_loss
 
-def get_W_e2n_():
-    '''
-    获取ESD到NER的转换矩阵
-    '''
+
