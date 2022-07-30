@@ -82,13 +82,12 @@ def TwitterColloteFn(batch_samples):
                               dtype=int)
     for idx, sentence in enumerate(batch_sentences):
         encoding = processor(text=sentence, truncation=True,return_tensors="pt", padding="max_length", max_length=config.max_length)
+        SEP_pos = encoding.tokens().index('[SEP]')
         batch_tags[idx][0] = config.special_token_tagid
-        batch_tags[idx][len(encoding.tokens()) -
-                        1:] = config.special_token_tagid
+        batch_tags[idx][SEP_pos:] = config.special_token_tagid
         batch_ESD_tags[idx][0] = config.special_token_tagid
-        batch_ESD_tags[idx][len(encoding.tokens()) -
-                            1:] = config.special_token_tagid
-        for i in range(1, len(encoding.tokens()) - 1):
+        batch_ESD_tags[idx][SEP_pos:] = config.special_token_tagid
+        for i in range(1, SEP_pos):
             char_start, char_end = encoding.token_to_chars(i)
             tag = batch_samples[idx]['tags'][char_start]
             batch_tags[idx][i] = tag
