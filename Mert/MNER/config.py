@@ -17,4 +17,5 @@ class Config:
 
     epochs=10
     learning_rate=1e-5
+    batch_size=4
 config=Config()

@@ -7,19 +7,19 @@ from transformers import get_scheduler
 
 if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+    device= torch.device('cpu')
     model=FlavaForNERwithESD_bert_only()
 
     model = model.to(device)
     train_dataset = TwitterDataset(config.train_text_path,
                                    config.train_img_path)
     train_dataloader = DataLoader(train_dataset,
-                                  batch_size=2,
+                                  batch_size=config.batch_size,
                                   shuffle=True,
                                   collate_fn=TwitterColloteFn)
 
-    W_e2n = train_dataset.W_e2n
-
+    W_e2n = train_dataset.W_e2n.to(device)
+    W_e2n=W_e2n.repeat(config.batch_size,len(config.ESD_id2tag),len(config.id2tag))
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
     lr_scheduler = get_scheduler(
         "linear",

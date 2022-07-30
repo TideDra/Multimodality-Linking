@@ -73,7 +73,8 @@ def TwitterColloteFn(batch_samples):
     batch_sentences, batch_img_inputs = [], []
     for sample in batch_samples:
         batch_sentences.append(sample['sentence'])
-        batch_img_inputs.append(Image.open(sample['imgid']))
+        img=Image.open(sample['imgid'])
+        batch_img_inputs.append(Image.merge('RGB',img.split()[:3]))
  
     batch_inputs=processor(text=batch_sentences,images=batch_img_inputs,return_tensors="pt", padding="max_length", max_length=config.max_length,truncation=True)
     batch_tags = np.zeros(shape=batch_inputs['input_ids'].shape,

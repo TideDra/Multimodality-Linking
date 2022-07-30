@@ -32,7 +32,7 @@ class ModelForNER(nn.Module):
         logits = self.classifier(hidden_states)
         loss = self.crf(logits,
                         labels,
-                        mask=inputs['attention_mask'])
+                        mask=inputs['attention_mask'].bool())
         loss = -1 * loss
         return logits, loss
 
@@ -75,7 +75,7 @@ class ModelForNERwithESD(nn.Module):
         ESD_logits = self.ESD_classifier(ESD_hidden_states)
         ESD_loss = self.ESD_crf(ESD_logits,
                                 ESD_labels,
-                                mask=inputs['attention_mask'])
+                                mask=inputs['attention_mask'].bool())
         ESD_loss = -1 * ESD_loss
 
         logits += torch.bmm(ESD_logits, W_e2n)
