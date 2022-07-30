@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset
 from config import config
 import numpy as np
-from torch import tensor
+from torch import double, float32, tensor
 from transformers import AutoTokenizer
 from PIL import Image
 
@@ -59,7 +59,7 @@ class TwitterDataset(Dataset):
                 ind += 1
         # normalize W
         self.W_e2n = self.W_e2n / (self.W_e2n.sum(1).reshape(-1, 1))
-        self.W_e2n = tensor(self.W_e2n)
+        self.W_e2n = tensor(self.W_e2n,requires_grad=False,dtype=float32)
         return Data
 
     def __len__(self):
@@ -74,7 +74,7 @@ def TwitterColloteFn(batch_samples):
     for sample in batch_samples:
         batch_sentences.append(sample['sentence'])
         img=Image.open(sample['imgid'])
-        batch_img_inputs.append(Image.merge('RGB',img.split()[:3]))
+        batch_img_inputs.append(img.convert('RGB'))
  
     batch_inputs=processor(text=batch_sentences,images=batch_img_inputs,return_tensors="pt", padding="max_length", max_length=config.max_length,truncation=True)
     batch_tags = np.zeros(shape=batch_inputs['input_ids'].shape,

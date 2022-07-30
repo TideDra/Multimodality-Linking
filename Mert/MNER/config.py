@@ -8,7 +8,7 @@ class Config:
     processor=FlavaProcessor.from_pretrained("facebook/flava-full")
 
     special_token_tagid=0
-    max_length=77
+    max_length=50
     test_text_path='./data/Twitter2015/test.txt'
     test_img_path='/home/zero_lag/Document/srtp/data/twitter2015/images/'
 
