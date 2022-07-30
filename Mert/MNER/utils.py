@@ -3,13 +3,16 @@ from config import config
 import numpy as np
 from torch import tensor
 from transformers import AutoTokenizer
+from PIL import Image
 
+processor=config.processor
 
 class TwitterDataset(Dataset):
-    def __init__(self, file_path) -> None:
-        self.data = self.load_data(file_path)
+    def __init__(self, file_path:str, img_path:str) -> None:
+        self.data = self.load_data(file_path,img_path)
+        
 
-    def load_data(self, file_path):
+    def load_data(self, file_path:str,img_path:str):
         dataset = open(file_path).readlines()
         Data = []
         ind = 0
@@ -47,7 +50,7 @@ class TwitterDataset(Dataset):
                         config.tag2id[tag]] += 1
                     ind += 1
                 Data.append({
-                    'imgid': img_id,
+                    'imgid': img_path+img_id+'.jpg',
                     'sentence': sentence,
                     'tags': tags,
                     'ESD_tags': ESD_tags
@@ -70,18 +73,15 @@ def TwitterColloteFn(batch_samples):
     batch_sentences, batch_img_inputs = [], []
     for sample in batch_samples:
         batch_sentences.append(sample['sentence'])
-        batch_img_inputs.append(sample['imgid'])
-    tokenizer = AutoTokenizer.from_pretrained(config.tokenizer)
-    batch_text_inputs = tokenizer(batch_sentences,
-                                  padding=True,
-                                  truncation=True,
-                                  return_tensors='pt')
-    batch_tags = np.zeros(shape=batch_text_inputs['input_ids'].shape,
+        batch_img_inputs.append(Image.open(sample['imgid']))
+ 
+    batch_inputs=processor(text=batch_sentences,images=batch_img_inputs,return_tensors="pt", padding="max_length", max_length=config.max_length,truncation=True)
+    batch_tags = np.zeros(shape=batch_inputs['input_ids'].shape,
                           dtype=int)
-    batch_ESD_tags = np.zeros(shape=batch_text_inputs['input_ids'].shape,
+    batch_ESD_tags = np.zeros(shape=batch_inputs['input_ids'].shape,
                               dtype=int)
     for idx, sentence in enumerate(batch_sentences):
-        encoding = tokenizer(sentence, truncation=True)
+        encoding = processor(text=sentence, truncation=True,return_tensors="pt", padding="max_length", max_length=config.max_length)
         batch_tags[idx][0] = config.special_token_tagid
         batch_tags[idx][len(encoding.tokens()) -
                         1:] = config.special_token_tagid
@@ -94,5 +94,5 @@ def TwitterColloteFn(batch_samples):
             batch_tags[idx][i] = tag
             ESD_tag = batch_samples[idx]['ESD_tags'][char_start]
             batch_ESD_tags[idx][i] = ESD_tag
-    return batch_text_inputs, batch_img_inputs, tensor(batch_tags), tensor(
+    return batch_inputs, tensor(batch_tags), tensor(
         batch_ESD_tags)
