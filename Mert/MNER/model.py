@@ -1,3 +1,4 @@
+import torch
 from torch import nn
 from torchcrf import CRF
 import torch
@@ -162,9 +163,7 @@ class ModelForNERwithESD_ComplexedVer(nn.Module):
 
         ESD_hidden_states = self.dropout(ESD_hidden_states)
         ESD_logits = self.ESD_classifier(ESD_hidden_states)
-        ESD_loss = self.ESD_crf(ESD_logits,
-                                ESD_labels,
-                                mask=inputs['attention_mask'].bool())
+        ESD_loss = self.ESD_crf(ESD_logits, ESD_labels, mask=inputs['attention_mask'].bool())
         ESD_loss = -1 * ESD_loss
         batch_size=ESD_logits.shape[0]
         W_e2n=W_e2n.repeat(batch_size,1,1)
