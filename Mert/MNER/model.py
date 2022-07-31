@@ -1,9 +1,11 @@
-from torch import Tensor, nn
-from torchcrf import CRF
 import torch
-from utils import get_W_e2n_
-from transformers import FlavaConfig, FlavaModel
+from torch import nn
+from torchcrf import CRF
+from transformers import BertModel, FlavaConfig, FlavaModel, FlavaTextModel
 from transformers.models.flava.modeling_flava import FlavaModelOutput
+
+from config import config
+from utils import get_W_e2n_
 '''
 encoder要有属性hidden_size
 encoder的最终输出要提供获取文本特征的接口,
@@ -12,46 +14,72 @@ encoder的最终输出要提供获取文本特征的接口,
 '''
 
 
-class MertForNER(nn.Module):
-    def __init__(self, encoder, num_tags) -> None:
+class ModelForNER(nn.Module):
+    def __init__(self, encoder, num_tags, is_encoder_frozen=True, dropout=0.1) -> None:
         super().__init__()
         self.encoder = encoder
         self.crf = CRF(num_tags=num_tags, batch_first=True)
-        self.classifier = nn.Linear(encoder.hidden_size, num_tags)
+        self.classifier = nn.Linear(encoder.config.hidden_size, num_tags)
+        self.dropout = nn.Dropout(dropout)
+        self.is_encoder_frozen = is_encoder_frozen
 
-    def forward(self, text_input, img_input, labels):
+    def forward(self, inputs, labels):
         '''
-        text_input为transformers库的标准文本输入格式,这个要与encoder作者保持一致,此外还需文本序列的标签
+        inputs为由Processor返回的多模态标准输入格式
         '''
-        hidden_states = self.encoder(text_input, img_input).text_features
+        if self.is_encoder_frozen:
+            with torch.no_grad():
+                hidden_states = self.encoder(**inputs).text_embeddings
+        else:
+            hidden_states = self.encoder(**inputs).text_embeddings
+        hidden_states = self.dropout(hidden_states)
         logits = self.classifier(hidden_states)
-        loss = self.crf(logits, labels, attention_mask=text_input['attention_mask'])
+        loss = self.crf(logits, labels, mask=inputs['attention_mask'].bool())
         loss = -1 * loss
         return logits, loss
 
 
-class MertForNERwithESD(nn.Module):
-    def __init__(self, encoder, ESD_encoder, num_tags, ESD_num_tags, ratio) -> None:
+class ModelForNERwithESD(nn.Module):
+    def __init__(self, encoder, ESD_encoder, num_tags, ESD_num_tags, ratio, is_encoder_frozen=True, is_ESD_encoder_frozen=True, dropout=0.1) -> None:
         super().__init__()
         self.encoder = encoder
         self.ESD_encoder = ESD_encoder
         self.crf = CRF(num_tags=num_tags, batch_first=True)
         self.ESD_crf = CRF(num_tags=ESD_num_tags, batch_first=True)
-        self.classifier = nn.Linear(encoder.hidden_size, num_tags)
-        self.ESD_classifier = nn.Linear(encoder.hidden_size, ESD_num_tags)
+        self.classifier = nn.Linear(encoder.config.hidden_size, num_tags)
+        self.ESD_classifier = nn.Linear(encoder.config.hidden_size, ESD_num_tags)
         self.ratio = ratio
+        self.is_encoder_frozen = is_encoder_frozen
+        self.is_ESD_encoder_frozen = is_ESD_encoder_frozen
+        self.dropout = nn.Dropout(dropout)
 
-    def forward(self, text_input, img_input, labels, ESD_labels, W_e2n):
-        hidden_states = self.encoder(text_input, img_input).text_features
+    def forward(self, inputs, labels, ESD_labels, W_e2n):
+        if self.is_encoder_frozen:
+            with torch.no_grad():
+                hidden_states = self.encoder(**inputs).text_embeddings
+        else:
+            hidden_states = self.encoder(**inputs).text_embeddings
+
+        hidden_states = self.dropout(hidden_states)
+
         logits = self.classifier(hidden_states)
 
-        ESD_hidden_states = self.ESD_encoder(text_input)
+        del inputs['pixel_values']
+
+        if self.is_ESD_encoder_frozen:
+            with torch.no_grad():
+                ESD_hidden_states = self.ESD_encoder(**inputs).last_hidden_state
+
+        else:
+            ESD_hidden_states = self.ESD_encoder(**inputs).last_hidden_state
+
+        ESD_hidden_states = self.dropout(ESD_hidden_states)
         ESD_logits = self.ESD_classifier(ESD_hidden_states)
-        ESD_loss = self.ESD_crf(ESD_logits, ESD_labels, attention_mask=text_input['attention_mask'])
+        ESD_loss = self.ESD_crf(ESD_logits, ESD_labels, mask=inputs['attention_mask'].bool())
         ESD_loss = -1 * ESD_loss
 
         logits += torch.bmm(ESD_logits, W_e2n)
-        loss = self.crf(logits, labels, attention_mask=text_input['attention_mask'])
+        loss = self.crf(logits, labels, mask=inputs['attention_mask'].bool())
         loss = -1 * loss
 
         total_loss = loss + self.ratio * ESD_loss
@@ -73,6 +101,16 @@ class FlavaEncoder(nn.Module):
         return fusion_output
 
 
-class BertEncoder(nn.Module):
-    def __init__(self) -> None:
-        super().__init__()
+class FlavaForNER(ModelForNER):
+    def __init__(self, is_encoder_frozen=True, dropout=0.1) -> None:
+        encoder = FlavaModel.from_pretrained("facebook/flava-full")
+        super().__init__(encoder=encoder, num_tags=len(config.tag2id), is_encoder_frozen=is_encoder_frozen, dropout=dropout)
+
+
+class FlavaForNERwithESD_bert_only(ModelForNERwithESD):
+    def __init__(self, ratio=1, is_encoder_frozen=True, is_ESD_encoder_frozen=True, dropout=0.1) -> None:
+        encoder = FlavaModel.from_pretrained("facebook/flava-full")
+        ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
+        num_tags = len(config.tag2id)
+        ESD_num_tags = len(config.ESD_id2tag)
+        super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio, is_encoder_frozen, is_ESD_encoder_frozen, dropout)
