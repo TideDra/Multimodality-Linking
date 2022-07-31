@@ -13,7 +13,7 @@ class Config:
     test_text_path='./data/Twitter2015/test.txt'
     test_img_path='/home/zero_lag/Document/srtp/data/twitter2015/images/'
 
-    train_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/test.txt'
+    train_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/train.txt'
     train_img_path='/home/zero_lag/Document/srtp/data/twitter2015/images/'
 
     dev_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/valid.txt'

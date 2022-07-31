@@ -1,7 +1,10 @@
 import logging
+from utils import getlogger
+logger=getlogger('Mert')
+logger.info('')
 from model import FlavaForNERwithESD_bert_only
 from config import config
-from utils import TwitterDataset, TwitterColloteFn, train, evaluate,save_model,getlogger
+from utils import TwitterDataset, TwitterColloteFn, train, evaluate,save_model
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 import torch
@@ -11,13 +14,14 @@ from time import time
 #silence logs
 warnings.filterwarnings("ignore")
 for log_name, log_obj in logging.Logger.manager.loggerDict.items():
+    if log_name!="Mert":
           log_obj.disabled = True
     
 device = config.device
 
 if __name__ == '__main__':
 
-    logger=getlogger('Logger')
+    
     writer=SummaryWriter(config.tb_dir)
     logger.info('Loading model...')
     model = FlavaForNERwithESD_bert_only()
