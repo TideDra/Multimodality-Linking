@@ -1,7 +1,7 @@
 import logging
 from utils import getlogger
 logger=getlogger('Mert')
-logger.info('')
+logger.info('Loading packages...')
 from model import FlavaForNERwithESD_bert_only
 from config import config
 from utils import TwitterDataset, TwitterColloteFn, train, evaluate,save_model
@@ -21,13 +21,13 @@ device = config.device
 
 if __name__ == '__main__':
 
-    
+    logger.info('Done.')
     writer=SummaryWriter(config.tb_dir)
     logger.info('Loading model...')
     model = FlavaForNERwithESD_bert_only()
 
     model = model.to(device)
-    logger.info('Model loaded successfully.')
+    logger.info('Done.')
     logger.info('Constructing datasets.')
     train_dataset = TwitterDataset(config.train_text_path,
                                    config.train_img_path)
@@ -41,7 +41,7 @@ if __name__ == '__main__':
                                 batch_size=config.batch_size,
                                 shuffle=False,
                                 collate_fn=TwitterColloteFn)
-    logger.info('Datasets constructed successfully.')
+    logger.info('Done.')
     W_e2n = train_dataset.W_e2n.to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)

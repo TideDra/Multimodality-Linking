@@ -28,4 +28,5 @@ class Config:
     max_checkpoint_num=2
 
     tb_dir='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/tb_log'
+
 config=Config()

@@ -1,9 +1,11 @@
+from turtle import forward
 import torch
-from torch import nn
+from torch import float32, nn
 from torchcrf import CRF
 import torch
 from transformers import FlavaModel, FlavaTextModel
 from config import config
+from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
 class ModelForTokenClassification(nn.Module):
     '''
@@ -94,6 +96,20 @@ class ModelForNERwithESD(nn.Module):
             total_loss = loss + self.ratio * ESD_loss
             return logits, total_loss
 
+class BiLSTM(nn.Module):
+    def __init__(self,input_size,hidden_size) -> None:
+        super().__init__()
+        self.bilstm=nn.LSTM(input_size=input_size,hidden_size=hidden_size,batch_first=True,dropout=0.1,bidirectional=True)
+        self.classifier=nn.Linear(2*hidden_size,768)
+
+    def forward(self,inputs,mask):
+        inputs = inputs*mask
+        length=mask.norm(1,dim=1).type(torch.int64).cpu().detach().numpy().tolist()
+        packed = pack_padded_sequence(inputs, length, batch_first=True)
+        rnn_out, _ = self.bilstm(packed)
+        rnn_out, _ = pad_packed_sequence(rnn_out, batch_first=True)
+        logits = self.classifier(rnn_out)
+        return logits
 
 class FlavaForNER(ModelForTokenClassification):
     def __init__(self, is_encoder_frozen:bool=True, dropout:float=0.1) -> None:
