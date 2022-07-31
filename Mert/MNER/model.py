@@ -1,8 +1,9 @@
-from turtle import forward
-from torch import nn
+from torch import Tensor, nn
 from torchcrf import CRF
 import torch
 from utils import get_W_e2n_
+from transformers import FlavaConfig, FlavaModel
+from transformers.models.flava.modeling_flava import FlavaModelOutput
 '''
 encoder要有属性hidden_size
 encoder的最终输出要提供获取文本特征的接口,
@@ -24,16 +25,13 @@ class MertForNER(nn.Module):
         '''
         hidden_states = self.encoder(text_input, img_input).text_features
         logits = self.classifier(hidden_states)
-        loss = self.crf(logits,
-                        labels,
-                        attention_mask=text_input['attention_mask'])
+        loss = self.crf(logits, labels, attention_mask=text_input['attention_mask'])
         loss = -1 * loss
         return logits, loss
 
 
 class MertForNERwithESD(nn.Module):
-    def __init__(self, encoder, ESD_encoder, num_tags, ESD_num_tags,
-                 ratio) -> None:
+    def __init__(self, encoder, ESD_encoder, num_tags, ESD_num_tags, ratio) -> None:
         super().__init__()
         self.encoder = encoder
         self.ESD_encoder = ESD_encoder
@@ -49,23 +47,31 @@ class MertForNERwithESD(nn.Module):
 
         ESD_hidden_states = self.ESD_encoder(text_input)
         ESD_logits = self.ESD_classifier(ESD_hidden_states)
-        ESD_loss = self.ESD_crf(ESD_logits,
-                                ESD_labels,
-                                attention_mask=text_input['attention_mask'])
+        ESD_loss = self.ESD_crf(ESD_logits, ESD_labels, attention_mask=text_input['attention_mask'])
         ESD_loss = -1 * ESD_loss
 
         logits += torch.bmm(ESD_logits, W_e2n)
-        loss = self.crf(logits,
-                        labels,
-                        attention_mask=text_input['attention_mask'])
+        loss = self.crf(logits, labels, attention_mask=text_input['attention_mask'])
         loss = -1 * loss
 
         total_loss = loss + self.ratio * ESD_loss
         return logits, total_loss
 
+
+from Mert.MNER.fusion import FlavaFusionConfig, FlavaFusionModel
+
+
 class FlavaEncoder(nn.Module):
-    def __init__(self) -> None:
+    def __init__(self, config: FlavaConfig, fusion_config: FlavaFusionConfig) -> None:
         super().__init__()
+        self.flava_model = FlavaModel(config)
+        self.fusion = FlavaFusionModel(fusion_config)
+
+    def forward(self, inputs: dict):
+        outputs: FlavaModelOutput = self.flava_model(**inputs)
+        fusion_output = self.fusion(outputs.text_embeddings, outputs.text_embeddings)
+        return fusion_output
+
 
 class BertEncoder(nn.Module):
     def __init__(self) -> None:
