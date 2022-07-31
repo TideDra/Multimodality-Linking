@@ -1,0 +1,5 @@
+Mert/MNER/checkpoint/*
+Mert/MNER/test.ipynb
+Mert/MNER/tb_log/*
+.vscode
+**/__pycache__
