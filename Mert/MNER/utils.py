@@ -1,10 +1,16 @@
 from torch.utils.data import Dataset
 from config import config
 import numpy as np
-from torch import double, float32, tensor
+from torch import float32, tensor
 from transformers import AutoTokenizer
 from PIL import Image
-
+import torch
+from tqdm import tqdm
+from seqeval.metrics import classification_report
+from seqeval.scheme import IOB2
+import os
+import sys
+import logging
 processor=config.processor
 
 class TwitterDataset(Dataset):
@@ -96,3 +102,74 @@ def TwitterColloteFn(batch_samples):
             batch_ESD_tags[idx][i] = ESD_tag
     return batch_inputs, tensor(batch_tags), tensor(
         batch_ESD_tags)
+
+def train(model, dataloader, optimizer, lr_scheduler, epoch, W_e2n,writer):
+    model.train()
+    total_loss = 0.0
+    with tqdm(enumerate(dataloader,start=1),
+              unit='batch',
+              total=len(dataloader),
+              desc='epoch:{}/{}'.format(epoch, config.epochs)) as tbar:
+        for idx,(inputs, labels, ESD_labels) in tbar:
+            inputs = inputs.to(config.device)
+            labels = labels.to(config.device)
+            ESD_labels = ESD_labels.to(config.device)
+            _, loss = model(inputs,W_e2n, labels, ESD_labels)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            lr_scheduler.step()
+            total_loss += loss.item()
+            writer.add_scalar('train/batch_loss',loss.item(),len(dataloader)*(epoch-1)+idx)
+            tbar.set_postfix(loss="%.2f"%(total_loss / idx))
+            tbar.update()
+    return total_loss
+
+def evaluate(model, dataloader, W_e2n):
+    model.eval()
+    pred_tags=[]
+    true_tags=[]
+    with torch.no_grad():
+        for inputs, labels, ESD_labels in tqdm(dataloader,unit='batch',
+              total=len(dataloader)+1,desc='Evaluating...'):
+            inputs = inputs.to(config.device)
+            logits, _ = model(inputs, W_e2n)
+            mask = inputs['attention_mask'].bool()
+            pred_labels = model.crf.decode(logits,mask)
+            true_labels = labels.tolist()
+
+            pred_tags += [[config.id2tag[id] for id in seq] for seq in pred_labels]
+            true_tags += [[config.id2tag[id] for id, m in zip(seq, mask) if m] for seq, mask in zip(true_labels,mask.tolist())]
+    print(classification_report(true_tags,pred_tags, mode='strict', scheme=IOB2))
+    return classification_report(true_tags,pred_tags, mode='strict', scheme=IOB2,output_dict=True)
+
+def save_model(model,name):
+    print('Saving checkpoint...\n')
+    torch.save(
+                model.state_dict(), 
+                os.path.join(config.checkpoint_path,name)
+            )
+    checkpoint_list=os.listdir(config.checkpoint_path)
+    if(len(checkpoint_list)>config.max_checkpoint_num):
+        file_map={}
+        times=[]
+        del_num=len(checkpoint_list)-config.max_checkpoint_num
+        for f in checkpoint_list:
+            t=f.split('.')[0].split('_')[-1]
+            file_map[int(t)]=os.path.join(config.checkpoint_path,f)
+            times.append(int(t))
+        times.sort()
+        for i in range(del_num):
+            del_f=file_map[times[i]]
+            os.remove(del_f)
+    print('Checkpoint has been updated successfully.\n')
+
+def getlogger(name,level=logging.INFO):
+    logger=logging.getLogger(name)
+    logger.setLevel(level)
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger

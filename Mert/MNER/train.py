@@ -1,25 +1,44 @@
+import logging
 from model import FlavaForNERwithESD_bert_only
 from config import config
-from utils import TwitterDataset, TwitterColloteFn
+from utils import TwitterDataset, TwitterColloteFn, train, evaluate,save_model,getlogger
 from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
 import torch
 from transformers import get_scheduler
+import warnings
+from time import time
+#silence logs
+warnings.filterwarnings("ignore")
+for log_name, log_obj in logging.Logger.manager.loggerDict.items():
+          log_obj.disabled = True
+    
+device = config.device
 
 if __name__ == '__main__':
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    model=FlavaForNERwithESD_bert_only()
+    logger=getlogger('Logger')
+    writer=SummaryWriter(config.tb_dir)
+    logger.info('Loading model...')
+    model = FlavaForNERwithESD_bert_only()
 
     model = model.to(device)
+    logger.info('Model loaded successfully.')
+    logger.info('Constructing datasets.')
     train_dataset = TwitterDataset(config.train_text_path,
                                    config.train_img_path)
     train_dataloader = DataLoader(train_dataset,
                                   batch_size=config.batch_size,
-                                  shuffle=True,
+                                  shuffle=False,
                                   collate_fn=TwitterColloteFn)
 
+    dev_dataset = TwitterDataset(config.dev_text_path, config.dev_img_path)
+    dev_dataloader = DataLoader(dev_dataset,
+                                batch_size=config.batch_size,
+                                shuffle=False,
+                                collate_fn=TwitterColloteFn)
+    logger.info('Datasets constructed successfully.')
     W_e2n = train_dataset.W_e2n.to(device)
-    W_e2n=W_e2n.repeat(config.batch_size,1,1)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
     lr_scheduler = get_scheduler(
@@ -29,18 +48,28 @@ if __name__ == '__main__':
         num_training_steps=config.epochs * len(train_dataloader),
     )
 
-    for epoch in range(config.epochs):
-        total_loss = 0
-        for idx, (inputs, labels, ESD_labels) in enumerate(train_dataloader,start=1):
-            inputs = inputs.to(device)
-            labels = labels.to(device)
-            ESD_labels = ESD_labels.to(device)
-            _, loss = model(inputs, labels, ESD_labels, W_e2n)
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-            lr_scheduler.step()
+    best_macro_f1 = -1.
+    best_micro_f1 = -1.
 
-            total_loss+=loss.item()
-            if idx%100==0:
-                print('epoch:{} batch:{} loss;{}'.format(epoch,idx,total_loss/idx))
+    logger.info('Launching training.')
+    for epoch in range(config.epochs):
+        loss=train(model, train_dataloader, optimizer, lr_scheduler, epoch + 1,
+              W_e2n,writer)
+        writer.add_scalar('train/epoch_loss',loss,epoch+1)
+        print('\n')
+        metrics=evaluate(model,dev_dataloader,W_e2n)
+        valid_macro_f1, valid_micro_f1 = metrics['macro avg']['f1-score'], metrics['micro avg']['f1-score']
+        save_weights = False
+        if valid_macro_f1 > best_macro_f1:
+            best_macro_f1 = valid_macro_f1
+            name=f'epoch_{epoch+1}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
+            save_model(model,name)
+            save_weights = True
+        if valid_micro_f1 > best_micro_f1:
+            best_micro_f1 = valid_micro_f1
+            if not save_weights: 
+                name=f'epoch_{epoch+1}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
+                save_model(model,name)
+        print('----------------------------------')
+    writer.close()
+    logger.info('Training over.')
