@@ -30,3 +30,11 @@ class Config:
     tb_dir='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/tb_log'
 
 config=Config()
+
+class BertBiLSTMEncoderConfig:
+    blstm_hidden_size=768
+    blstm_dropout=0.1
+    hidden_size=768
+    is_bert_frozen=False
+    
+BertBiLSTMEncoderConfigforFNEBB=BertBiLSTMEncoderConfig()

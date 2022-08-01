@@ -2,7 +2,7 @@ import logging
 from utils import getlogger
 logger=getlogger('Mert')
 logger.info('Loading packages...')
-from model import FlavaForNERwithESD_bert_only
+from model import FlavaForNERwithESD_bert_only,FlavaForNERwithESD_bert_blstm
 from config import config
 from utils import TwitterDataset, TwitterColloteFn, train, evaluate,save_model
 from torch.utils.data import DataLoader
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     logger.info('Done.')
     writer=SummaryWriter(config.tb_dir)
     logger.info('Loading model...')
-    model = FlavaForNERwithESD_bert_only()
+    model = FlavaForNERwithESD_bert_blstm()
 
     model = model.to(device)
     logger.info('Done.')
