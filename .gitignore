@@ -1,5 +1,6 @@
 Mert/MNER/checkpoint/*
 Mert/MNER/test.ipynb
 Mert/MNER/tb_log/*
+Mert/MNER/data/Twitter2015/images
 .vscode
 **/__pycache__

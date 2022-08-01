@@ -11,14 +11,15 @@ from seqeval.scheme import IOB2
 import os
 import sys
 import logging
-processor=config.processor
+
+processor = config.processor
+
 
 class TwitterDataset(Dataset):
-    def __init__(self, file_path:str, img_path:str) -> None:
-        self.data = self.load_data(file_path,img_path)
-        
+    def __init__(self, file_path: str, img_path: str) -> None:
+        self.data = self.load_data(file_path, img_path)
 
-    def load_data(self, file_path:str,img_path:str):
+    def load_data(self, file_path: str, img_path: str):
         dataset = open(file_path).readlines()
         Data = []
         ind = 0
@@ -56,7 +57,7 @@ class TwitterDataset(Dataset):
                         config.tag2id[tag]] += 1
                     ind += 1
                 Data.append({
-                    'imgid': img_path+img_id+'.jpg',
+                    'imgid': img_path + img_id + '.jpg',
                     'sentence': sentence,
                     'tags': tags,
                     'ESD_tags': ESD_tags
@@ -65,7 +66,7 @@ class TwitterDataset(Dataset):
                 ind += 1
         # normalize W
         self.W_e2n = self.W_e2n / (self.W_e2n.sum(1).reshape(-1, 1))
-        self.W_e2n = tensor(self.W_e2n,requires_grad=False,dtype=float32)
+        self.W_e2n = tensor(self.W_e2n, requires_grad=False, dtype=float32)
         return Data
 
     def __len__(self):
@@ -79,16 +80,23 @@ def TwitterColloteFn(batch_samples):
     batch_sentences, batch_img_inputs = [], []
     for sample in batch_samples:
         batch_sentences.append(sample['sentence'])
-        img=Image.open(sample['imgid'])
+        img = Image.open(sample['imgid'])
         batch_img_inputs.append(img.convert('RGB'))
- 
-    batch_inputs=processor(text=batch_sentences,images=batch_img_inputs,return_tensors="pt", padding="max_length", max_length=config.max_length,truncation=True)
-    batch_tags = np.zeros(shape=batch_inputs['input_ids'].shape,
-                          dtype=int)
-    batch_ESD_tags = np.zeros(shape=batch_inputs['input_ids'].shape,
-                              dtype=int)
+
+    batch_inputs = processor(text=batch_sentences,
+                             images=batch_img_inputs,
+                             return_tensors="pt",
+                             padding="max_length",
+                             max_length=config.max_length,
+                             truncation=True)
+    batch_tags = np.zeros(shape=batch_inputs['input_ids'].shape, dtype=int)
+    batch_ESD_tags = np.zeros(shape=batch_inputs['input_ids'].shape, dtype=int)
     for idx, sentence in enumerate(batch_sentences):
-        encoding = processor(text=sentence, truncation=True,return_tensors="pt", padding="max_length", max_length=config.max_length)
+        encoding = processor(text=sentence,
+                             truncation=True,
+                             return_tensors="pt",
+                             padding="max_length",
+                             max_length=config.max_length)
         SEP_pos = encoding.tokens().index('[SEP]')
         batch_tags[idx][0] = config.special_token_tagid
         batch_tags[idx][SEP_pos:] = config.special_token_tagid
@@ -100,72 +108,93 @@ def TwitterColloteFn(batch_samples):
             batch_tags[idx][i] = tag
             ESD_tag = batch_samples[idx]['ESD_tags'][char_start]
             batch_ESD_tags[idx][i] = ESD_tag
-    return batch_inputs, tensor(batch_tags), tensor(
-        batch_ESD_tags)
+    return batch_inputs, tensor(batch_tags), tensor(batch_ESD_tags)
 
-def train(model, dataloader, optimizer, lr_scheduler, epoch, W_e2n,writer):
+
+def train(model, dataloader, optimizer, lr_scheduler, epoch, W_e2n, writer,
+          accelerator):
     model.train()
     total_loss = 0.0
-    with tqdm(enumerate(dataloader,start=1),
+    with tqdm(enumerate(dataloader, start=1),
               unit='batch',
               total=len(dataloader),
-              desc='epoch:{}/{}'.format(epoch, config.epochs)) as tbar:
-        for idx,(inputs, labels, ESD_labels) in tbar:
-            inputs = inputs.to(config.device)
-            labels = labels.to(config.device)
-            ESD_labels = ESD_labels.to(config.device)
-            _, loss = model(inputs,W_e2n, labels, ESD_labels)
+              desc='epoch:{}/{}'.format(epoch, config.epochs),
+              disable=not accelerator.is_local_main_process) as tbar:
+        for idx, (inputs, labels, ESD_labels) in tbar:
+            #inputs = inputs.to(config.device)
+            #labels = labels.to(config.device)
+            #ESD_labels = ESD_labels.to(config.device)
+            _, loss = model(inputs, W_e2n, labels, ESD_labels)
             optimizer.zero_grad()
-            loss.backward()
+            accelerator.backward(loss)
             optimizer.step()
             lr_scheduler.step()
+            loss=accelerator.gather(loss)
             total_loss += loss.item()
-            writer.add_scalar('train/batch_loss',loss.item(),len(dataloader)*(epoch-1)+idx)
-            tbar.set_postfix(loss="%.2f"%(total_loss / idx /dataloader.batch_size))
+            if accelerator.is_main_process:
+                writer.add_scalar('train/batch_loss', loss.item(),
+                              len(dataloader) * (epoch - 1) + idx)
+            tbar.set_postfix(loss="%.2f" %
+                             ((total_loss / idx) / config.batch_size))
             tbar.update()
     return total_loss
 
-def evaluate(model, dataloader, W_e2n):
+
+def evaluate(model, dataloader, W_e2n, accelerator):
     model.eval()
-    pred_tags=[]
-    true_tags=[]
+    pred_tags = []
+    true_tags = []
     with torch.no_grad():
-        for inputs, labels, ESD_labels in tqdm(dataloader,unit='batch',
-              total=len(dataloader)+1,desc='Evaluating...'):
-            inputs = inputs.to(config.device)
+        for inputs, labels, ESD_labels in tqdm(dataloader,
+                                               unit='batch',
+                                               total=len(dataloader) + 1,
+                                               desc='Evaluating...'):
+            #inputs = inputs.to(config.device)
             logits, _ = model(inputs, W_e2n)
+            logits = accelerator.gather(logits)
+            inputs = accelerator.gather(inputs)
+            labels = accelerator.gather(labels)
             mask = inputs['attention_mask'].bool()
-            pred_labels = model.crf.decode(logits,mask)
+            pred_labels = model.crf.decode(logits, mask)
             true_labels = labels.tolist()
 
-            pred_tags += [[config.id2tag[id] for id in seq] for seq in pred_labels]
-            true_tags += [[config.id2tag[id] for id, m in zip(seq, mask) if m] for seq, mask in zip(true_labels,mask.tolist())]
-    print(classification_report(true_tags,pred_tags, mode='strict', scheme=IOB2))
-    return classification_report(true_tags,pred_tags, mode='strict', scheme=IOB2,output_dict=True)
+            pred_tags += [[config.id2tag[id] for id in seq]
+                          for seq in pred_labels]
+            true_tags += [[config.id2tag[id] for id, m in zip(seq, mask) if m]
+                          for seq, mask in zip(true_labels, mask.tolist())]
+    print(
+        classification_report(true_tags, pred_tags, mode='strict',
+                              scheme=IOB2))
+    return classification_report(true_tags,
+                                 pred_tags,
+                                 mode='strict',
+                                 scheme=IOB2,
+                                 output_dict=True)
 
-def save_model(model,name):
-    print('Saving checkpoint...\n')
-    torch.save(
-                model.state_dict(), 
-                os.path.join(config.checkpoint_path,name)
-            )
-    checkpoint_list=os.listdir(config.checkpoint_path)
-    if(len(checkpoint_list)>config.max_checkpoint_num):
-        file_map={}
-        times=[]
-        del_num=len(checkpoint_list)-config.max_checkpoint_num
+
+def save_model(model, name,accelerator):
+    accelerator.print('Saving checkpoint...\n')
+    accelerator.wait_for_everyone()
+    unwrapped_model = accelerator.unwrap_model(model)
+    accelerator.save(unwrapped_model.state_dict(), os.path.join(config.checkpoint_path, name))
+    checkpoint_list = os.listdir(config.checkpoint_path)
+    if (len(checkpoint_list) > config.max_checkpoint_num):
+        file_map = {}
+        times = []
+        del_num = len(checkpoint_list) - config.max_checkpoint_num
         for f in checkpoint_list:
-            t=f.split('.')[0].split('_')[-1]
-            file_map[int(t)]=os.path.join(config.checkpoint_path,f)
+            t = f.split('.')[0].split('_')[-1]
+            file_map[int(t)] = os.path.join(config.checkpoint_path, f)
             times.append(int(t))
         times.sort()
         for i in range(del_num):
-            del_f=file_map[times[i]]
+            del_f = file_map[times[i]]
             os.remove(del_f)
-    print('Checkpoint has been updated successfully.\n')
+    accelerator.print('Checkpoint has been updated successfully.\n')
 
-def getlogger(name,level=logging.INFO):
-    logger=logging.getLogger(name)
+
+def getlogger(name, level=logging.INFO):
+    logger = logging.getLogger(name)
     logger.setLevel(level)
     handler = logging.StreamHandler(sys.stdout)
     handler.setLevel(logging.INFO)

@@ -1,4 +1,3 @@
-from turtle import forward
 import torch
 from torch import float32, nn
 from torchcrf import CRF

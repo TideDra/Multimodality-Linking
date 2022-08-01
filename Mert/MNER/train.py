@@ -1,3 +1,5 @@
+from accelerate import Accelerator
+accelerator=Accelerator()
 from apex.optimizers import FusedAdam
 import logging
 from utils import getlogger
@@ -27,7 +29,7 @@ if __name__ == '__main__':
     logger.info('Loading model...')
     model = FlavaForNERwithESD_bert_blstm()
     model_name=model.__class__.__name__
-    model = model.to(device)
+    #model = model.to(device)
     logger.info(f'Model:{model_name}|Trained_epoch:{int(model.trained_epoch.item())}')
     logger.info('Done.')
     logger.info('Constructing datasets.')
@@ -44,8 +46,8 @@ if __name__ == '__main__':
                                 shuffle=False,
                                 collate_fn=TwitterColloteFn)
     logger.info('Done.')
-    W_e2n = train_dataset.W_e2n.to(device)
-
+    W_e2n = train_dataset.W_e2n.to(accelerator.device)
+    
     optimizer = FusedAdam(model.parameters(), lr=config.learning_rate)
     lr_scheduler = get_scheduler(
         "linear",
@@ -58,25 +60,28 @@ if __name__ == '__main__':
     best_micro_f1 = -1.
     
     logger.info('Launching training.')
+
+    model,lr_scheduler,train_dataloader,optimizer=accelerator.prepare(model,lr_scheduler,train_dataloader,optimizer)
+    dev_dataloader = accelerator.prepare_data_loader(dev_dataloader)
     for epoch in range(config.epochs):
         loss=train(model, train_dataloader, optimizer, lr_scheduler, epoch + 1,
-              W_e2n,writer)
+              W_e2n,writer,accelerator)
         model.trained_epoch+=torch.tensor([1],dtype=torch.float32,requires_grad=False)
         writer.add_scalar('train/epoch_loss',loss,epoch+1)
-        print('\n')
-        metrics=evaluate(model,dev_dataloader,W_e2n)
+        accelerator.print('\n')
+        metrics=evaluate(model,dev_dataloader,W_e2n,accelerator)
         valid_macro_f1, valid_micro_f1 = metrics['macro avg']['f1-score'], metrics['micro avg']['f1-score']
         save_weights = False
         if valid_macro_f1 > best_macro_f1:
             best_macro_f1 = valid_macro_f1
-            name=f'epoch_{epoch+1}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
-            save_model(model,name)
+            name=f'{model_name}_epoch_{epoch+1}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
+            save_model(model,name,accelerator)
             save_weights = True
         if valid_micro_f1 > best_micro_f1:
             best_micro_f1 = valid_micro_f1
             if not save_weights: 
                 name=f'{model_name}_epoch_{epoch+1+int(model.trained_epoch.item())}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
-                save_model(model,name)
-        print('----------------------------------')
+                save_model(model,name,accelerator)
+        accelerator.print('-----------------------------------------------------------')
     writer.close()
     logger.info('Training over.')
