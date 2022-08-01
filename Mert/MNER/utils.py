@@ -121,7 +121,7 @@ def train(model, dataloader, optimizer, lr_scheduler, epoch, W_e2n,writer):
             lr_scheduler.step()
             total_loss += loss.item()
             writer.add_scalar('train/batch_loss',loss.item(),len(dataloader)*(epoch-1)+idx)
-            tbar.set_postfix(loss="%.2f"%(total_loss / idx))
+            tbar.set_postfix(loss="%.2f"%(total_loss / idx /dataloader.batch_size))
             tbar.update()
     return total_loss
 
