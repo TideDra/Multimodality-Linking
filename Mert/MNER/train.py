@@ -1,3 +1,4 @@
+from apex.optimizers import FusedAdam
 import logging
 from utils import getlogger
 logger=getlogger('Mert')
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     logger.info('Done.')
     W_e2n = train_dataset.W_e2n.to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
+    optimizer = FusedAdam(model.parameters(), lr=config.learning_rate)
     lr_scheduler = get_scheduler(
         "linear",
         optimizer=optimizer,
@@ -55,7 +56,7 @@ if __name__ == '__main__':
 
     best_macro_f1 = -1.
     best_micro_f1 = -1.
-
+    
     logger.info('Launching training.')
     for epoch in range(config.epochs):
         loss=train(model, train_dataloader, optimizer, lr_scheduler, epoch + 1,
