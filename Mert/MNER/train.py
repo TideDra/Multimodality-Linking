@@ -38,13 +38,15 @@ if __name__ == '__main__':
     train_dataloader = DataLoader(train_dataset,
                                   batch_size=config.batch_size,
                                   shuffle=False,
-                                  collate_fn=TwitterColloteFn)
+                                  collate_fn=TwitterColloteFn,
+                                  num_workers=config.num_workers)
 
     dev_dataset = TwitterDataset(config.dev_text_path, config.dev_img_path)
     dev_dataloader = DataLoader(dev_dataset,
                                 batch_size=config.batch_size,
                                 shuffle=False,
-                                collate_fn=TwitterColloteFn)
+                                collate_fn=TwitterColloteFn,
+                                num_workers=config.num_workers)
     logger.info('Done.')
     W_e2n = train_dataset.W_e2n.to(accelerator.device)
     

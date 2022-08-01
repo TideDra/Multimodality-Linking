@@ -19,6 +19,7 @@ class Config:
     dev_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/valid.txt'
     dev_img_path='/home/zero_lag/Document/srtp/data/twitter2015/images/'
 
+    num_workers=4
     epochs=1
     learning_rate=1e-5
     batch_size=6
@@ -36,5 +37,5 @@ class BertBiLSTMEncoderConfig:
     blstm_dropout=0.1
     hidden_size=768
     is_bert_frozen=False
-    
+
 BertBiLSTMEncoderConfigforFNEBB=BertBiLSTMEncoderConfig()
