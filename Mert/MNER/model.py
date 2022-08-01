@@ -96,64 +96,6 @@ class ModelForNERwithESD(nn.Module):
             total_loss = loss + self.ratio * ESD_loss
             return logits, total_loss
 
-class BiLSTM(nn.Module):
-    def __init__(self,input_size,hidden_size,dropout=0.1) -> None:
-        super().__init__()
-        self.bilstm=nn.LSTM(input_size=input_size,hidden_size=hidden_size,batch_first=True,dropout=dropout,bidirectional=True)
- 
-    def forward(self,inputs,mask):
-        #inputs = inputs*mask
-        length=mask.type(float32).norm(1,dim=1).type(torch.int64).cpu().detach().numpy().tolist()
-        packed = pack_padded_sequence(inputs, length, batch_first=True,enforce_sorted=False)
-        rnn_out, _ = self.bilstm(packed)
-        rnn_out, _ = pad_packed_sequence(rnn_out, batch_first=True)
-        max_length=mask.shape[1]
-        if max_length>rnn_out.shape[1]:
-            pad=torch.zeros((rnn_out.shape[0],max_length-rnn_out.shape[1],rnn_out.shape[2]),dtype=float32)
-            rnn_out=torch.cat((rnn_out,pad.to(config.device)),dim=1)
-        return rnn_out
-
-class BertBiLSTMEncoder(nn.Module):
-    def __init__(self,config:BertBiLSTMEncoderConfig) -> None:
-        super().__init__()
-        self.config=config
-        self.bert_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
-        self.blstm = BiLSTM(input_size=self.bert_encoder.config.hidden_size,hidden_size=config.blstm_hidden_size,dropout=config.blstm_dropout)
-        self.fc = nn.Linear(config.blstm_hidden_size*2,config.hidden_size)
-    
-    def forward(self,**inputs):
-        if self.config.is_bert_frozen:
-            with torch.no_grad():
-                bert_embedding=self.bert_encoder(**inputs).last_hidden_state
-        else:
-            bert_embedding=self.bert_encoder(**inputs).last_hidden_state
-        blstm_embedding=self.blstm(bert_embedding,inputs['attention_mask'])
-        hidden_state=self.fc(blstm_embedding)
-        hidden_state.last_hidden_state=hidden_state
-        return hidden_state
-
-class FlavaForNER(ModelForTokenClassification):
-    def __init__(self, is_encoder_frozen:bool=True, dropout:float=0.1) -> None:
-        encoder = FlavaModel.from_pretrained("facebook/flava-full")
-        super().__init__(encoder=encoder,
-                         num_tags=len(config.tag2id),
-                         is_encoder_frozen=is_encoder_frozen,
-                         dropout=dropout)
-
-
-class FlavaForNERwithESD_bert_only(ModelForNERwithESD):
-    def __init__(self,
-                 ratio:float=1,
-                 is_encoder_frozen:bool=True,
-                 is_ESD_encoder_frozen:bool=True,
-                 dropout:float=0.1) -> None:
-        encoder = FlavaModel.from_pretrained("facebook/flava-full")
-        ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
-        num_tags = len(config.tag2id)
-        ESD_num_tags = len(config.ESD_id2tag)
-        super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
-                         is_encoder_frozen, is_ESD_encoder_frozen, dropout)
-
 class ModelForNERwithESD_ComplexedVer(nn.Module):
     def __init__(self,
                  encoder,
@@ -211,6 +153,67 @@ class ModelForNERwithESD_ComplexedVer(nn.Module):
         total_loss = loss + self.ratio * ESD_loss
         return logits, total_loss
 
+class BiLSTM(nn.Module):
+    def __init__(self,input_size,hidden_size,dropout=0.1) -> None:
+        super().__init__()
+        self.bilstm=nn.LSTM(input_size=input_size,hidden_size=hidden_size,batch_first=True,dropout=dropout,bidirectional=True)
+ 
+    def forward(self,inputs,mask):
+        #inputs = inputs*mask
+        length=mask.type(float32).norm(1,dim=1).type(torch.int64).cpu().detach().numpy().tolist()
+        packed = pack_padded_sequence(inputs, length, batch_first=True,enforce_sorted=False)
+        rnn_out, _ = self.bilstm(packed)
+        rnn_out, _ = pad_packed_sequence(rnn_out, batch_first=True)
+        max_length=mask.shape[1]
+        if max_length>rnn_out.shape[1]:
+            pad=torch.zeros((rnn_out.shape[0],max_length-rnn_out.shape[1],rnn_out.shape[2]),dtype=float32)
+            rnn_out=torch.cat((rnn_out,pad.to(config.device)),dim=1)
+        return rnn_out
+
+class BertBiLSTMEncoder(nn.Module):
+    def __init__(self,config:BertBiLSTMEncoderConfig) -> None:
+        super().__init__()
+        self.config=config
+        self.bert_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
+        self.blstm = BiLSTM(input_size=self.bert_encoder.config.hidden_size,hidden_size=config.blstm_hidden_size,dropout=config.blstm_dropout)
+        self.fc = nn.Linear(config.blstm_hidden_size*2,config.hidden_size)
+    
+    def forward(self,**inputs):
+        if self.config.is_bert_frozen:
+            with torch.no_grad():
+                bert_embedding=self.bert_encoder(**inputs).last_hidden_state
+        else:
+            bert_embedding=self.bert_encoder(**inputs).last_hidden_state
+        blstm_embedding=self.blstm(bert_embedding,inputs['attention_mask'])
+        hidden_state=self.fc(blstm_embedding)
+        hidden_state.last_hidden_state=hidden_state
+        return hidden_state
+
+class FlavaForNER(ModelForTokenClassification):
+    def __init__(self, is_encoder_frozen:bool=True, dropout:float=0.1) -> None:
+        encoder = FlavaModel.from_pretrained("facebook/flava-full")
+        super().__init__(encoder=encoder,
+                         num_tags=len(config.tag2id),
+                         is_encoder_frozen=is_encoder_frozen,
+                         dropout=dropout)
+        self.trained_epoch=0
+
+class FlavaForNERwithESD_bert_only(ModelForNERwithESD):
+    def __init__(self,
+                 ratio:float=1,
+                 is_encoder_frozen:bool=True,
+                 is_ESD_encoder_frozen:bool=True,
+                 dropout:float=0.1) -> None:
+        encoder = FlavaModel.from_pretrained("facebook/flava-full")
+        ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
+        num_tags = len(config.tag2id)
+        ESD_num_tags = len(config.ESD_id2tag)
+        super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
+                         is_encoder_frozen, is_ESD_encoder_frozen, dropout)
+        self.trained_epoch=0
+
+
+
 class FlavaForNERwithESD_bert_blstm(ModelForNERwithESD):
     def __init__(self,
                  ratio:float=1,
@@ -223,3 +226,4 @@ class FlavaForNERwithESD_bert_blstm(ModelForNERwithESD):
         ESD_num_tags = len(config.ESD_id2tag)
         super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
                          is_encoder_frozen, is_ESD_encoder_frozen, dropout)
+        self.trained_epoch=torch.tensor([0],dtype=float32, requires_grad=False)

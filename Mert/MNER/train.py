@@ -25,8 +25,9 @@ if __name__ == '__main__':
     writer=SummaryWriter(config.tb_dir)
     logger.info('Loading model...')
     model = FlavaForNERwithESD_bert_blstm()
-
+    model_name=model.__class__.__name__
     model = model.to(device)
+    logger.info(f'Model:{model_name}|Trained_epoch:{int(model.trained_epoch.item())}')
     logger.info('Done.')
     logger.info('Constructing datasets.')
     train_dataset = TwitterDataset(config.train_text_path,
@@ -59,6 +60,7 @@ if __name__ == '__main__':
     for epoch in range(config.epochs):
         loss=train(model, train_dataloader, optimizer, lr_scheduler, epoch + 1,
               W_e2n,writer)
+        model.trained_epoch+=torch.tensor([1],dtype=torch.float32,requires_grad=False)
         writer.add_scalar('train/epoch_loss',loss,epoch+1)
         print('\n')
         metrics=evaluate(model,dev_dataloader,W_e2n)
@@ -72,7 +74,7 @@ if __name__ == '__main__':
         if valid_micro_f1 > best_micro_f1:
             best_micro_f1 = valid_micro_f1
             if not save_weights: 
-                name=f'epoch_{epoch+1}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
+                name=f'{model_name}_epoch_{epoch+1+int(model.trained_epoch.item())}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
                 save_model(model,name)
         print('----------------------------------')
     writer.close()
