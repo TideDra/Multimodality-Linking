@@ -10,11 +10,17 @@ processor = config.processor
 
 
 class DataLoaderX(DataLoader):
+    '''
+    A replacement to DataLoader which improves the pipeline performance.
+    '''
     def __iter__(self):
         return BackgroundGenerator(super().__iter__())
 
 
 class TwitterDataset(Dataset):
+    '''
+    Dataset for Twitter2015 and Twitter2017
+    '''
     def __init__(self, file_path: str, img_path: str) -> None:
         self.data = self.load_data(file_path, img_path)
 
@@ -81,6 +87,10 @@ class TwitterDataset(Dataset):
 
 
 def TwitterColloteFn(batch_samples):
+    '''
+    Collate function for TwitterDataset. This Collate function contains too many CPU and IO operation, so it shouldn't be used 
+    as train dataloader(dataset), especially in multi-GPU training.
+    '''
     batch_sentences, batch_img_inputs = [], []
     for sample in batch_samples:
         batch_sentences.append(sample['sentence'])
@@ -117,7 +127,20 @@ def TwitterColloteFn(batch_samples):
 
 
 class TwitterDatasetV2(Dataset):
+    '''
+    A pre-process version of TwitterDataset. this implementation finish all the pre-process operations during constructing the dataset, e.g. tokenize, Image IO.
+    We strongly recommend to use this version, especially in multi-GPU training, which efficiently decrease the waiting time of GPUs.
+    '''
     def __init__(self, file_path: str, img_path: str, batch_size: int) -> None:
+        '''
+        Args:
+            file_path(str): path of text data file.
+            img_path(str): path of image data folder.
+            batch_size(int): Different from common dataset, you need to define the batch_size when constructing the dataset.
+        Because it consumes too much time to construct a batch(see the TwitterColloteFn), we don't let dataloader to do this, which will bolck GPUs.
+        Consequently, you must set the batch_size of dataloader to 1. A sample from the dataset is already a batch. To avoid dataloader batch the sample
+        again, you also need to use TwitterCollateFnV2 as the ''collate_fn'' of dataloader.
+        '''
         self.data = self.load_data(file_path, img_path)
         self.processor = config.processor
         self.batch_data = self.get_batch_data(batch_size)
@@ -230,6 +253,9 @@ class TwitterDatasetV2(Dataset):
 
 
 def TwitterColloteFnV2(batch_sample):
+    '''
+    The default ''collate_fn'' of dataloader will batch the sample again, which is already a batch. Use this collate_fn to avoid it.
+    '''
     sample = batch_sample[0]
     return sample['batch_inputs'], sample['batch_tags'], sample[
         'batch_ESD_tags']

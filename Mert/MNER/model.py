@@ -1,4 +1,4 @@
-import torch
+from torch import Tensor
 from torch import float32, nn
 from torchcrf import CRF
 import torch
@@ -16,7 +16,14 @@ class ModelForTokenClassification(nn.Module):
                  encoder,
                  num_tags: int,
                  is_encoder_frozen: bool = True,
-                 dropout: int = 0.1) -> None:
+                 dropout: float = 0.1) -> None:
+        '''
+        Args:
+            encoder(Model): a multimodal or text-model encoder to get the embeddings of the model(s), e.g. FlavaModel, FlavaTextModel.
+            num_tags(int): the number of tags to classify in NER task.
+            is_encoder_frozen(bool): whether to freeze the encoder when forwarding.
+            dropout(float): dropout of the classifier.
+        '''
         super().__init__()
         self.encoder = encoder
         self.crf = CRF(num_tags=num_tags, batch_first=True)
@@ -24,9 +31,11 @@ class ModelForTokenClassification(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.is_encoder_frozen = is_encoder_frozen
 
-    def forward(self, inputs, labels=None):
+    def forward(self, inputs, labels:Tensor=None):
         '''
-        inputs is the outputs of Processor
+        Args:
+            inputs: the input required by encoder. For example, it should be the output of FlavaProcessor if the encoder is FlavaModel.
+            labels(Tensor): labels should be given when training, used for computing loss. the default ''None'' is for inferring.
         '''
         if self.is_encoder_frozen:
             with torch.no_grad():
@@ -68,6 +77,16 @@ class ModelForNERwithESD(nn.Module):
                  is_encoder_frozen: bool = True,
                  is_ESD_encoder_frozen: bool = True,
                  dropout: float = 0.1) -> None:
+        '''
+        Args:
+            encoder(Model): a multimodal or text-model encoder to get the embeddings of the model(s), e.g. FlavaModel, FlavaTextModel.
+            ESD_encoder(Model): a text-model encoder to get the embeddings of the text, which is only for ESD, e.g. FlavaTextModel, BertModel.
+            num_tags(int): the number of tags to clssify in NER task.
+            ESD_tags(int): the number of tags to clssify in ESD task.
+            is_encoder_frozen(bool): whether to freeze the encoder when forwarding.
+            is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
+            dropout(float): dropout of the classifier.
+        '''
         super().__init__()
         self.NERmodel = ModelForTokenClassification(
             encoder=encoder,
@@ -83,6 +102,13 @@ class ModelForNERwithESD(nn.Module):
         self.crf = CRF(num_tags=num_tags, batch_first=True)
 
     def forward(self, inputs, W_e2n, labels=None, ESD_labels=None):
+        '''
+        Args:
+            inputs: the input required by encoder. For example, it should be the output of FlavaProcessor if the encoder is FlavaModel.
+            W_e2n: the transition matrix used for the ESD auxiliary module.
+            labels(Tensor): labels should be given when training, used for computing loss. the default ''None'' is for inferring.
+            ESD_labels(Tensor): ESD_labels should be given when training, used for computing loss. the default ''None'' is for inferring.
+        '''
         logits, _ = self.NERmodel(inputs, labels)
         del inputs['pixel_values']
         ESD_logits, ESD_loss = self.ESDmodel(inputs, ESD_labels)
@@ -102,6 +128,10 @@ class ModelForNERwithESD(nn.Module):
 
 
 class ModelForNERwithESD_ComplexedVer(nn.Module):
+    '''
+    This is the origin(complexed) implementation of ModelForNERwithESD. We reserve it to show the models'details for someone who needs it.
+    We recommend to use the above simple version.
+    '''
     def __init__(self,
                  encoder,
                  ESD_encoder,
@@ -162,7 +192,16 @@ class ModelForNERwithESD_ComplexedVer(nn.Module):
 
 
 class BiLSTM(nn.Module):
-    def __init__(self, input_size, hidden_size, dropout=0.1) -> None:
+    '''
+    A implementation of BiLSTM. Reference: https://github.com/luopeixiang/named_entity_recognition
+    '''
+    def __init__(self, input_size:int, hidden_size:int, dropout:float=0.1) -> None:
+        '''
+        Args:
+            input_size(int): the hidden size of the input embeddings.
+            hidden_size(int): hidden_size of LSTM.
+            dropout(float): dropout of LSTM.
+        '''
         super().__init__()
         self.bilstm = nn.LSTM(input_size=input_size,
                               hidden_size=hidden_size,
@@ -170,8 +209,12 @@ class BiLSTM(nn.Module):
                               dropout=dropout,
                               bidirectional=True)
 
-    def forward(self, inputs, mask):
-        #inputs = inputs*mask
+    def forward(self, inputs:Tensor, mask:Tensor):
+        '''
+        Args:
+            inputs(Tensor): the input embeddings. its shape should be (batch_size, seq_length, embeding_size)
+            mask(Tensor): mask for the input.
+        '''
         length = mask.type(float32).norm(1, dim=1).type(
             torch.int64).cpu().detach().numpy().tolist()
         packed = pack_padded_sequence(inputs,
@@ -190,6 +233,9 @@ class BiLSTM(nn.Module):
 
 
 class BertBiLSTMEncoder(nn.Module):
+    '''
+    A bert-BiLSTM encoder to get text embeddings.
+    '''
     def __init__(self, config: BertBiLSTMEncoderConfig) -> None:
         super().__init__()
         self.config = config
@@ -201,6 +247,10 @@ class BertBiLSTMEncoder(nn.Module):
         self.fc = nn.Linear(config.blstm_hidden_size * 2, config.hidden_size)
 
     def forward(self, **inputs):
+        '''
+        Args:
+            inputs: the output of Tokenizer.
+        '''
         if self.config.is_bert_frozen:
             with torch.no_grad():
                 bert_embedding = self.bert_encoder(**inputs).last_hidden_state
@@ -213,6 +263,9 @@ class BertBiLSTMEncoder(nn.Module):
 
 
 class FlavaForNER(ModelForTokenClassification):
+    '''
+    A NER model with Flava as encoder.
+    '''
     def __init__(self,
                  is_encoder_frozen: bool = True,
                  dropout: float = 0.1) -> None:
@@ -227,11 +280,21 @@ class FlavaForNER(ModelForTokenClassification):
 
 
 class FlavaForNERwithESD_bert_only(ModelForNERwithESD):
+    '''
+    A NER model with Flava as encoder and Bert as ESD_encoder.
+    '''
     def __init__(self,
                  ratio: float = 1,
                  is_encoder_frozen: bool = True,
                  is_ESD_encoder_frozen: bool = True,
                  dropout: float = 0.1) -> None:
+        '''
+        Args:
+            ratio(float): the weight of ESD_loss.
+            is_encoder_frozen(bool): whether to freeze the encoder when forwarding.
+            is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
+            dropout(float): dropout of the classifier.
+        '''
         encoder = FlavaModel.from_pretrained("facebook/flava-full")
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
@@ -244,11 +307,21 @@ class FlavaForNERwithESD_bert_only(ModelForNERwithESD):
 
 
 class FlavaForNERwithESD_bert_blstm(ModelForNERwithESD):
+    '''
+    A NER model with Flava as encoder and Bert-BiLSTM as ESD_encoder.
+    '''
     def __init__(self,
                  ratio: float = 1,
                  is_encoder_frozen: bool = True,
                  is_ESD_encoder_frozen: bool = True,
                  dropout: float = 0.1) -> None:
+        '''
+        Args:
+            ratio(float): the weight of ESD_loss.
+            is_encoder_frozen(bool): whether to freeze the encoder when forwarding.
+            is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
+            dropout(float): dropout of the classifier.
+        '''
         encoder = FlavaModel.from_pretrained("facebook/flava-full")
         ESD_encoder = BertBiLSTMEncoder(BertBiLSTMEncoderConfigforFNEBB)
         num_tags = len(config.tag2id)

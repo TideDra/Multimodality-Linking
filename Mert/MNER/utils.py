@@ -46,6 +46,15 @@ def train(model, dataloader, optimizer, lr_scheduler, epoch, W_e2n, writer,
 
 
 def evaluate(model, dataloader, W_e2n, accelerator, test_ESD=False):
+    '''
+    Evaluate the P,R and F1 use the ''seqeval'' package in token level.
+    Args:
+        model: the model to evaluate.
+        dataloader: the dataloader.
+        W_e2n: transition matrix used for ESD module.
+        acceelerator: accelerator used for distributed training.
+        test_ESD: if ''False'', only evaluate ESD. Other wise evaluate NER. 
+    '''
     model.eval()
     pred_tags = []
     true_tags = []
@@ -84,6 +93,9 @@ def evaluate(model, dataloader, W_e2n, accelerator, test_ESD=False):
 
 
 def NERpipeline(model, W_e2n, text=None, img=None, inputs=None):
+    '''
+    Do multi-modal NER for given text and img.
+    '''
     if inputs == None:
         if type(text) != type([]):
             text = [text]
@@ -155,6 +167,15 @@ def NERpipeline(model, W_e2n, text=None, img=None, inputs=None):
 
 
 def evaluate_word_level(model, dataloader, W_e2n, accelerator, test_ESD=False):
+    '''
+    Evaluate the P,R and F1 use the ''seqeval'' package in word level.
+    Args:
+        model: the model to evaluate.
+        dataloader: the dataloader.
+        W_e2n: transition matrix used for ESD module.
+        acceelerator: accelerator used for distributed training.
+        test_ESD: if ''False'', only evaluate ESD. Other wise evaluate NER. 
+    '''
     model.eval()
     pred_tags = []
     true_tags = []
