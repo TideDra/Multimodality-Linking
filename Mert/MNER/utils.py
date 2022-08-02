@@ -1,4 +1,4 @@
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 from config import config
 import numpy as np
 from torch import float32, tensor
@@ -13,102 +13,6 @@ import sys
 import logging
 
 processor = config.processor
-
-
-class TwitterDataset(Dataset):
-    def __init__(self, file_path: str, img_path: str) -> None:
-        self.data = self.load_data(file_path, img_path)
-
-    def load_data(self, file_path: str, img_path: str):
-        dataset = open(file_path).readlines()
-        Data = []
-        ind = 0
-        end = len(dataset)
-        self.W_e2n = np.zeros((len(config.ESD_tag2id), len(config.tag2id)))
-        while ind < end:
-            text = dataset[ind]
-            if text[:5] == 'IMGID':
-                img_id = text[6:-1]
-                ind += 1
-                if dataset[ind][:2] == 'RT':  # skip name
-                    ind += 3
-                # read sentence
-                sentence = ''
-                tags = []
-                ESD_tags = []
-                while ind < end:
-                    text = dataset[ind]
-                    if text == '\n':  # reach the end of a sample
-                        ind += 1
-                        break
-                    if text[:4] == 'http':  # skip url
-                        ind += 1
-                        continue
-                    word, tag = text.replace('\n', '').split('\t')
-                    if sentence != '':  # use space to split words
-                        sentence += ' '
-                        tags.append(0)
-                        ESD_tags.append(0)
-                    sentence += word
-                    # tag is mapped to char
-                    tags += [config.tag2id[tag]] * len(word)
-                    ESD_tags += [config.ESD_tag2id[tag[0]]] * len(word)
-                    self.W_e2n[config.ESD_tag2id[tag[0]]][
-                        config.tag2id[tag]] += 1
-                    ind += 1
-                Data.append({
-                    'imgid': img_path + img_id + '.jpg',
-                    'sentence': sentence,
-                    'tags': tags,
-                    'ESD_tags': ESD_tags
-                })
-            else:
-                ind += 1
-        # normalize W
-        self.W_e2n = self.W_e2n / (self.W_e2n.sum(1).reshape(-1, 1))
-        self.W_e2n = tensor(self.W_e2n, requires_grad=False, dtype=float32)
-        return Data
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, idx):
-        return self.data[idx]
-
-
-def TwitterColloteFn(batch_samples):
-    batch_sentences, batch_img_inputs = [], []
-    for sample in batch_samples:
-        batch_sentences.append(sample['sentence'])
-        img = Image.open(sample['imgid'])
-        batch_img_inputs.append(img.convert('RGB'))
-
-    batch_inputs = processor(text=batch_sentences,
-                             images=batch_img_inputs,
-                             return_tensors="pt",
-                             padding="max_length",
-                             max_length=config.max_length,
-                             truncation=True)
-    batch_tags = np.zeros(shape=batch_inputs['input_ids'].shape, dtype=int)
-    batch_ESD_tags = np.zeros(shape=batch_inputs['input_ids'].shape, dtype=int)
-    for idx, sentence in enumerate(batch_sentences):
-        encoding = processor(text=sentence,
-                             truncation=True,
-                             return_tensors="pt",
-                             padding="max_length",
-                             max_length=config.max_length)
-        SEP_pos = encoding.tokens().index('[SEP]')
-        batch_tags[idx][0] = config.special_token_tagid
-        batch_tags[idx][SEP_pos:] = config.special_token_tagid
-        batch_ESD_tags[idx][0] = config.special_token_tagid
-        batch_ESD_tags[idx][SEP_pos:] = config.special_token_tagid
-        for i in range(1, SEP_pos):
-            char_start, char_end = encoding.token_to_chars(i)
-            tag = batch_samples[idx]['tags'][char_start]
-            batch_tags[idx][i] = tag
-            ESD_tag = batch_samples[idx]['ESD_tags'][char_start]
-            batch_ESD_tags[idx][i] = ESD_tag
-    return batch_inputs, tensor(batch_tags), tensor(batch_ESD_tags)
 
 
 def train(model, dataloader, optimizer, lr_scheduler, epoch, W_e2n, writer,
@@ -129,27 +33,35 @@ def train(model, dataloader, optimizer, lr_scheduler, epoch, W_e2n, writer,
             accelerator.backward(loss)
             optimizer.step()
             lr_scheduler.step()
-            loss=accelerator.gather(loss)
-            total_loss += loss.item()
+            loss = accelerator.gather(loss)
+            total_loss += loss.sum().item()
             if accelerator.is_main_process:
-                writer.add_scalar('train/batch_loss', loss.item(),
-                              len(dataloader) * (epoch - 1) + idx)
+                writer.add_scalar('train/batch_loss',
+                                  loss.sum().item(),
+                                  len(dataloader) * (epoch - 1) + idx)
             tbar.set_postfix(loss="%.2f" %
                              ((total_loss / idx) / config.batch_size))
             tbar.update()
     return total_loss
 
 
-def evaluate(model, dataloader, W_e2n, accelerator):
+def evaluate(model, dataloader, W_e2n, accelerator, test_ESD=False):
     model.eval()
     pred_tags = []
     true_tags = []
     with torch.no_grad():
-        for inputs, labels, ESD_labels in tqdm(dataloader,
-                                               unit='batch',
-                                               total=len(dataloader) + 1,
-                                               desc='Evaluating...'):
+        for inputs, labels, ESD_labels in tqdm(
+                dataloader,
+                unit='batch',
+                total=len(dataloader) + 1,
+                desc='Evaluating...',
+                disable=not accelerator.is_local_main_process):
             #inputs = inputs.to(config.device)
+            if test_ESD:
+                labels = ESD_labels
+                id2tag = config.ESD_id2tag
+            else:
+                id2tag = config.id2tag
             logits, _ = model(inputs, W_e2n)
             logits = accelerator.gather(logits)
             inputs = accelerator.gather(inputs)
@@ -158,10 +70,138 @@ def evaluate(model, dataloader, W_e2n, accelerator):
             pred_labels = model.crf.decode(logits, mask)
             true_labels = labels.tolist()
 
-            pred_tags += [[config.id2tag[id] for id in seq]
-                          for seq in pred_labels]
-            true_tags += [[config.id2tag[id] for id, m in zip(seq, mask) if m]
+            pred_tags += [[id2tag[id] for id in seq] for seq in pred_labels]
+            true_tags += [[id2tag[id] for id, m in zip(seq, mask) if m]
                           for seq, mask in zip(true_labels, mask.tolist())]
+    accelerator.print(
+        classification_report(true_tags, pred_tags, mode='strict',
+                              scheme=IOB2))
+    return classification_report(true_tags,
+                                 pred_tags,
+                                 mode='strict',
+                                 scheme=IOB2,
+                                 output_dict=True)
+
+
+def NERpipeline(model, W_e2n, text=None, img=None, inputs=None):
+    if inputs == None:
+        if type(text) != type([]):
+            text = [text]
+        if type(img) != type([]):
+            img = [img]
+        assert len(text) == len(
+            img), "number of texts must equal to number of imgs."
+        inputs = config.processor(text=text,
+                                  images=img,
+                                  return_tensors="pt",
+                                  padding="max_length",
+                                  max_length=config.max_length,
+                                  truncation=True)
+    inputs = inputs.to(config.device)
+    W_e2n = W_e2n.to(config.device)
+    model.eval()
+    with torch.no_grad():
+        logits, _ = model(inputs, W_e2n)
+        mask = inputs['attention_mask'].bool()
+        pred_labels = model.crf.decode(logits, mask)
+    pred_token_tags = [[config.id2tag[id] for id in seq]
+                       for seq in pred_labels]
+
+    batch_size = inputs['input_ids'].shape[0]
+    result = []
+    for b in range(batch_size):
+        word_ids = set(inputs.word_ids(b))
+        word_ids.remove(None)
+        recording = False
+        entities = []
+        entity_head = None
+        entity_type = None
+        for word_id in range(len(word_ids)):
+            token_start, token_end = inputs.word_to_tokens(b, word_id)
+            word_tag = pred_token_tags[b][token_start]
+            if word_tag[0] == 'B' and recording == False:
+                recording = True
+                token_ids = [i for i in range(token_start, token_end)]
+                entity_head, _ = inputs.word_to_chars(b, word_id)
+                entity_type = word_tag.split('-')[-1]
+            elif word_tag[0] == 'B' and recording == True:
+                _, last_entity_end = inputs.word_to_chars(b, word_id - 1)
+                entities.append({
+                    'entity': text[b][entity_head:last_entity_end],
+                    'type': entity_type,
+                    'token_ids': token_ids
+                })
+                token_ids = []
+                token_ids = [i for i in range(token_start, token_end)]
+                entity_head, _ = inputs.word_to_chars(b, word_id)
+                entity_type = word_tag.split('-')[-1]
+            elif word_tag[0] == 'I' and recording == True:
+                token_ids += [i for i in range(token_start, token_end)]
+            elif word_tag[0] == 'O' and recording == True:
+                _, last_entity_end = inputs.word_to_chars(b, word_id - 1)
+                entities.append({
+                    'entity': text[b][entity_head:last_entity_end],
+                    'type': entity_type,
+                    'token_ids': token_ids
+                })
+                recording = False
+                token_ids = []
+        result.append({
+            'sentence': text[b],
+            'entities': entities,
+            'image': img[b]
+        })
+    return result
+
+
+def evaluate_word_level(model, dataloader, W_e2n, accelerator, test_ESD=False):
+    model.eval()
+    pred_tags = []
+    true_tags = []
+    with torch.no_grad():
+        for inputs, labels, ESD_labels, sentences in tqdm(
+                dataloader,
+                unit='batch',
+                total=len(dataloader) + 1,
+                desc='Evaluating...',
+                disable=not accelerator.is_local_main_process):
+            #inputs = inputs.to(config.device)
+            if test_ESD:
+                labels = ESD_labels
+                id2tag = config.ESD_id2tag
+            else:
+                id2tag = config.id2tag
+            logits, _ = model(inputs, W_e2n)
+            logits = accelerator.gather(logits)
+            inputs = accelerator.gather(inputs)
+            labels = accelerator.gather(labels)
+
+            mask = inputs['attention_mask'].bool()
+            pred_labels = model.crf.decode(logits, mask)
+            true_labels = labels.tolist()
+            inputs = config.processor(text=sentences,
+                                      truncation=True,
+                                      return_tensors="pt",
+                                      padding="max_length",
+                                      max_length=config.max_length)
+            pred_token_tags = [[id2tag[id] for id in seq]
+                               for seq in pred_labels]
+            true_token_tags = [[id2tag[id] for id, m in zip(seq, mask) if m]
+                               for seq, mask in zip(true_labels, mask.tolist())
+                               ]
+
+            batch_size = inputs['input_ids'].shape[0]
+            for b in range(batch_size):
+                word_ids = set(inputs.word_ids(b))
+                word_ids.remove(None)
+                pred_word_tags = []
+                true_word_tags = []
+                for word_id in range(len(word_ids)):
+                    start, end = inputs.word_to_tokens(b, word_id)
+                    pred_word_tags.append(pred_token_tags[b][start])
+                    true_word_tags.append(true_token_tags[b][start])
+                pred_tags.append(pred_word_tags)
+                true_tags.append(true_word_tags)
     print(
         classification_report(true_tags, pred_tags, mode='strict',
                               scheme=IOB2))
@@ -172,19 +212,25 @@ def evaluate(model, dataloader, W_e2n, accelerator):
                                  output_dict=True)
 
 
-def save_model(model, name,accelerator):
+def save_model(model, name, accelerator):
     accelerator.print('Saving checkpoint...\n')
     accelerator.wait_for_everyone()
     unwrapped_model = accelerator.unwrap_model(model)
-    accelerator.save(unwrapped_model.state_dict(), os.path.join(config.checkpoint_path, name))
-    checkpoint_list = os.listdir(config.checkpoint_path)
+    model_name = name.split('_epoch')[0]
+    checkpoint_path = config.checkpoint_path
+    if model_name not in os.listdir(checkpoint_path):
+        os.mkdir(os.path.join(checkpoint_path, model_name))
+    checkpoint_path = os.path.join(checkpoint_path, model_name)
+    accelerator.save(unwrapped_model.state_dict(),
+                     os.path.join(checkpoint_path, name))
+    checkpoint_list = os.listdir(checkpoint_path)
     if (len(checkpoint_list) > config.max_checkpoint_num):
         file_map = {}
         times = []
         del_num = len(checkpoint_list) - config.max_checkpoint_num
         for f in checkpoint_list:
             t = f.split('.')[0].split('_')[-1]
-            file_map[int(t)] = os.path.join(config.checkpoint_path, f)
+            file_map[int(t)] = os.path.join(checkpoint_path, f)
             times.append(int(t))
         times.sort()
         for i in range(del_num):

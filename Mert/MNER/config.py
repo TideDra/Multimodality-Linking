@@ -9,23 +9,23 @@ class Config:
     processor=FlavaProcessor.from_pretrained("facebook/flava-full")
 
     special_token_tagid=0
-    max_length=50
+    max_length=128
     test_text_path='./data/Twitter2015/test.txt'
-    test_img_path='/home/zero_lag/Document/srtp/data/twitter2015/images/'
+    test_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
 
     train_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/train.txt'
-    train_img_path='/home/zero_lag/Document/srtp/data/twitter2015/images/'
+    train_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
 
     dev_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/valid.txt'
-    dev_img_path='/home/zero_lag/Document/srtp/data/twitter2015/images/'
+    dev_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
 
     num_workers=4
-    epochs=1
-    learning_rate=1e-5
+    epochs=10
+    learning_rate=1e-4
     batch_size=6
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    checkpoint_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/checkpoint/FlavaForNERwithESD_bert_only'
+    checkpoint_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/checkpoint'
     max_checkpoint_num=2
 
     tb_dir='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/tb_log'
@@ -34,8 +34,8 @@ config=Config()
 
 class BertBiLSTMEncoderConfig:
     blstm_hidden_size=768
-    blstm_dropout=0.1
-    hidden_size=768
+    blstm_dropout=0.4
+    hidden_size=384
     is_bert_frozen=False
 
 BertBiLSTMEncoderConfigforFNEBB=BertBiLSTMEncoderConfig()
