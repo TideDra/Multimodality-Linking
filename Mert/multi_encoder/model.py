@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 import torch
-from Mert.multi_fusion.config import MultimodalFusionConfig
+from Mert.multi_encoder.config import MultimodalFusionConfig
 from torch import Tensor, nn
 
 
