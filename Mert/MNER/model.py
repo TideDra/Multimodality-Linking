@@ -3,7 +3,7 @@ from torch import float32, nn
 from torchcrf import CRF
 import torch
 from transformers import FlavaModel, FlavaTextModel
-from config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
+from .config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
 

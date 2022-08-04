@@ -1,5 +1,5 @@
 from torch.utils.data import Dataset, DataLoader
-from config import config
+from .config import config
 import numpy as np
 from torch import float32, tensor
 from transformers import AutoTokenizer
