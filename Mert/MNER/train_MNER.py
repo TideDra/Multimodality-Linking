@@ -1,24 +1,25 @@
+import sys
+sys.path.append('/home/zero_lag/Document/srtp/Multimodality-Link/Mert/')
 from accelerate import Accelerator
 
 accelerator = Accelerator()
 accelerator.free_memory()
 from apex.optimizers import FusedAdam
 import logging
-from utils import getlogger
+from MNER.utils import getlogger,train, evaluate, save_model
 
 logger = getlogger('Mert')
 if accelerator.is_main_process:
     logger.info('Loading packages...')
-from model import FlavaForNERwithESD_bert_only, FlavaForNERwithESD_bert_blstm
-from config import config
-from utils import train, evaluate, save_model
+from MNER.model import FlavaForNERwithESD_bert_only, FlavaForNERwithESD_bert_blstm
+from MNER.config import config
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 import torch
 from transformers import get_scheduler
 import warnings
 from time import time
-from dataset import TwitterDatasetV2, TwitterColloteFnV2, DataLoaderX
+from MNER.dataset import TwitterDatasetV2, TwitterColloteFnV2, DataLoaderX
 import os
 #silence logs
 warnings.filterwarnings("ignore")

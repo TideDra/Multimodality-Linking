@@ -1,5 +1,5 @@
 from torch.utils.data import Dataset, DataLoader
-from config import config
+from .config import config
 import numpy as np
 from PIL import Image
 import os
