@@ -5,9 +5,9 @@ import torch
 
 @dataclass
 class MultiEncoderConfig:
-    num_layers: int = 16
-    d_text: int = 256
-    d_vision: int = 256
+    num_layers: int = 6
+    d_text: int = 128
+    d_vision: int = 14**2 + 1
     d_bottleneck: int = 4
     hidden_size: int = 768
     nhead: int = 4

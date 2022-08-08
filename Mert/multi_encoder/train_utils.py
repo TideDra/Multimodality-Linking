@@ -22,16 +22,16 @@ def train(
         disable=not accelerator.is_local_main_process
     ) as tbar:
         for idx, (inputs, _, _) in tbar:
-            optimizer.zero_grad()
             loss = model(inputs)
+            optimizer.zero_grad()
+            accelerator.backward(loss)
             optimizer.step()
             lr_scheduler.step()
-            accelerator.backward(loss)
             loss = accelerator.gather(loss)
             total_loss += loss.sum().item()
             if accelerator.is_main_process:
                 writer.add_scalar('train/batch_loss', loss.sum().item(), len(dataloader) * (epoch - 1) + idx)
-            tbar.set_postfix(loss=f"{(total_loss / idx) / config.batch_size:.2f}")
+            tbar.set_postfix(loss=f"{(total_loss / idx) / config.batch_size:.4f}")
             tbar.update()
     return total_loss
 
