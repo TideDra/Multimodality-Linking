@@ -79,17 +79,21 @@ class TwitterDataset(Dataset):
                     self.W_e2n[config.ESD_tag2id[tag[0]]][
                         config.tag2id[tag]] += 1
                     ind += 1
-                Data.append({
-                    'img':
-                    Image.open(os.path.join(img_path, img_id) +
-                               '.jpg').convert('RGB'),
-                    'sentence':
-                    sentence,
-                    'tags':
-                    tags,
-                    'ESD_tags':
-                    ESD_tags
-                })
+
+                try:
+                    Data.append({
+                        'img':
+                        Image.open(os.path.join(img_path, img_id) +
+                                   '.jpg').convert('RGB'),
+                        'sentence':
+                        sentence,
+                        'tags':
+                        tags,
+                        'ESD_tags':
+                        ESD_tags
+                    })
+                except:
+                    pass
             else:
                 ind += 1
         # normalize W
@@ -215,17 +219,20 @@ class TwitterDatasetV2(Dataset):
                     self.W_e2n[config.ESD_tag2id[tag[0]]][
                         config.tag2id[tag]] += 1
                     ind += 1
-                Data.append({
-                    'img':
-                    Image.open(os.path.join(img_path, img_id) +
-                               '.jpg').convert('RGB'),
-                    'sentence':
-                    sentence,
-                    'tags':
-                    tags,
-                    'ESD_tags':
-                    ESD_tags
-                })
+                try:
+                    Data.append({
+                        'img':
+                        Image.open(os.path.join(img_path, img_id) +
+                                   '.jpg').convert('RGB'),
+                        'sentence':
+                        sentence,
+                        'tags':
+                        tags,
+                        'ESD_tags':
+                        ESD_tags
+                    })
+                except:
+                    pass
             else:
                 ind += 1
         # normalize W

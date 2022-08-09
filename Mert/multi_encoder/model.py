@@ -46,6 +46,7 @@ class MultimodalFusionModel(nn.Module):
         btn_shape = (batch_size, self.config.d_bottleneck, self.config.hidden_size
                      ) if self.config.batch_first else (self.config.d_bottleneck, batch_size, self.config.hidden_size)
         bottleneck = torch.zeros(btn_shape)
+        bottleneck = bottleneck.to(text_embeddings.device)
         outputs = FusionModelOutput(text_embeddings, image_embeddings, bottleneck)
         for layer in self.fusion_layers:
             outputs = layer(outputs.text_embeddings, outputs.image_embeddings, outputs.bottleneck)
@@ -59,10 +60,11 @@ class MultiEncoder(nn.Module):
         fusion_config: MultiEncoderConfig = MultiEncoderConfig(),
     ):
         super().__init__()
-        self.flava = FlavaModel(flava_config)
+        self.flava = FlavaModel.from_pretrained('facebook/flava-full')
+        self.config=fusion_config
         self.fusion = MultimodalFusionModel(fusion_config)
 
-    def forward(self, batch_data) -> FusionModelOutput:
+    def forward(self, **batch_data) -> FusionModelOutput:
         flava_output: FlavaModelOutput = self.flava(**batch_data)
         # print(flava_output.text_embeddings.shape, flava_output.image_embeddings.shape)
         # torch.Size([6, 128, 768]) torch.Size([6, 197, 768])

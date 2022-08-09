@@ -13,7 +13,7 @@ from MNER.utils import getlogger,train, evaluate, save_model
 logger = getlogger('Mert')
 if accelerator.is_main_process:
     logger.info('Loading packages...')
-from MNER.model import FlavaForNERwithESD_bert_only, FlavaForNERwithESD_bert_blstm
+from MNER.model import MertForNERwithESD_bert_only
 from MNER.config import config
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
@@ -37,8 +37,7 @@ if __name__ == '__main__':
         logger.info('Done.')
         logger.info('Loading model...')
 
-    model = FlavaForNERwithESD_bert_blstm(is_encoder_frozen=True,
-                                          is_ESD_encoder_frozen=True)
+    model = MertForNERwithESD_bert_only(is_encoder_frozen=True,is_ESD_encoder_frozen=True)
     model_name = model.__class__.__name__
     #model = model.to(device)
     if accelerator.is_main_process:

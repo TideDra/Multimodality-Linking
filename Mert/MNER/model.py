@@ -5,7 +5,9 @@ import torch
 from transformers import FlavaModel, FlavaTextModel
 from .config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
-
+import sys
+sys.path.append('/home/zero_lag/Document/srtp/Multimodality-Link/')
+from Mert.multi_encoder.model import MultiEncoder
 
 class ModelForTokenClassification(nn.Module):
     '''
@@ -328,6 +330,48 @@ class FlavaForNERwithESD_bert_blstm(ModelForNERwithESD):
         ESD_num_tags = len(config.ESD_id2tag)
         super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
                          is_encoder_frozen, is_ESD_encoder_frozen, dropout)
+        self.trained_epoch = torch.tensor([0],
+                                          dtype=float32,
+                                          requires_grad=False)
+
+class MertForNERwithESD_bert_only(ModelForNERwithESD):
+    '''
+    A NER model with Mert as encoder and Bert as ESD_encoder.
+    '''
+    def __init__(self,
+                 ratio: float = 1,
+                 is_encoder_frozen: bool = True,
+                 is_ESD_encoder_frozen: bool = True,
+                 dropout: float = 0.1) -> None:
+        '''
+        Args:
+            ratio(float): the weight of ESD_loss.
+            is_encoder_frozen(bool): whether to freeze the encoder when forwarding.
+            is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
+            dropout(float): dropout of the classifier.
+        '''
+        encoder = MultiEncoder()
+        ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
+        num_tags = len(config.tag2id)
+        ESD_num_tags = len(config.ESD_id2tag)
+        super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
+                         is_encoder_frozen, is_ESD_encoder_frozen, dropout)
+        self.trained_epoch = torch.tensor([0],
+                                          dtype=float32,
+                                          requires_grad=False)
+
+class MertForNER(ModelForTokenClassification):
+    '''
+    A NER model with Flava as encoder.
+    '''
+    def __init__(self,
+                 is_encoder_frozen: bool = True,
+                 dropout: float = 0.1) -> None:
+        encoder = MultiEncoder()
+        super().__init__(encoder=encoder,
+                         num_tags=len(config.tag2id),
+                         is_encoder_frozen=is_encoder_frozen,
+                         dropout=dropout)
         self.trained_epoch = torch.tensor([0],
                                           dtype=float32,
                                           requires_grad=False)
