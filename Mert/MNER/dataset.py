@@ -5,6 +5,7 @@ from PIL import Image
 import os
 from torch import tensor, float32
 from prefetch_generator import BackgroundGenerator
+import pickle
 
 processor = config.processor
 
@@ -21,8 +22,25 @@ class TwitterDataset(Dataset):
     '''
     Dataset for Twitter2015 and Twitter2017
     '''
-    def __init__(self, file_path: str, img_path: str) -> None:
-        self.data = self.load_data(file_path, img_path)
+    def __init__(self, file_path: str=None, img_path: str=None, cache_path: str=None) -> None:
+        '''
+        Args:
+            file_path(str): path of text data file.
+            img_path(str): path of image data folder.
+            cache_path(str): path of the cache. if the cache doesn't exist, it will create it automatically using the file_path
+            and img_path. Otherwise, don't pass file_path and img_path.
+        '''
+        if cache_path!=None:
+            if os.path.isfile(cache_path):# the cache exists.
+                with open(cache_path,'rb') as f:
+                    self.data,self.W_e2n=pickle.load(f)
+            else:
+                with open(cache_path,'wb') as f:# the cache doesn't exist. Or it's the first time to construct the dataset.
+                    assert file_path!=None and img_path!=None, "You use the cache but the cache doesn't exist. Please pass the file_path and img_path, then it will create the cache automatically."
+                    self.data = self.load_data(file_path, img_path)
+                    pickle.dump([self.data,self.W_e2n],f)
+        else:
+            self.data = self.load_data(file_path, img_path)
 
     def load_data(self, file_path: str, img_path: str):
         dataset = open(file_path).readlines()
@@ -131,19 +149,34 @@ class TwitterDatasetV2(Dataset):
     A pre-process version of TwitterDataset. this implementation finish all the pre-process operations during constructing the dataset, e.g. tokenize, Image IO.
     We strongly recommend to use this version, especially in multi-GPU training, which efficiently decrease the waiting time of GPUs.
     '''
-    def __init__(self, file_path: str, img_path: str, batch_size: int) -> None:
+    def __init__(self, batch_size: int,file_path: str=None, img_path: str=None, cache_path:str=None) -> None:
         '''
         Args:
             file_path(str): path of text data file.
             img_path(str): path of image data folder.
+            cache_path(str): path of the cache. if the cache doesn't exist, it will create it automatically using the file_path
+            and img_path. Otherwise, don't pass file_path and img_path.
             batch_size(int): Different from common dataset, you need to define the batch_size when constructing the dataset.
         Because it consumes too much time to construct a batch(see the TwitterColloteFn), we don't let dataloader to do this, which will bolck GPUs.
         Consequently, you must set the batch_size of dataloader to 1. A sample from the dataset is already a batch. To avoid dataloader batch the sample
         again, you also need to use TwitterCollateFnV2 as the ''collate_fn'' of dataloader.
         '''
-        self.data = self.load_data(file_path, img_path)
-        self.processor = config.processor
-        self.batch_data = self.get_batch_data(batch_size)
+
+        if cache_path!=None:
+            if os.path.isfile(cache_path):# the cache exists.
+                with open(cache_path,'rb') as f:
+                    self.batch_data,self.W_e2n=pickle.load(f)
+            else:
+                with open(cache_path,'wb') as f:# the cache doesn't exist. Or it's the first time to construct the dataset.
+                    assert file_path!=None and img_path!=None, "You use the cache but the cache doesn't exist. Please pass the file_path and img_path, then it will create the cache automatically."
+                    self.data = self.load_data(file_path, img_path)
+                    self.processor = config.processor
+                    self.batch_data = self.get_batch_data(batch_size)
+                    pickle.dump([self.batch_data,self.W_e2n],f)
+        else:
+            self.data = self.load_data(file_path, img_path)
+            self.processor = config.processor
+            self.batch_data = self.get_batch_data(batch_size)
 
     def load_data(self, file_path: str, img_path: str):
         dataset = open(file_path).readlines()

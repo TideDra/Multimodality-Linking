@@ -1,5 +1,7 @@
 import sys
 sys.path.append('/home/zero_lag/Document/srtp/Multimodality-Link/Mert/')
+import os
+os.environ['TOKENIZERS_PARALLELISM']='false'
 from accelerate import Accelerator
 
 accelerator = Accelerator()
@@ -20,7 +22,7 @@ from transformers import get_scheduler
 import warnings
 from time import time
 from MNER.dataset import TwitterDatasetV2, TwitterColloteFnV2, DataLoaderX
-import os
+
 #silence logs
 warnings.filterwarnings("ignore")
 for log_name, log_obj in logging.Logger.manager.loggerDict.items():
@@ -47,8 +49,7 @@ if __name__ == '__main__':
         )
         logger.info('Done.')
         logger.info('Constructing datasets...')
-    train_dataset = TwitterDatasetV2(config.train_text_path,
-                                     config.train_img_path, config.batch_size)
+    train_dataset = TwitterDatasetV2(file_path=config.train_text_path,img_path=config.train_img_path,cache_path=config.train_cache_path,batch_size=config.batch_size)
     train_dataloader = DataLoaderX(train_dataset,
                                    batch_size=1,
                                    shuffle=False,
@@ -56,8 +57,7 @@ if __name__ == '__main__':
                                    num_workers=config.num_workers,
                                    pin_memory=True)
 
-    dev_dataset = TwitterDatasetV2(config.dev_text_path, config.dev_img_path,
-                                   config.batch_size)
+    dev_dataset = TwitterDatasetV2(file_path=config.dev_text_path,img_path=config.dev_img_path,cache_path=config.dev_cache_path,batch_size=config.batch_size)
     dev_dataloader = DataLoaderX(dev_dataset,
                                  batch_size=1,
                                  shuffle=False,
@@ -101,7 +101,7 @@ if __name__ == '__main__':
             if accelerator.is_main_process:
                 save_model(model, name, accelerator)
         accelerator.print(
-            '-----------------------------------------------------------')
+            '------------------------------------------------------------------------------------------')
     if accelerator.is_main_process:
         writer.close()
     if accelerator.is_main_process:
