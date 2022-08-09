@@ -45,8 +45,7 @@ class MultimodalFusionModel(nn.Module):
         batch_size = text_embeddings.size(0 if self.config.batch_first else 1)
         btn_shape = (batch_size, self.config.d_bottleneck, self.config.hidden_size
                      ) if self.config.batch_first else (self.config.d_bottleneck, batch_size, self.config.hidden_size)
-        bottleneck = torch.zeros(btn_shape)
-        bottleneck = bottleneck.to(text_embeddings.device)
+        bottleneck = torch.zeros(btn_shape).to(self.config.device)
         outputs = FusionModelOutput(text_embeddings, image_embeddings, bottleneck)
         for layer in self.fusion_layers:
             outputs = layer(outputs.text_embeddings, outputs.image_embeddings, outputs.bottleneck)
@@ -97,10 +96,11 @@ class MultiEncoderOutput(nn.Module):
         text_features = text_features / text_features.norm(dim=1, keepdim=True)
         # cosine similarity as logits
         logit_scale = self.logit_scale.exp()
-        logits_per_image = image_features @ text_features.t() * logit_scale
+        logits_per_image = image_features @ text_features.T * logit_scale
+        logits_per_text = logits_per_image.T
         # shape = [global_batch_size, global_batch_size]
         labels = torch.arange(logits_per_image.size(0))  # 对角线元素的labels
-        loss_i = self.crit_i(logits_per_image, labels, axis=0)
-        loss_t = self.crit_t(logits_per_image, labels, axis=1)
+        loss_i = self.crit_i(logits_per_image, labels)
+        loss_t = self.crit_t(logits_per_text, labels)
         loss = (loss_i + loss_t) / 2
         return loss
