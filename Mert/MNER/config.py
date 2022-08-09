@@ -12,16 +12,19 @@ class Config:
     max_length=128
     test_text_path='./data/Twitter2015/test.txt'
     test_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
+    test_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/test_cache'
 
     train_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/train.txt'
     train_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
+    train_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/train_cache'
 
     dev_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/valid.txt'
     dev_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
+    dev_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/dev_cache'
 
     num_workers=4
     epochs=10
-    learning_rate=1e-4
+    learning_rate=5*1e-5
     batch_size=6
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
