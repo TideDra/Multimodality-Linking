@@ -24,7 +24,7 @@ from Mert.MNER.config import config
 from Mert.MNER.dataset import DataLoaderX, TwitterColloteFnV2, TwitterDatasetV2
 from Mert.multi_encoder.config import MultiEncoderConfig
 from Mert.multi_encoder.model import MultiEncoder, MultiEncoderOutput
-from Mert.multi_encoder.train_utils import train
+from Mert.multi_encoder.train_utils import evaluate, train
 from torch.utils.tensorboard import SummaryWriter
 from transformers.trainer_utils import SchedulerType
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
         logger.info('Loading model...')
 
     multi_config = MultiEncoderConfig(d_text=config.max_length, d_vision=197)
-    encoder = MultiEncoder(fusion_config=multi_config)
+    encoder = MultiEncoder(config=multi_config)
     model = MultiEncoderOutput(encoder)
     model_name = model.__class__.__name__
     #model = model.to(device)
@@ -52,10 +52,12 @@ if __name__ == '__main__':
         #logger.info(f'Model:{model_name}|Trained_epoch:{int(model.trained_epoch.item())}')
         logger.info('Done.')
         logger.info('Constructing datasets...')
+
     train_ds = TwitterDatasetV2(
-        file_path="Mert/MNER/data/Twitter2015/train.txt",
-        img_path="Mert/MNER/data/Twitter2015_images",
         batch_size=config.batch_size,
+        file_path="/hy-tmp/Twitter2017/train.txt",
+        img_path="/hy-tmp/Twitter2017/images",
+        cache_path="/hy-tmp/Twitter2017/train_cache"
     )
     train_dl = DataLoaderX(
         train_ds,
@@ -66,19 +68,21 @@ if __name__ == '__main__':
         pin_memory=True
     )
 
-    # val_ds = TwitterDatasetV2(
-    #     file_path="Mert/MNER/data/Twitter2015/valid.txt",
-    #     img_path="Mert/MNER/data/Twitter2015_images",
-    #     batch_size=config.batch_size
-    # )
-    # val_ds = DataLoaderX(
-    #     val_ds,
-    #     batch_size=1,
-    #     shuffle=False,
-    #     collate_fn=TwitterColloteFnV2,
-    #     num_workers=config.num_workers,
-    #     pin_memory=True
-    # )
+    val_ds = TwitterDatasetV2(
+        batch_size=config.batch_size,
+        file_path="/hy-tmp/Twitter2017/valid.txt",
+        img_path="/hy-tmp/Twitter2017/images",
+        cache_path="/hy-tmp/Twitter2017/dev_cache"
+    )
+    val_dl = DataLoaderX(
+        val_ds,
+        batch_size=1,
+        shuffle=False,
+        collate_fn=TwitterColloteFnV2,
+        num_workers=config.num_workers,
+        pin_memory=True
+    )
+
     if accelerator.is_main_process:
         logger.info('Done.')
 
@@ -94,7 +98,9 @@ if __name__ == '__main__':
     if accelerator.is_main_process:
         logger.info('Launching training.')
 
-    model, lr_scheduler, train_dl, optimizer = accelerator.prepare(model, lr_scheduler, train_dl, optimizer)
+    model, lr_scheduler, train_dl, val_dl, optimizer = accelerator.prepare(
+        model, lr_scheduler, train_dl, val_dl, optimizer
+    )
     #val_ds = accelerator.prepare_data_loader(val_ds)
     for epoch in range(config.epochs):
         loss = train(model, train_dl, optimizer, lr_scheduler, epoch + 1, multi_config, writer, accelerator)
@@ -102,13 +108,7 @@ if __name__ == '__main__':
         if accelerator.is_main_process:
             writer.add_scalar('train/epoch_loss', loss, epoch + 1)
         accelerator.print('\n')
-        # metrics = evaluate(model, val_ds, W_e2n, accelerator)
-        # valid_macro_f1, valid_micro_f1 = metrics['macro avg']['f1-score'], metrics['micro avg']['f1-score']
-        # if valid_micro_f1 > best_micro_f1:
-        #     best_micro_f1 = valid_micro_f1
-        #     name = f'{model_name}_epoch_{epoch+1+int(model.trained_epoch.item())}_macrof1_{(100*valid_macro_f1):0.3f}_microf1_{(100*valid_micro_f1):0.3f}_{round(time())}.bin'
-        #     #if accelerator.is_main_process:
-        #     #    save_model(model, name, accelerator)
+        print(f"Eval loss {evaluate(model, val_dl, multi_config, accelerator):.8f}")
         accelerator.print('-----------------------------------------------------------')
     if accelerator.is_main_process:
         writer.close()

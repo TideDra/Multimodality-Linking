@@ -14,4 +14,3 @@ class MultiEncoderConfig:
     batch_first = True
     batch_size = 6 # 要和预处理的batch_size统一
     epochs = 10
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
