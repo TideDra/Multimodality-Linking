@@ -1,8 +1,8 @@
 from transformers import FlavaProcessor
 import torch
 class Config:
-    id2tag={0:'O',1:'B-PER',2:'I-PER',3:'B-LOC',4:'I-LOC',5:'B-ORG',6:'I-ORG',7:'B-OTHER',8:'I-OTHER'}
-    tag2id={'O':0,'B-PER':1,'I-PER':2,'B-LOC':3,'I-LOC':4,'B-ORG':5,'I-ORG':6,'B-OTHER':7,'I-OTHER':8}
+    id2tag={0:'O',1:'B-PER',2:'I-PER',3:'B-LOC',4:'I-LOC',5:'B-ORG',6:'I-ORG',7:'B-MISC',8:'I-MISC'}
+    tag2id={'O':0,'B-PER':1,'I-PER':2,'B-LOC':3,'I-LOC':4,'B-ORG':5,'I-ORG':6,'B-MISC':7,'I-MISC':8}
     ESD_id2tag={0:'O',1:'B',2:'I'}
     ESD_tag2id={'O':0,'B':1,'I':2}
 
@@ -11,21 +11,21 @@ class Config:
     special_token_tagid=0
     max_length=128
     test_text_path='./data/Twitter2015/test.txt'
-    test_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
-    test_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/test_cache'
+    test_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/images'
+    test_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/test_cache'
 
-    train_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/train.txt'
-    train_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
-    train_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/train_cache'
+    train_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/train.txt'
+    train_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/images'
+    train_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/train_cache'
 
-    dev_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/valid.txt'
-    dev_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/images'
-    dev_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2015/dev_cache'
+    dev_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/valid.txt'
+    dev_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/images'
+    dev_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/dev_cache'
 
-    num_workers=4
+    num_workers=1
     epochs=10
     learning_rate=5*1e-5
-    batch_size=6
+    batch_size=2
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     checkpoint_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/checkpoint'

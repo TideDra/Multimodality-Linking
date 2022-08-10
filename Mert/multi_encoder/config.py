@@ -12,5 +12,5 @@ class MultiEncoderConfig:
     hidden_size: int = 768
     nhead: int = 4
     batch_first = True
-    batch_size = 6 # 要和预处理的batch_size统一
+    batch_size = 4 # 要和预处理的batch_size统一
     epochs = 10
