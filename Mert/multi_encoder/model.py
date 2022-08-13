@@ -5,6 +5,7 @@ from transformers import FlavaModel
 from transformers.models.flava.modeling_flava import FlavaModelOutput
 from Mert.multi_encoder.config import MultiEncoderConfig
 from torch import Tensor, nn
+from Mert.multi_encoder.transformer import TransformerEncoderLayer2
 
 
 @dataclass
@@ -35,11 +36,50 @@ class MultiFusionLayer(nn.Module):
         return FusionModelOutput(src_text, src_vision, bottleneck)
 
 
+class MultiFusionLayerV2(nn.Module):
+    def __init__(self, config: MultiEncoderConfig):
+        super().__init__()
+        self.config = config
+
+        d_model = config.hidden_size
+        nhead = config.nhead
+
+        self.trans_tb = TransformerEncoderLayer2(
+            d_model,
+            nhead,
+            config.d_text + config.d_bottleneck,
+            config.d_text,
+            batch_first=config.batch_first,
+        )
+        self.trans_vb = TransformerEncoderLayer2(
+            d_model,
+            nhead,
+            config.d_vision + config.d_bottleneck,
+            config.d_vision,
+            batch_first=config.batch_first,
+        )
+        self.trans_tvb = TransformerEncoderLayer2(
+            d_model,
+            nhead,
+            config.d_text + config.d_vision + config.d_bottleneck,
+            config.d_bottleneck,
+            batch_first=config.batch_first
+        )
+
+    def forward(self, src_text: Tensor, src_vision: Tensor, bottleneck: Tensor) -> FusionModelOutput:
+        # shape: batch_size * len * d_model
+        cat_dim = 1
+        out_text = self.trans_tb(torch.cat([src_text, bottleneck], dim=cat_dim), src_text)
+        out_vision = self.trans_vb(torch.cat([src_vision, bottleneck], dim=cat_dim), src_vision)
+        out_btn = self.trans_tvb(torch.cat([src_text, src_vision, bottleneck], dim=cat_dim), bottleneck)
+        return FusionModelOutput(out_text, out_vision, out_btn)
+
+
 class MultiFusionModel(nn.Module):
     def __init__(self, config: MultiEncoderConfig):
         super().__init__()
         self.config = config
-        self.fusion_layers = nn.ModuleList([MultiFusionLayer(config) for _ in range(config.num_layers)])
+        self.fusion_layers = nn.ModuleList([MultiFusionLayerV2(config) for _ in range(config.num_layers)])
         self.bottleneck = nn.Parameter(torch.zeros(config.d_bottleneck, config.hidden_size))
 
     def forward(self, text_embeddings: Tensor, image_embeddings: Tensor) -> FusionModelOutput:
@@ -71,6 +111,11 @@ class MultiEncoder(nn.Module):
             image_embeddings=flava_output.image_embeddings,
         )
         return fusion_output
+
+    @classmethod
+    def from_pretrained(cls, path: str):
+        MultiEncoder()
+        ...
 
 
 class MultiEncoderOutput(nn.Module):

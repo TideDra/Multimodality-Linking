@@ -11,6 +11,20 @@ class MultiEncoderConfig:
     d_bottleneck: int = 4
     hidden_size: int = 768
     nhead: int = 4
+    dropout = 0.1
     batch_first = True
-    batch_size = 4 # 要和预处理的batch_size统一
+    batch_size = 16  # 要和预处理的batch_size统一
     epochs = 10
+    ckpt_path = "/home/model_ckpt"
+    max_ckpt_num = 5
+
+
+@dataclass
+class TwitterDatasetTrainConfig:
+    base_path = "/home/data/"
+    train_file_path = base_path + "twitter2017/train.txt"
+    train_img_path = base_path + "twitter2017_images"
+    train_cache_path = base_path + "twitter2017/train_cache.pickle"
+    val_file_path = base_path + "twitter2017/valid.txt"
+    val_img_path = base_path + "twitter2017_images"
+    val_cache_path = base_path + "twitter2017/dev_cache.pickle"

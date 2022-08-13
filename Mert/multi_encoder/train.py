@@ -22,9 +22,9 @@ import torch
 import transformers
 from Mert.MNER.config import config
 from Mert.MNER.dataset import DataLoaderX, TwitterColloteFnV2, TwitterDatasetV2
-from Mert.multi_encoder.config import MultiEncoderConfig
+from Mert.multi_encoder.config import MultiEncoderConfig, TwitterDatasetTrainConfig
 from Mert.multi_encoder.model import MultiEncoder, MultiEncoderOutput
-from Mert.multi_encoder.train_utils import evaluate, train
+from Mert.multi_encoder.train_utils import evaluate, save_model, train
 from torch.utils.tensorboard import SummaryWriter
 from transformers.trainer_utils import SchedulerType
 
@@ -55,9 +55,9 @@ if __name__ == '__main__':
 
     train_ds = TwitterDatasetV2(
         batch_size=config.batch_size,
-        file_path="/hy-tmp/Twitter2017/train.txt",
-        img_path="/hy-tmp/Twitter2017/images",
-        cache_path="/hy-tmp/Twitter2017/train_cache"
+        file_path=TwitterDatasetTrainConfig.train_file_path,
+        img_path=TwitterDatasetTrainConfig.train_img_path,
+        cache_path=TwitterDatasetTrainConfig.train_cache_path
     )
     train_dl = DataLoaderX(
         train_ds,
@@ -70,9 +70,9 @@ if __name__ == '__main__':
 
     val_ds = TwitterDatasetV2(
         batch_size=config.batch_size,
-        file_path="/hy-tmp/Twitter2017/valid.txt",
-        img_path="/hy-tmp/Twitter2017/images",
-        cache_path="/hy-tmp/Twitter2017/dev_cache"
+        file_path=TwitterDatasetTrainConfig.val_file_path,
+        img_path=TwitterDatasetTrainConfig.val_img_path,
+        cache_path=TwitterDatasetTrainConfig.val_cache_path
     )
     val_dl = DataLoaderX(
         val_ds,
@@ -101,14 +101,20 @@ if __name__ == '__main__':
     model, lr_scheduler, train_dl, val_dl, optimizer = accelerator.prepare(
         model, lr_scheduler, train_dl, val_dl, optimizer
     )
-    #val_ds = accelerator.prepare_data_loader(val_ds)
+
+    best_loss = 1e6
     for epoch in range(config.epochs):
         loss = train(model, train_dl, optimizer, lr_scheduler, epoch + 1, multi_config, writer, accelerator)
         #model.trained_epoch += torch.tensor([1], dtype=torch.float32, requires_grad=False)
         if accelerator.is_main_process:
             writer.add_scalar('train/epoch_loss', loss, epoch + 1)
         accelerator.print('\n')
-        print(f"Eval loss {evaluate(model, val_dl, multi_config, accelerator):.8f}")
+        eval_loss = evaluate(model, val_dl, multi_config, accelerator)
+        print(f"Eval loss {eval_loss:.8f}")
+        if eval_loss < best_loss:
+            best_loss = eval_loss
+            if accelerator.is_main_process:
+                save_model(model, "multi-encoder", epoch + 1, multi_config, accelerator)
         accelerator.print('-----------------------------------------------------------')
     if accelerator.is_main_process:
         writer.close()

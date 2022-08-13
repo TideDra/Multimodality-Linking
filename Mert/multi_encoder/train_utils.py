@@ -51,3 +51,26 @@ def evaluate(model: MultiEncoderOutput, dataloader: DataLoader, config: MultiEnc
             loss = accelerator.gather(loss)
             total_loss += loss.sum().item()
     return total_loss / len(dataloader) / config.batch_size
+
+
+from pathlib import Path
+
+
+def save_model(model: torch.nn.Module, name: str, epoch: int, config: MultiEncoderConfig, accelerator: Accelerator):
+    accelerator.print('Saving checkpoint...\n')
+    accelerator.wait_for_everyone()
+    unwrapped_model = accelerator.unwrap_model(model)
+    # Example: model_10.pkl
+    ckpt_path = Path(config.ckpt_path)
+    ckpt_list = list(ckpt_path.iterdir())
+    if len(ckpt_list) >= config.max_ckpt_num:
+        ckpt_list.sort(key=lambda s: int(s.stem[s.stem.index("_") + 1 :]), reverse=True)
+        for del_path in ckpt_list[config.max_ckpt_num - 1 :]:
+            del_path.unlink()
+
+    ckpt = {
+        "model_state_dict": unwrapped_model.state_dict(),
+        "epoch": epoch,
+    }
+    accelerator.save(ckpt, ckpt_path / f"{name}_{epoch}.pkl")
+    accelerator.print('Checkpoint has been updated successfully.\n')
