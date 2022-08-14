@@ -3,8 +3,6 @@ import sys
 
 from accelerate import Accelerator
 
-from .train_config import MultiEncoderTrainConfig
-
 accelerator = Accelerator()
 accelerator.free_memory()
 
@@ -12,7 +10,7 @@ import logging
 
 sys.path.append(os.getcwd())
 
-from Mert.MNER.utils import getlogger
+from ..MNER.utils import getlogger
 
 logger = getlogger('Mert')
 if accelerator.is_main_process:
@@ -22,12 +20,14 @@ import warnings
 
 import torch
 import transformers
-from Mert.datasets.flickr_dataset import getFlickrDataLoader
-from Mert.multi_encoder.config import MultiEncoderConfig
-from Mert.multi_encoder.model import MultiEncoder, MultiEncoderOutput
-from Mert.multi_encoder.train_utils import evaluate, save_model, train
 from torch.utils.tensorboard import SummaryWriter
 from transformers.trainer_utils import SchedulerType
+
+from ..datasets.flickr_dataset import getFlickrDataLoader
+from .config import MultiEncoderConfig
+from .model import MultiEncoder, MultiEncoderOutput
+from .train_config import MultiEncoderTrainConfig
+from .train_utils import evaluate, load_model_best, save_model, train
 
 warnings.filterwarnings("ignore")
 for log_name, log_obj in logging.Logger.manager.loggerDict.items():
@@ -57,7 +57,15 @@ if __name__ == '__main__':
     if accelerator.is_main_process:
         logger.info('Done.')
 
-    train_config=MultiEncoderTrainConfig()
+    train_config = MultiEncoderTrainConfig()
+    start_epoch = 0
+    if train_config.load_ckpt:
+        ckpt = load_model_best(train_config, model)
+        if ckpt is not None:
+            start_epoch = ckpt["epoch"]
+        ckpt = None
+    logger.info(f"start-epoch: {start_epoch}")
+    logger.info(f"device: {accelerator.device}")
 
     optimizer = torch.optim.Adam(model.parameters(), lr=train_config.learning_rate)
     lr_scheduler = transformers.get_scheduler(
@@ -76,7 +84,7 @@ if __name__ == '__main__':
     )
 
     best_loss = 1e6
-    for epoch in range(train_config.epochs):
+    for epoch in range(start_epoch, train_config.epochs):
         loss = train(model, train_dl, optimizer, lr_scheduler, epoch + 1, train_config, writer, accelerator)
         if accelerator.is_main_process:
             writer.add_scalar('train/epoch_loss', loss, epoch + 1)

@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 
 import torch
+from torch import Tensor, nn
 from transformers import FlavaModel
 from transformers.models.flava.modeling_flava import FlavaModelOutput
-from Mert.multi_encoder.config import MultiEncoderConfig
-from torch import Tensor, nn
-from Mert.multi_encoder.transformer import TransformerEncoderLayer2
+
+from .config import MultiEncoderConfig
+from .transformer import TransformerEncoderLayer2
 
 
 @dataclass

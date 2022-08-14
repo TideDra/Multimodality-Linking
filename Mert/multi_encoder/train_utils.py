@@ -1,11 +1,14 @@
+from os import PathLike
+from pathlib import Path
+from typing import List
+
 import torch
 from accelerate import Accelerator
-from Mert.multi_encoder.config import MultiEncoderConfig
-from Mert.multi_encoder.model import MultiEncoderOutput
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
+from .model import MultiEncoderOutput
 from .train_config import MultiEncoderTrainConfig
 
 
@@ -16,6 +19,7 @@ def train(
 ):
     model.train()
     total_loss = 0.0
+    total_batch = 0
     with tqdm(
         enumerate(dataloader, start=1),
         unit='batch',
@@ -24,16 +28,20 @@ def train(
         disable=not accelerator.is_local_main_process
     ) as tbar:
         for idx, batch in tbar:
-            loss = model(**batch["batch_inputs"])
+            batch_inputs = batch["batch_inputs"]
+            loss = model(**batch_inputs)
             optimizer.zero_grad()
             accelerator.backward(loss)
             optimizer.step()
             lr_scheduler.step()
             loss = accelerator.gather(loss)
             total_loss += loss.sum().item()
+            total_batch += batch_inputs["input_ids"].size(0)
             if accelerator.is_main_process:
+                if idx % config.save_state_interval == 0:
+                    accelerator.save_state(config.state_path)
                 writer.add_scalar('train/batch_loss', loss.sum().item(), len(dataloader) * (epoch - 1) + idx)
-            tbar.set_postfix(loss=f"{(total_loss / idx) / config.batch_size:.6f}")
+            tbar.set_postfix(loss=f"{total_loss / total_batch:.6f}")
             tbar.update()
     return total_loss
 
@@ -43,21 +51,30 @@ def evaluate(
 ):
     model.eval()
     total_loss = 0.0
+    total_batch = 0
     with torch.no_grad():
-        for batch in tqdm(
-            dataloader,
+        with tqdm(
+            enumerate(dataloader),
             unit='batch',
             total=len(dataloader),
-            desc='Evaluating...',
+            desc=f'Evaluating...',
             disable=not accelerator.is_local_main_process
-        ):
-            loss = model(**batch["batch_inputs"])
-            loss = accelerator.gather(loss)
-            total_loss += loss.sum().item()
-    return total_loss / len(dataloader) / config.batch_size
+        ) as tbar:
+            for idx, batch in tbar:
+                batch_inputs = batch["batch_inputs"]
+                loss = model(**batch_inputs)
+                loss = accelerator.gather(loss)
+                total_loss += loss.sum().item()
+                total_batch += batch_inputs["input_ids"].size(0)
+                tbar.set_postfix(loss=f"{total_loss / total_batch:.6f}")
+                tbar.update()
+    return total_loss / total_batch
 
 
-from pathlib import Path
+def get_ckpt_list(path: PathLike) -> List[Path]:
+    ckpt_list = list(Path(path).iterdir())
+    ckpt_list.sort(key=lambda s: int(s.stem[s.stem.rindex("_") + 1 :]), reverse=True)
+    return ckpt_list
 
 
 def save_model(
@@ -68,9 +85,8 @@ def save_model(
     unwrapped_model = accelerator.unwrap_model(model)
     # Example: model_10.pkl
     ckpt_path = Path(config.ckpt_path)
-    ckpt_list = list(ckpt_path.iterdir())
+    ckpt_list = get_ckpt_list(ckpt_path)
     if len(ckpt_list) >= config.max_ckpt_num:
-        ckpt_list.sort(key=lambda s: int(s.stem[s.stem.index("_") + 1 :]), reverse=True)
         for del_path in ckpt_list[config.max_ckpt_num - 1 :]:
             del_path.unlink()
 
@@ -80,3 +96,20 @@ def save_model(
     }
     accelerator.save(ckpt, ckpt_path / f"{name}_{epoch}.pkl")
     accelerator.print('Checkpoint has been updated successfully.\n')
+
+
+def load_model(path: str, model: torch.nn.Module) -> dict:
+    ckpt = torch.load(path)
+    model.load_state_dict(ckpt["model_state_dict"])
+    del ckpt["model_state_dict"]
+    return ckpt
+
+
+def load_model_best(config: MultiEncoderTrainConfig, model: torch.nn.Module) -> dict:
+    ckpt_list = get_ckpt_list(config.ckpt_path)
+    if len(ckpt_list) == 0:
+        return None
+    ckpt = torch.load(ckpt_list[0])
+    model.load_state_dict(ckpt["model_state_dict"])
+    del ckpt["model_state_dict"]
+    return ckpt
