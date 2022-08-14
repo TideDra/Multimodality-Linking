@@ -5,7 +5,7 @@ from typing import Tuple
 import pandas as pd
 import torch
 import torch.utils.data
-from Mert.MNER.dataset import DataLoaderX
+from .DataLoaderX import DataLoaderX
 from PIL import Image
 from torch.utils.data import Dataset
 from transformers import FlavaProcessor
