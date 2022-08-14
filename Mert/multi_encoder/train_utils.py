@@ -44,14 +44,14 @@ def evaluate(
     model.eval()
     total_loss = 0.0
     with torch.no_grad():
-        for inputs, _, _ in tqdm(
+        for batch in tqdm(
             dataloader,
             unit='batch',
             total=len(dataloader),
             desc='Evaluating...',
             disable=not accelerator.is_local_main_process
         ):
-            loss = model(**inputs)
+            loss = model(**batch["batch_inputs"])
             loss = accelerator.gather(loss)
             total_loss += loss.sum().item()
     return total_loss / len(dataloader) / config.batch_size

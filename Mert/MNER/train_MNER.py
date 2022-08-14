@@ -1,5 +1,6 @@
 import sys
-sys.path.append('/home/zero_lag/Document/srtp/Multimodality-Link/Mert/')
+from pathlib import Path
+sys.path.append(Path(__file__).resolve().parent.parent)
 import os
 os.environ['TOKENIZERS_PARALLELISM']='false'
 from accelerate import Accelerator
@@ -21,7 +22,7 @@ import torch
 from transformers import get_scheduler
 import warnings
 from time import time
-from MNER.dataset import TwitterDatasetV2, TwitterColloteFnV2, DataLoaderX
+from MNER.dataset import TwitterDatasetV2, TwitterColloteFnV2, DataLoaderX,TwitterDataset,TwitterColloteFn
 
 #silence logs
 warnings.filterwarnings("ignore")

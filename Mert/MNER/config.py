@@ -22,6 +22,7 @@ class Config:
     dev_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/images'
     dev_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/dev_cache'
 
+    shuffle_seed=10086
     num_workers=1
     epochs=10
     learning_rate=5*1e-5
