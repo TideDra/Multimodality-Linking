@@ -6,11 +6,13 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
+from .train_config import MultiEncoderTrainConfig
+
 
 def train(
     model: MultiEncoderOutput, dataloader: DataLoader, optimizer: torch.optim.Optimizer,
-    lr_scheduler: torch.optim.lr_scheduler._LRScheduler, epoch: int, config: MultiEncoderConfig, writer: SummaryWriter,
-    accelerator: Accelerator
+    lr_scheduler: torch.optim.lr_scheduler._LRScheduler, epoch: int, config: MultiEncoderTrainConfig,
+    writer: SummaryWriter, accelerator: Accelerator
 ):
     model.train()
     total_loss = 0.0
@@ -21,8 +23,8 @@ def train(
         desc=f'epoch:{epoch}/{config.epochs}',
         disable=not accelerator.is_local_main_process
     ) as tbar:
-        for idx, (inputs, _, _) in tbar:
-            loss = model(**inputs)
+        for idx, batch in tbar:
+            loss = model(**batch["batch_inputs"])
             optimizer.zero_grad()
             accelerator.backward(loss)
             optimizer.step()
@@ -36,7 +38,9 @@ def train(
     return total_loss
 
 
-def evaluate(model: MultiEncoderOutput, dataloader: DataLoader, config: MultiEncoderConfig, accelerator: Accelerator):
+def evaluate(
+    model: MultiEncoderOutput, dataloader: DataLoader, config: MultiEncoderTrainConfig, accelerator: Accelerator
+):
     model.eval()
     total_loss = 0.0
     with torch.no_grad():
@@ -56,7 +60,9 @@ def evaluate(model: MultiEncoderOutput, dataloader: DataLoader, config: MultiEnc
 from pathlib import Path
 
 
-def save_model(model: torch.nn.Module, name: str, epoch: int, config: MultiEncoderConfig, accelerator: Accelerator):
+def save_model(
+    model: torch.nn.Module, name: str, epoch: int, config: MultiEncoderTrainConfig, accelerator: Accelerator
+):
     accelerator.print('Saving checkpoint...\n')
     accelerator.wait_for_everyone()
     unwrapped_model = accelerator.unwrap_model(model)

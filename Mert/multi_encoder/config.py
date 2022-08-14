@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-import torch
-
 
 @dataclass
 class MultiEncoderConfig:
@@ -15,8 +13,6 @@ class MultiEncoderConfig:
     batch_first = True
     batch_size = 16  # 要和预处理的batch_size统一
     epochs = 10
-    ckpt_path = "/home/model_ckpt"
-    max_ckpt_num = 5
 
 
 @dataclass
