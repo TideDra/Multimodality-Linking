@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 
 from accelerate import Accelerator
 
@@ -8,9 +9,10 @@ accelerator.free_memory()
 
 import logging
 
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 sys.path.append(os.getcwd())
 
-from ..MNER.utils import getlogger
+from MNER.utils import getlogger
 
 logger = getlogger('Mert')
 if accelerator.is_main_process:
@@ -23,11 +25,11 @@ import transformers
 from torch.utils.tensorboard import SummaryWriter
 from transformers.trainer_utils import SchedulerType
 
-from ..datasets.flickr_dataset import getFlickrDataLoader
-from .config import MultiEncoderConfig
-from .model import MultiEncoder, MultiEncoderOutput
-from .train_config import MultiEncoderTrainConfig
-from .train_utils import evaluate, load_model_best, save_model, train
+from datasets.flickr_dataset import getFlickrDataLoader
+from multi_encoder.config import MultiEncoderConfig
+from multi_encoder.model import MultiEncoder, MultiEncoderOutput
+from multi_encoder.train_config import MultiEncoderTrainConfig
+from multi_encoder.train_utils import evaluate, load_model_best, save_model, train
 
 warnings.filterwarnings("ignore")
 for log_name, log_obj in logging.Logger.manager.loggerDict.items():
