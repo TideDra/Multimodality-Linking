@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Tuple
 from torch.utils.data import Dataset
 from PIL import Image
@@ -9,17 +10,19 @@ import torch
 import numpy as np
 import random
 
+@dataclass
 class EntityLinkDatasetConfig:
-    max_length = 32
-    abs_max_length = 128
-    train_MEL_path='/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/RichpediaMEL/Richpedia-MELv2_train.json'
-    val_MEL_path='/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/RichpediaMEL/Richpedia-MELv2_val.json'
-    KG_path='/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/RichpediaMEL/Richpedia-KGv2.json'
-    img_path=None
+    max_length:int = 32
+    abs_max_length:int = 128
+    train_MEL_path:str='/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/RichpediaMEL/Richpedia-MELv2_train.json'
+    val_MEL_path:str='/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/RichpediaMEL/Richpedia-MELv2_val.json'
+    KG_path:str='/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/RichpediaMEL/Richpedia-KGv2.json'
+    img_path:str=None
 
-    batch_size=8
-    num_workers=8
-    shuffle_seed=10086
+    batch_size:int=8
+    num_workers:int=8
+    shuffle_seed:int=10086
+    
 class EntityLinkDataset(Dataset):
     def __init__(self, MEL_path,KG_path,img_path) -> None:
         super().__init__()
