@@ -1,8 +1,8 @@
 from tqdm import tqdm
 import json
-import urllib.request as request
+from .wikidata import WikiClient
 import threading
-from time import time
+
 with open(
         '/home/zero_lag/Document/srtp/Multimodality-Link/Mert/Recall_entity/data/Richpedia/Richpedia-MEL.json',
         'r') as f:
@@ -10,19 +10,6 @@ with open(
 datast_keys=list(dataset.keys())
 kg = {}
 tbar=tqdm(total=len(datast_keys))
-
-class WikiClient:
-    def __init__(self) -> None:
-        self.wait_time=0.5
-        self.last_request_time=time()
-
-    def get(self, id: str):
-        while(time()-self.last_request_time<self.wait_time):
-            pass
-        url = f"https://www.wikidata.org/w/api.php?action=wbgetentities&ids={id}&format=json&languages=en"
-        self.last_request_time=time()
-        response = request.urlopen(url)
-        return json.loads(response.read().decode('utf-8'))['entities'][id]
 
 class SpiderThread(threading.Thread):
     def __init__(self, threadID, name, s, e):
