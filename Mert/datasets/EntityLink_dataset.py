@@ -37,7 +37,7 @@ class EntityLinkDataset(Dataset):
         for key in dataset.keys():
             sentence = dataset[key]['sentence']
             mention = dataset[key]['mentions']
-            img = os.path.join(img_path, f'{key}.jpg')
+            img = os.path.join(img_path,dataset[key]['imgPath'].split('/')[-1])
             positive_abstract = self.__dict_to_str(kg[key])
             negative_abstract = [
                 self.__dict_to_str(kg[cand_id])

@@ -1,9 +1,4 @@
-from torch.utils.data import Dataset, DataLoader
 from .config import config
-import numpy as np
-from torch import float32, tensor
-from transformers import AutoTokenizer
-from PIL import Image
 import torch
 from tqdm import tqdm
 from seqeval.metrics import classification_report
