@@ -27,7 +27,7 @@ from transformers.trainer_utils import SchedulerType
 
 from datasets.flickr_dataset import getFlickrDataLoader
 from multi_encoder.config import MultiEncoderConfig
-from multi_encoder.model import MultiEncoder, MultiEncoderOutput
+from multi_encoder.model import MultiEncoder, MultiEncoderV2_2, MultiEncoderOutput
 from multi_encoder.train_config import MultiEncoderTrainConfig
 from multi_encoder.train_utils import evaluate, load_model_best, save_model, train
 
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         logger.info('Loading model...')
 
     multi_config = MultiEncoderConfig(d_text=64, d_vision=197)
-    encoder = MultiEncoder(config=multi_config)
+    encoder = MultiEncoderV2_2(config=multi_config)
     model = MultiEncoderOutput(encoder)
     model_name = model.__class__.__name__
 
