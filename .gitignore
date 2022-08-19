@@ -168,3 +168,4 @@ cython_debug/
 
 #Large dataset
 MELdataset/RichpediaMEL/images
+MELdataset/KVQA/images

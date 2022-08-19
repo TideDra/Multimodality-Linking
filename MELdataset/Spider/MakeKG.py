@@ -13,7 +13,6 @@ for v in dataset.values():
     datast_keys+=v['candidates'] if v.get('candidates')!=None else []
 kg = {}
 tbar=tqdm(total=len(datast_keys))
-
 class SpiderThread(threading.Thread):
     def __init__(self, threadID, name, s, e):
         threading.Thread.__init__(self)
