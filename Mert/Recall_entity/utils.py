@@ -54,7 +54,7 @@ def train(multi_model, entity_model, criterion, dataloader, optimizer, lr_schedu
                 writer.add_scalar('train/batch_loss',
                                   loss.item(),
                                   len(dataloader) * (epoch - 1) + batch_num)
-            tbar.set_postfix(loss="%.3f" % (total_loss / batch_num))
+            tbar.set_postfix(loss="%.4f" % (total_loss / batch_num))
             tbar.update()
     return total_loss
 

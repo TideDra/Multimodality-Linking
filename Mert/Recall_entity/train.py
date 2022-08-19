@@ -55,8 +55,8 @@ if __name__ == '__main__':
     train_dataloader,val_dataloader=getEntityLinkDataLoader()
     if accelerator.is_main_process:
         logger.info('Done.')
-    
-    optimizer = FusedAdam(multimodel.parameters(), lr=config.learning_rate)
+
+    optimizer = FusedAdam(multimodel.parameters(), lr=config.learning_rate,weight_decay=0.2)
     lr_scheduler = get_scheduler(
         "linear",
         optimizer=optimizer,
