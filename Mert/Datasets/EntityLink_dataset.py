@@ -3,6 +3,7 @@ from typing import Tuple
 from torch.utils.data import Dataset
 from PIL import Image,ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+Image.MAX_IMAGE_PIXELS = 2300000000
 import json
 import os
 from transformers import FlavaProcessor, BertTokenizerFast
@@ -18,13 +19,18 @@ class EntityLinkDatasetConfig:
     abs_max_length: int = 128
     train_MEL_path: str = '/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/KVQA/train_v2.json'
     val_MEL_path: str = '/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/KVQA/dev_v2.json'
-    KG_path: str = '/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/KVQA/KG .json'
+    KG_path: str = '/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/KVQA/KG.json'
     img_path: str = '/home/zero_lag/Document/srtp/Multimodality-Link/MELdataset/KVQA/images'
 
     batch_size: int = 8
     num_workers: int = 8
     shuffle_seed: int = 10086
 
+def abs_dict_to_str(x: dict):
+    if type(x)==type('str'):
+        return x
+    else:
+        return str(x).replace('{', '').replace('}', '').replace('\'', '')
 
 class EntityLinkDataset(Dataset):
     def __init__(self, MEL_path, KG_path, img_path) -> None:
@@ -41,9 +47,9 @@ class EntityLinkDataset(Dataset):
             sentence = dataset[key]['sentence']
             mention = dataset[key]['mentions']
             img = os.path.join(img_path, dataset[key]['imgPath'].split('/')[-1])
-            positive_abstract = self.__dict_to_str(kg[dataset[key]['answer']])
+            positive_abstract = abs_dict_to_str(kg[dataset[key]['answer']])
             negative_abstract = [
-                self.__dict_to_str(kg[cand_id]) for cand_id in dataset[key]['candidates']
+                abs_dict_to_str(kg[cand_id]) for cand_id in dataset[key]['candidates']
             ]
             Data.append({
                 'sentence': sentence,
@@ -54,8 +60,7 @@ class EntityLinkDataset(Dataset):
             })
         return Data
 
-    def __dict_to_str(self, x: dict):
-        return str(x).replace('{', '').replace('}', '').replace('\'', '')
+
 
     def __len__(self):
         return len(self.data)
@@ -94,9 +99,11 @@ class EntityLinkDatasetCollateFn:
         batch_mention_token_pos = []
         for s, m in enumerate(batch_mention):
             mention_tokens = self.multi_processor(text=m, add_special_tokens=False).tokens()
-
-            start = multi_input.tokens(s).index(mention_tokens[0])
-            end = multi_input.tokens(s).index(mention_tokens[-1])
+            try:
+                start = multi_input.tokens(s).index(mention_tokens[0])
+                end = multi_input.tokens(s).index(mention_tokens[-1])
+            except ValueError:
+                start,end=0,0
             batch_mention_token_pos.append((start, end))
 
         batch_positive_inputs = self.bert_processor(batch_positive,

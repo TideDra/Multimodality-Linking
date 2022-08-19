@@ -26,7 +26,7 @@ def train(multi_model, entity_model, criterion, dataloader, optimizer, lr_schedu
             anchor_embedding = []
             for idx, candidates in enumerate(negative_inputs):
                 #negative_inputs(list).size:(batchsize,candidate_num)
-                candidates_embeddings: Tensor = entity_model(**candidates).last_hidden_state[0]
+                candidates_embeddings: Tensor = entity_model(**candidates).last_hidden_state[:,0]
                 entity_s, entity_e = mention_token_pos[idx]
                 if entity_e>entity_s:
                     entity_embedding = torch.mean(text_embedding[idx][entity_s:entity_e], dim=0)
@@ -39,9 +39,8 @@ def train(multi_model, entity_model, criterion, dataloader, optimizer, lr_schedu
                 negative_embedding.append(nearest_candidate_embedding)
                 anchor_embedding.append(entity_embedding)
 
-            negative_embedding = torch.stack(negative_embedding).requires_grad_()
-            anchor_embedding = torch.stack(anchor_embedding).requires_grad_()
-            positive_embedding.requires_grad_()
+            negative_embedding = torch.stack(negative_embedding)
+            anchor_embedding = torch.stack(anchor_embedding)
 
             loss = criterion(anchor_embedding, positive_embedding, negative_embedding)
             optimizer.zero_grad()
@@ -65,7 +64,7 @@ def evaluate(multi_model, entity_model, dataloader, accelerator):
     correct_num=0
     total_num=0
     with torch.no_grad():
-        for idx, (multi_input, mention_token_pos, positive_inputs,
+        for (multi_input, mention_token_pos, positive_inputs,
                   negative_inputs) in tqdm(dataloader,
                                            unit='batch',
                                            total=len(dataloader) + 1,
@@ -74,13 +73,16 @@ def evaluate(multi_model, entity_model, dataloader, accelerator):
             multi_input=multi_input.to(accelerator.device)
             positive_inputs=positive_inputs.to(accelerator.device)
             text_embedding = multi_model(**multi_input).text_embeddings
-            positive_embedding = entity_model(**positive_inputs).last_hidden_state[0]
+            positive_embedding = entity_model(**positive_inputs).last_hidden_state[:,0]
             for idx, candidates in enumerate(negative_inputs):
                 #negative_inputs(list).size:(batchsize,candidate_num)
                 candidates=candidates.to(accelerator.device)
-                candidates_embeddings: Tensor = entity_model(**candidates).last_hidden_state[0]
+                candidates_embeddings: Tensor = entity_model(**candidates).last_hidden_state[:,0]
                 entity_s, entity_e = mention_token_pos[idx]
-                entity_embedding = torch.mean(text_embedding[idx][entity_s:entity_e], dim=0)
+                if entity_e>entity_s:
+                    entity_embedding = torch.mean(text_embedding[idx][entity_s:entity_e], dim=0)
+                else:
+                    entity_embedding=text_embedding[idx][entity_s]
                 search_results_embeddings=torch.cat([positive_embedding[idx].unsqueeze(0),candidates_embeddings],dim=0)
                 entity_embedding_repeats=entity_embedding.repeat(len(search_results_embeddings),1)
                 similarities = torch.cosine_similarity(entity_embedding_repeats,

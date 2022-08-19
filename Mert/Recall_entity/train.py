@@ -82,9 +82,9 @@ if __name__ == '__main__':
         acc=evaluate(multimodel,entity_model,val_dataloader,accelerator)
         if acc>best_acc:
             best_acc=acc
-        name = f'{model_name}_epoch_{epoch+1}_acc_{acc}_{round(time())}.bin'
-        if accelerator.is_main_process:
-            save_model(multimodel, name, accelerator)
+            name = f'{model_name}_epoch_{epoch+1}_acc_{acc}_{round(time())}.bin'
+            if accelerator.is_main_process:
+                save_model(multimodel, name, accelerator)
     accelerator.print(
             '------------------------------------------------------------------------------------------')
     if accelerator.is_main_process:
