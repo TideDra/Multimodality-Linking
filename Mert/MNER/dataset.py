@@ -1,5 +1,8 @@
 from torch.utils.data import Dataset, DataLoader
-from .config import config
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from MNER.config import config
 import numpy as np
 from PIL import Image
 import os

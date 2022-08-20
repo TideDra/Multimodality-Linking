@@ -6,7 +6,7 @@ from seqeval.scheme import IOB2
 import os
 import sys
 import logging
-
+import pickle
 processor = config.processor
 
 
@@ -87,7 +87,7 @@ def evaluate(model, dataloader, W_e2n, accelerator, test_ESD=False):
                                  output_dict=True)
 
 
-def NERpipeline(model, W_e2n, text=None, img=None, inputs=None):
+def NERpipeline(model, text=None, img=None, inputs=None, W_e2n=None):
     '''
     Do multi-modal NER for given text and img.
     '''
@@ -104,8 +104,11 @@ def NERpipeline(model, W_e2n, text=None, img=None, inputs=None):
                                   padding="max_length",
                                   max_length=config.max_length,
                                   truncation=True)
-    inputs = inputs.to(config.device)
-    W_e2n = W_e2n.to(config.device)
+    inputs = inputs.to('cpu')
+    if W_e2n==None:
+        with open('/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/W_e2n','rb') as f:
+            W_e2n=pickle.load(f)
+    W_e2n = W_e2n.to('cpu')
     model.eval()
     with torch.no_grad():
         logits, _ = model(inputs, W_e2n)
