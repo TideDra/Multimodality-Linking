@@ -1,5 +1,8 @@
 from tqdm import tqdm
 import json
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent))
 from wikidata import WikiClient
 import threading
 from MakeMELv2 import is_human

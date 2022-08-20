@@ -16,8 +16,8 @@ def EntityLinkPipeline(query_text, query_image, multi_model, NER_model, entity_m
                                   padding="max_length",
                                   max_length=64,
                                   truncation=True)
+    query_input=query_input.to('cpu')
     query_embedding = multi_model(**query_input).text_embeddings
-
     NER_result = NERpipeline(model=NER_model, text=query_text, img=query_image)
     entities = NER_result[0]['entities']
     client = WikiClient()

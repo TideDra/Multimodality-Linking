@@ -104,11 +104,11 @@ def NERpipeline(model, text=None, img=None, inputs=None, W_e2n=None):
                                   padding="max_length",
                                   max_length=config.max_length,
                                   truncation=True)
-    inputs = inputs.to(config.device)
+    inputs = inputs.to('cpu')
     if W_e2n==None:
         with open('/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/W_e2n','rb') as f:
             W_e2n=pickle.load(f)
-    W_e2n = W_e2n.to(config.device)
+    W_e2n = W_e2n.to('cpu')
     model.eval()
     with torch.no_grad():
         logits, _ = model(inputs, W_e2n)
