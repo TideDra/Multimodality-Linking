@@ -99,7 +99,7 @@ def save_model(
 
 
 def load_model(path: str, model: torch.nn.Module) -> dict:
-    ckpt = torch.load(path)
+    ckpt = torch.load(path,map_location='cpu')
     model.load_state_dict(ckpt["model_state_dict"])
     del ckpt["model_state_dict"]
     return ckpt

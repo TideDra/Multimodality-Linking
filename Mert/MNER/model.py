@@ -3,11 +3,13 @@ from torch import float32, nn
 from torchcrf import CRF
 import torch
 from transformers import FlavaModel, FlavaTextModel
-from .config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
+
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 import sys
-sys.path.append('/home/zero_lag/Document/srtp/Multimodality-Link/')
-from Mert.multi_encoder.model import MultiEncoder
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from MNER.config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
+from multi_encoder.model import MultiEncoder,MultiEncoderOutput
 
 class ModelForTokenClassification(nn.Module):
     '''
@@ -334,7 +336,7 @@ class FlavaForNERwithESD_bert_blstm(ModelForNERwithESD):
                                           dtype=float32,
                                           requires_grad=False)
 
-class MertForNERwithESD_bert_only(ModelForNERwithESD):
+class Mert_no_MCA_ForNERwithESD_bert_only(ModelForNERwithESD):
     '''
     A NER model with Mert as encoder and Bert as ESD_encoder.
     '''
@@ -351,6 +353,9 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
             dropout(float): dropout of the classifier.
         '''
         encoder = MultiEncoder()
+        output=MultiEncoderOutput(encoder)
+        output.load_state_dict(torch.load(config.MultiEncoder_no_MCA_model_path)["model_state_dict"])
+        encoder=output.encoder
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)
@@ -360,7 +365,7 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
                                           dtype=float32,
                                           requires_grad=False)
 
-class MertForNER(ModelForTokenClassification):
+class Mert_no_MCA_ForNER(ModelForTokenClassification):
     '''
     A NER model with Flava as encoder.
     '''
@@ -368,6 +373,9 @@ class MertForNER(ModelForTokenClassification):
                  is_encoder_frozen: bool = True,
                  dropout: float = 0.1) -> None:
         encoder = MultiEncoder()
+        output=MultiEncoderOutput(encoder)
+        output.load_state_dict(torch.load(config.MultiEncoder_no_MCA_model_path)["model_state_dict"])
+        encoder=output.encoder
         super().__init__(encoder=encoder,
                          num_tags=len(config.tag2id),
                          is_encoder_frozen=is_encoder_frozen,

@@ -1,0 +1,2 @@
+ssh -p 39007 root@i-1.gpushare.com
+password: 6QVy6aSsrryFctrT8SFbSshkHw7FstW9
