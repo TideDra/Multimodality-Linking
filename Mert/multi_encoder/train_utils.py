@@ -72,12 +72,14 @@ def evaluate(
 
 
 def get_ckpt_list(config: MultiEncoderTrainConfig) -> List[Path]:
+    if not Path(config.ckpt_path).exists():
+        return []
     ckpt_list = [s for s in Path(config.ckpt_path).iterdir() if s.stem[: s.stem.rindex('_')] == config.ckpt_name]
     ckpt_list.sort(key=lambda s: int(s.stem[s.stem.rindex("_") + 1 :]), reverse=True)
     return ckpt_list
 
 
-def save_model(model: torch.nn.Module, epoch: int, config: MultiEncoderTrainConfig, accelerator: Accelerator):
+def save_model(model: MultiEncoderOutput, epoch: int, config: MultiEncoderTrainConfig, accelerator: Accelerator):
     ckpt_path = Path(config.ckpt_path)
     if not ckpt_path.exists():
         ckpt_path.mkdir()
@@ -92,6 +94,7 @@ def save_model(model: torch.nn.Module, epoch: int, config: MultiEncoderTrainConf
             del_path.unlink()
 
     ckpt = {
+        "config": unwrapped_model.encoder.config,
         "model_state_dict": unwrapped_model.state_dict(),
         "epoch": epoch,
     }
