@@ -71,30 +71,34 @@ def evaluate(
     return total_loss / total_batch
 
 
-def get_ckpt_list(path: PathLike) -> List[Path]:
-    ckpt_list = list(Path(path).iterdir())
+def get_ckpt_list(config: MultiEncoderTrainConfig) -> List[Path]:
+    if not Path(config.ckpt_path).exists():
+        return []
+    ckpt_list = [s for s in Path(config.ckpt_path).iterdir() if s.stem[: s.stem.rindex('_')] == config.ckpt_name]
     ckpt_list.sort(key=lambda s: int(s.stem[s.stem.rindex("_") + 1 :]), reverse=True)
     return ckpt_list
 
 
-def save_model(
-    model: torch.nn.Module, name: str, epoch: int, config: MultiEncoderTrainConfig, accelerator: Accelerator
-):
+def save_model(model: MultiEncoderOutput, epoch: int, config: MultiEncoderTrainConfig, accelerator: Accelerator):
+    ckpt_path = Path(config.ckpt_path)
+    if not ckpt_path.exists():
+        ckpt_path.mkdir()
+
     accelerator.print('Saving checkpoint...\n')
     accelerator.wait_for_everyone()
     unwrapped_model = accelerator.unwrap_model(model)
     # Example: model_10.pkl
-    ckpt_path = Path(config.ckpt_path)
-    ckpt_list = get_ckpt_list(ckpt_path)
+    ckpt_list = get_ckpt_list(config)
     if len(ckpt_list) >= config.max_ckpt_num:
         for del_path in ckpt_list[config.max_ckpt_num - 1 :]:
             del_path.unlink()
 
     ckpt = {
+        "config": unwrapped_model.encoder.config,
         "model_state_dict": unwrapped_model.state_dict(),
         "epoch": epoch,
     }
-    accelerator.save(ckpt, ckpt_path / f"{name}_{epoch}.pkl")
+    accelerator.save(ckpt, ckpt_path / f"{config.ckpt_name}_{epoch}.pkl")
     accelerator.print('Checkpoint has been updated successfully.\n')
 
 
@@ -106,7 +110,7 @@ def load_model(path: str, model: torch.nn.Module) -> dict:
 
 
 def load_model_best(config: MultiEncoderTrainConfig, model: torch.nn.Module) -> dict:
-    ckpt_list = get_ckpt_list(config.ckpt_path)
+    ckpt_list = get_ckpt_list(config)
     if len(ckpt_list) == 0:
         return None
     ckpt = torch.load(ckpt_list[0])
