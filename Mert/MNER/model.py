@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from MNER.config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
-from multi_encoder.model import MultiEncoder,MultiEncoderOutput
+from multi_encoder.model import MultiEncoder,MultiEncoderOutput,MultiEncoderConfig, MultiEncoderV1
 
 class ModelForTokenClassification(nn.Module):
     '''
@@ -341,10 +341,10 @@ class Mert_no_MCA_ForNERwithESD_bert_only(ModelForNERwithESD):
     A NER model with Mert as encoder and Bert as ESD_encoder.
     '''
     def __init__(self,
-                 ratio: float = 1,
+                 ratio: float = 0.5,
                  is_encoder_frozen: bool = True,
                  is_ESD_encoder_frozen: bool = True,
-                 dropout: float = 0.1) -> None:
+                 dropout: float = 0.4) -> None:
         '''
         Args:
             ratio(float): the weight of ESD_loss.
@@ -352,10 +352,7 @@ class Mert_no_MCA_ForNERwithESD_bert_only(ModelForNERwithESD):
             is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
             dropout(float): dropout of the classifier.
         '''
-        encoder = MultiEncoder()
-        output=MultiEncoderOutput(encoder)
-        output.load_state_dict(torch.load(config.MultiEncoder_no_MCA_model_path)["model_state_dict"])
-        encoder=output.encoder
+        encoder = MultiEncoder.from_pretrained(config.MultiEncoder_no_MCA_model_path,MultiEncoderConfig())
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)
@@ -365,14 +362,41 @@ class Mert_no_MCA_ForNERwithESD_bert_only(ModelForNERwithESD):
                                           dtype=float32,
                                           requires_grad=False)
 
-class Mert_no_MCA_ForNER(ModelForTokenClassification):
+
+class MertForNERwithESD_bert_only(ModelForNERwithESD):
     '''
-    A NER model with Flava as encoder.
+    A NER model with Mert as encoder and Bert as ESD_encoder.
+    '''
+    def __init__(self,
+                 ratio: float = 0.5,
+                 is_encoder_frozen: bool = True,
+                 is_ESD_encoder_frozen: bool = True,
+                 dropout: float = 0.4) -> None:
+        '''
+        Args:
+            ratio(float): the weight of ESD_loss.
+            is_encoder_frozen(bool): whether to freeze the encoder when forwarding.
+            is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
+            dropout(float): dropout of the classifier.
+        '''
+        encoder = MultiEncoderV1.from_pretrained(config.MultiEncoderV1_model_path,MultiEncoderConfig())
+        ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
+        num_tags = len(config.tag2id)
+        ESD_num_tags = len(config.ESD_id2tag)
+        super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
+                         is_encoder_frozen, is_ESD_encoder_frozen, dropout)
+        self.trained_epoch = torch.tensor([0],
+                                          dtype=float32,
+                                          requires_grad=False)
+
+class MertForNER(ModelForTokenClassification):
+    '''
+    A NER model with Mert as encoder.
     '''
     def __init__(self,
                  is_encoder_frozen: bool = True,
-                 dropout: float = 0.1) -> None:
-        encoder = MultiEncoder()
+                 dropout: float = 0.4) -> None:
+        encoder = MultiEncoderV1.from_pretrained(config.MultiEncoderV1_model_path,MultiEncoderConfig())
         output=MultiEncoderOutput(encoder)
         output.load_state_dict(torch.load(config.MultiEncoder_no_MCA_model_path)["model_state_dict"])
         encoder=output.encoder

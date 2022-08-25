@@ -141,8 +141,13 @@ def TwitterColloteFn(batch_samples):
         batch_ESD_tags[idx][0] = config.special_token_tagid
         batch_ESD_tags[idx][SEP_pos:] = config.special_token_tagid
         for i in range(1, SEP_pos):
+            word_pos=encoding.token_to_word(i)
+            word_token_s,word_token_e=encoding.word_to_tokens(word_pos)
+
             char_start, char_end = encoding.token_to_chars(i)
             tag = batch_samples[idx]['tags'][char_start]
+            if tag in config.b2m.keys() and i!=word_token_s:
+                tag=config.b2m[tag]
             batch_tags[idx][i] = tag
             ESD_tag = batch_samples[idx]['ESD_tags'][char_start]
             batch_ESD_tags[idx][i] = ESD_tag

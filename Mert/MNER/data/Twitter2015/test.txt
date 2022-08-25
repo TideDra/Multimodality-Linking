@@ -13,8 +13,8 @@ $	O
 8	O
 MILLION	O
 FROM	O
-KEYSTONE	B-OTHER
-PIPELINE	I-OTHER
+KEYSTONE	B-MISC
+PIPELINE	B-MISC
 INVESTORS	O
 http://t.co/17CGxAS18d	O
 #ClintonCash	O
@@ -36,7 +36,7 @@ Tatiana	B-PER
 Averin	I-PER
 #inspiration	O
 #infinity	O
-#CGE	B-OTHER
+#CGE	B-MISC
 http://t.co/Yg1g6boFEq	O
 
 IMGID:138103
@@ -72,9 +72,9 @@ look	O
 Gina	B-PER
 got	O
 a	O
-5lb	B-OTHER
-Hershey	I-OTHER
-bar	I-OTHER
+5lb	B-MISC
+Hershey	B-MISC
+bar	B-MISC
 in	O
 her	O
 driveway	O
@@ -87,9 +87,9 @@ look	O
 Gina	B-PER
 got	O
 a	O
-5lb	B-OTHER
-Hershey	I-OTHER
-bar	I-OTHER
+5lb	B-MISC
+Hershey	B-MISC
+bar	B-MISC
 in	O
 her	O
 driveway	O
@@ -175,10 +175,10 @@ http://t.co/jD2vb0cU1f	O
 IMGID:109976
 The	O
 new	O
-EMC	B-OTHER
-VNXe3200	I-OTHER
-Hybrid	I-OTHER
-Storage	I-OTHER
+EMC	B-MISC
+VNXe3200	B-MISC
+Hybrid	B-MISC
+Storage	B-MISC
 :	O
 Low-cost	O
 bundle	O
@@ -188,7 +188,7 @@ your	O
 own	O
 in	O
 the	O
-EMC	B-OTHER
+EMC	B-MISC
 Store	O
 .	O
 http://t.co/LqBEB7Rxw7	O
@@ -242,8 +242,8 @@ Colin	O
 The	O
 16th	O
 at	O
-The	B-OTHER
-Vintage	I-OTHER
+The	B-MISC
+Vintage	B-MISC
 in	O
 Palm	B-LOC
 Springs	I-LOC
@@ -492,7 +492,7 @@ IMGID:1111338
 RT	O
 @NewsCoverUp	O
 :	O
-#MH17	B-OTHER
+#MH17	B-MISC
 report	O
 not	O
 released	O
@@ -594,8 +594,8 @@ the	O
 thin	O
 bezels	O
 !	O
-Oppo	B-OTHER
-R7	I-OTHER
+Oppo	B-MISC
+R7	B-MISC
 .	O
 http://t.co/z7GegsmmOo	O
 
@@ -655,13 +655,13 @@ IMGID:491726
 How	O
 to	O
 Create	O
-Fiori	B-OTHER
-Apps	I-OTHER
+Fiori	B-MISC
+Apps	B-MISC
 on	O
 the	O
-HANA	B-OTHER
-Cloud	I-OTHER
-Platform	I-OTHER
+HANA	B-MISC
+Cloud	B-MISC
+Platform	B-MISC
 :	O
 http://t.co/D95hiGMC55	O
 http://t.co/S0Q0RqbR9J	O
@@ -764,8 +764,8 @@ poster	O
 about	O
 the	O
 next	O
-Leadership	B-OTHER
-Course	I-OTHER
+Leadership	B-MISC
+Course	B-MISC
 for	O
 Young	O
 Deaf	O
@@ -901,7 +901,7 @@ IMGID:1315735
 Hi	O
 I	O
 am	O
-Riley	B-OTHER
+Riley	B-MISC
 http://t.co/cief5KS1gb	O
 
 IMGID:481625
@@ -981,7 +981,7 @@ the	O
 ruling	O
 also	O
 support	O
-Islam	B-OTHER
+Islam	B-MISC
 .	O
 Islamic	O
 law	O
@@ -1032,8 +1032,8 @@ Kane	I-PER
 shows	O
 off	O
 the	O
-Stanley	B-OTHER
-Cup	I-OTHER
+Stanley	B-MISC
+Cup	B-MISC
 .	O
 #BlackhawksRally	O
 photos	O
@@ -1062,8 +1062,8 @@ at	O
 Kroger	B-ORG
 during	O
 the	O
-MTV	B-OTHER
-VMAs	I-OTHER
+MTV	B-MISC
+VMAs	B-MISC
 !	O
 http://t.co/fb2UFNZPfG	O
 
@@ -1191,8 +1191,8 @@ Playing	O
 with	O
 #lua	O
 with	O
-Corona	B-OTHER
-SDK	I-OTHER
+Corona	B-MISC
+SDK	B-MISC
 for	O
 fun	O
 (	O
@@ -1323,7 +1323,7 @@ Here	O
 '	O
 s	O
 why	O
-NBA	B-OTHER
+NBA	B-MISC
 players	O
 are	O
 protesting	O
@@ -1332,8 +1332,8 @@ killing	O
 of	O
 #EricGarner	O
 with	O
-Comic	B-OTHER
-Sans	I-OTHER
+Comic	B-MISC
+Sans	B-MISC
 :	O
 http://t.co/JKCGdL0piQ	O
 http://t.co/7xfw…	O
@@ -1661,8 +1661,8 @@ The	O
 original	O
 cast	O
 of	O
-Star	B-OTHER
-Wars	I-OTHER
+Star	B-MISC
+Wars	B-MISC
 http://t.co/raWsQ8Hvct	O
 
 IMGID:71826
@@ -1671,11 +1671,11 @@ RT	O
 :	O
 #OTD	O
 1939	O
-Minesweeper	B-OTHER
-HNLMS	I-OTHER
-Willem	I-OTHER
-van	I-OTHER
-Ewijck	I-OTHER
+Minesweeper	B-MISC
+HNLMS	B-MISC
+Willem	B-MISC
+van	B-MISC
+Ewijck	B-MISC
 hit	O
 a	O
 mine	O
@@ -1735,10 +1735,10 @@ IMGID:14187
 RT	O
 @REACTlVE	O
 :	O
-Bacon	B-OTHER
-Crust	I-OTHER
-Wrapped	I-OTHER
-Pizza	I-OTHER
+Bacon	B-MISC
+Crust	B-MISC
+Wrapped	B-MISC
+Pizza	B-MISC
 http://t.co/JuINgNhwAG	O
 
 IMGID:971350
@@ -1817,9 +1817,9 @@ helps	O
 James	B-PER
 Corden	I-PER
 celebrate	O
-Late	I-OTHER
-Late	I-OTHER
-Show	I-OTHER
+Late	B-MISC
+Late	B-MISC
+Show	B-MISC
 http://t.co/B1AyGMjC49	O
 http://t.co/epoSvMAPaK	O
 
@@ -1851,11 +1851,11 @@ Sony	B-ORG
 has	O
 announced	O
 a	O
-Bad	B-OTHER
-Boys	I-OTHER
-3	I-OTHER
-and	I-OTHER
-4	I-OTHER
+Bad	B-MISC
+Boys	B-MISC
+3	B-MISC
+and	B-MISC
+4	B-MISC
 in	O
 the	O
 next	O
@@ -1905,7 +1905,7 @@ before	O
 the	O
 walk	O
 down	O
-Woodward	B-OTHER
+Woodward	B-MISC
 with	O
 some	O
 high	O
@@ -2086,11 +2086,11 @@ with	O
 Jonny	B-PER
 Sabboth	I-PER
 ,	O
-Global	B-OTHER
-Digital	I-OTHER
-Content	I-OTHER
+Global	B-MISC
+Digital	B-MISC
+Content	B-MISC
 for	O
-Anheuser-Busch	B-OTHER
+Anheuser-Busch	B-MISC
 Inbev	O
 #SXSW14	O
 http://t.co/yGCT65RFYE	O
@@ -2160,8 +2160,8 @@ by	O
 Robit	B-PER
 on	O
 the	O
-iTunes	B-OTHER
-Store	I-OTHER
+iTunes	B-MISC
+Store	B-MISC
 !	O
 http://t.co/GsbzJr1M8a	O
 
@@ -2222,9 +2222,9 @@ We	O
 produced	O
 our	O
 100th	O
-Merlin	B-OTHER
-1D	I-OTHER
-engine	I-OTHER
+Merlin	B-MISC
+1D	B-MISC
+engine	B-MISC
 in	O
 less	O
 than	O
@@ -2259,7 +2259,7 @@ Happened	O
 On	O
 Late	O
 Night	O
-Tumblr	B-OTHER
+Tumblr	B-MISC
 http://t.co/CjtyJt3XIR	O
 http://t.co/YJFE16TCUF	O
 
@@ -2400,12 +2400,12 @@ project	O
 for	O
 the	O
 2015	O
-Alberta	B-OTHER
-Film	I-OTHER
+Alberta	B-MISC
+Film	B-MISC
 &amp	O
 ;	O
-Television	I-OTHER
-Awards	I-OTHER
+Television	B-MISC
+Awards	B-MISC
 !	O
 #Rosies2015	O
 http://t.co/yqXOV8bQSL	O
@@ -2608,8 +2608,8 @@ Pardons	O
 Turkey	B-LOC
 Accused	O
 Of	O
-Domestic	B-OTHER
-Violence	I-OTHER
+Domestic	B-MISC
+Violence	B-MISC
 http://t.co/la4DVimwjb	O
 http://t.co/P3KHwwY2q9	O
 
@@ -2621,8 +2621,8 @@ National	O
 Semifinal	O
 at	O
 the	O
-Sugar	B-OTHER
-Bowl	I-OTHER
+Sugar	B-MISC
+Bowl	B-MISC
 .	O
 Go	O
 Bucks	O
@@ -2676,8 +2676,8 @@ from	O
 playing	O
 in	O
 our	O
-Golf	B-OTHER
-Classic	I-OTHER
+Golf	B-MISC
+Classic	B-MISC
 .	O
 Here	O
 '	O
@@ -2846,7 +2846,7 @@ Team	O
 via	O
 @1stStopFantasy	O
 http://t.co/7ZF7Ou8jmM	O
-#NFL	B-OTHER
+#NFL	B-MISC
 #Colts	B-ORG
 #Titans	O
 #Jaguars	B-ORG
@@ -2859,9 +2859,9 @@ W	O
 .	O
 Bush	I-PER
 takes	O
-ice	B-OTHER
-bucket	I-OTHER
-challenge	I-OTHER
+ice	B-MISC
+bucket	B-MISC
+challenge	B-MISC
 http://t.co/oAe1Sdi9AY	O
 challenges	O
 @billclinton	O
@@ -2875,10 +2875,10 @@ RT	O
 Perfect	O
 shot	O
 :	O
-NIGHT	B-OTHER
-OF	I-OTHER
-THE	I-OTHER
-COMET	I-OTHER
+NIGHT	B-MISC
+OF	B-MISC
+THE	B-MISC
+COMET	B-MISC
 (	O
 1984	O
 )	O
@@ -3004,8 +3004,8 @@ City	I-LOC
 http://t.co/kGsnFAMaUY	O
 
 IMGID:417143
-JDRF	B-OTHER
-Walk	I-OTHER
+JDRF	B-MISC
+Walk	B-MISC
 in	O
 High	O
 Point	O
@@ -3168,7 +3168,7 @@ daughter	O
 has	O
 seen	O
 @Disney	O
-Frozen	B-OTHER
+Frozen	B-MISC
 twice	O
 .	O
 http://t.co/AYyZS5lYc5	O
@@ -3182,9 +3182,9 @@ of	O
 my	O
 favorite	O
 #Princeton	B-ORG
-#Vikings	B-OTHER
+#Vikings	B-MISC
 @itsaziza	O
-#PHSchat	B-OTHER
+#PHSchat	B-MISC
 #edchat	O
 THIS	O
 SCHOOL	O
@@ -3195,8 +3195,8 @@ IMGID:803910
 RT	O
 @andreagrimes	O
 :	O
-Anti-Oppression	B-OTHER
-Clippy	I-OTHER
+Anti-Oppression	B-MISC
+Clippy	B-MISC
 is	O
 back	O
 !	O
@@ -3219,7 +3219,7 @@ to	O
 combine	O
 all	O
 your	O
-Android	B-OTHER
+Android	B-MISC
 phones	O
 to	O
 cure	O
@@ -3350,8 +3350,8 @@ for	O
 real	O
 while	O
 filming	O
-Rocky	B-OTHER
-IV	I-OTHER
+Rocky	B-MISC
+IV	B-MISC
 .	O
 http://t.co/TZxshOosov	O
 
@@ -3395,8 +3395,8 @@ lives	O
 intersected	O
 at	O
 the	O
-Boston	B-OTHER
-Marathon	I-OTHER
+Boston	B-MISC
+Marathon	B-MISC
 http://t.co/9RaveFDwCV	O
 http://t.co/ylqVHjedmS	O
 
@@ -3418,8 +3418,8 @@ http://t.co/CGzywIUtvQ	O
 IMGID:15543
 Anxiety	O
 in	O
-South	B-OTHER
-Africa	I-OTHER
+South	B-MISC
+Africa	B-MISC
 as	O
 economy	O
 slips	O
@@ -3437,8 +3437,8 @@ Andrew	B-PER
 Luck	I-PER
 raising	O
 a	O
-Lombardi	B-OTHER
-Trophy	I-OTHER
+Lombardi	B-MISC
+Trophy	B-MISC
 ?	O
 @Colts	O
 owner	O
@@ -3503,9 +3503,9 @@ our	O
 students	O
 enjoying	O
 the	O
-Cabramatta	B-OTHER
-Moon	I-OTHER
-Festival	I-OTHER
+Cabramatta	B-MISC
+Moon	B-MISC
+Festival	B-MISC
 yesterday	O
 !	O
 #studentlife	O
@@ -3577,8 +3577,8 @@ This	O
 Is	O
 Not	O
 a	O
-Horror	B-OTHER
-Movie	I-OTHER
+Horror	B-MISC
+Movie	B-MISC
 .	O
 This	O
 Is	O
@@ -3696,8 +3696,8 @@ his	O
 own	O
 version	O
 of	O
-Google	B-OTHER
-Maps	I-OTHER
+Google	B-MISC
+Maps	B-MISC
 for	O
 #publicsafety	O
 http://t.co/oF4kEfw4OS	O
@@ -3754,7 +3754,7 @@ the	O
 anniversary	O
 of	O
 the	O
-Trinity	B-OTHER
+Trinity	B-MISC
 atomic	O
 bomb	O
 test	O
@@ -3825,12 +3825,12 @@ in	O
 the	O
 second	O
 annual	O
-NMG	B-OTHER
-Awards	I-OTHER
+NMG	B-MISC
+Awards	B-MISC
 for	O
-Best	B-OTHER
-Rock	I-OTHER
-Band	I-OTHER
+Best	B-MISC
+Rock	B-MISC
+Band	B-MISC
 .	O
 http://t.co/m6UQm5mfEP	O
 http://t.co/krcBfERohe	O
@@ -3922,11 +3922,11 @@ Weidemuller	O
 http://t.co/hL4n7eLA3O	O
 
 IMGID:604307
-Pano	B-OTHER
+Pano	B-MISC
 of	O
 the	O
-Markie	B-OTHER
-Awards	I-OTHER
+Markie	B-MISC
+Awards	B-MISC
 shows	O
 you	O
 how	O
@@ -3993,10 +3993,10 @@ your	O
 hands	O
 on	O
 the	O
-Night	B-OTHER
-Changes	I-OTHER
-Afterhrs	I-OTHER
-remix	I-OTHER
+Night	B-MISC
+Changes	B-MISC
+Afterhrs	B-MISC
+remix	B-MISC
 ?	O
 http://t.co/sy5QP75Ylg	O
 http://t.co/pg7xlIxrTk	O
@@ -4145,8 +4145,8 @@ sleepover	O
 http://t.co/rbV0EfIPzP	O
 
 IMGID:71144
-Chicago	B-OTHER
-Fire	I-OTHER
+Chicago	B-MISC
+Fire	B-MISC
 (	O
 the	O
 real	O
@@ -4158,8 +4158,8 @@ a	O
 person	O
 on	O
 the	O
-Red	B-OTHER
-Line	I-OTHER
+Red	B-MISC
+Line	B-MISC
 subway	O
 tracks	O
 at	O
@@ -4176,7 +4176,7 @@ a	O
 tangible	O
 use	O
 of	O
-GIS	B-OTHER
+GIS	B-MISC
 in	O
 crisis	O
 mapping	O
@@ -4244,8 +4244,8 @@ to	O
 the	O
 cloud	O
 with	O
-EMC	B-OTHER
-VSPEX	I-OTHER
+EMC	B-MISC
+VSPEX	B-MISC
 http://t.co/BWrRiBuYSj	O
 http://t.co/KsUlfH58UG	O
 
@@ -4355,16 +4355,16 @@ IMGID:45966
 RT	O
 @voxdotcom	O
 :	O
-The	B-OTHER
-Batman	I-OTHER
+The	B-MISC
+Batman	B-MISC
 v	O
 .	O
 Superman	O
 :	O
-Dawn	I-OTHER
-of	I-OTHER
-Justice	I-OTHER
-trailer	I-OTHER
+Dawn	B-MISC
+of	B-MISC
+Justice	B-MISC
+trailer	B-MISC
 has	O
 leaked	O
 http://t.co/NhBFSoYG8G	O
@@ -4425,7 +4425,7 @@ RT	O
 LeBron	B-PER
 practicing	O
 in	O
-Yeezys	B-OTHER
+Yeezys	B-MISC
 today	O
 http://t.co/CzbLNasqx9	O
 
@@ -4522,10 +4522,10 @@ RT	O
 :	O
 desperately	O
 seeking	O
-Christmas	B-OTHER
+Christmas	B-MISC
 present	O
 from	O
-Santa	B-OTHER
+Santa	B-MISC
 @simonpegg	O
 @manmademoon	O
 http://t.co/0KHJ5mwS2y	O
@@ -4534,11 +4534,11 @@ IMGID:65417
 RT	O
 @brewhouse	O
 :	O
-Margaritas	B-OTHER
+Margaritas	B-MISC
 ,	O
-Pitchers	B-OTHER
-and	I-OTHER
-Wings	I-OTHER
+Pitchers	B-MISC
+and	B-MISC
+Wings	B-MISC
 all	O
 on	O
 special	O
@@ -4570,10 +4570,10 @@ Nyanza	B-LOC
 http://t.co/lntphN7pVS	O
 
 IMGID:812201
-The	B-OTHER
-Soviet	I-OTHER
-War	I-OTHER
-Memorial	I-OTHER
+The	B-MISC
+Soviet	B-MISC
+War	B-MISC
+Memorial	B-MISC
 at	O
 Treptower	B-LOC
 Park	I-LOC
@@ -4621,7 +4621,7 @@ RT	O
 :	O
 Deleting	O
 my	O
-tinder	B-OTHER
+tinder	B-MISC
 http://t.co/eWJRziUHKi	O
 
 IMGID:109144
@@ -4687,7 +4687,7 @@ IMGID:71727
 RT	O
 @FutureBoy	O
 :	O
-Photoshop	B-OTHER
+Photoshop	B-MISC
 turns	O
 25	O
 tomorrow	O
@@ -4789,10 +4789,10 @@ RT	O
 _	O
 FoH	O
 :	O
-The	B-OTHER
-Iron	I-OTHER
-Terrier	I-OTHER
-Award	I-OTHER
+The	B-MISC
+Iron	B-MISC
+Terrier	B-MISC
+Award	B-MISC
 goes	O
 this	O
 year	O
@@ -4814,9 +4814,9 @@ the	O
 anniversary	O
 of	O
 the	O
-Borneo	B-OTHER
-Jazz	I-OTHER
-Festival	I-OTHER
+Borneo	B-MISC
+Jazz	B-MISC
+Festival	B-MISC
 in	O
 Miri	B-LOC
 ,	O
@@ -4887,7 +4887,7 @@ Caitlyn	B-PER
 Jenner	I-PER
 !	O
 #NOH8	B-ORG
-#ESPYs	B-OTHER
+#ESPYs	B-MISC
 http://t.co/ogHpIYfhZJ	O
 
 IMGID:728708
@@ -4924,7 +4924,7 @@ news	O
 :	O
 Chennai	B-PER
 :	O
-Legendary	B-OTHER
+Legendary	B-MISC
 music	O
 director	O
 MS	O
@@ -4938,10 +4938,10 @@ IMGID:1818058
 RT	O
 @VayaShoes	O
 :	O
-Nike	B-OTHER
-Air	I-OTHER
-Max	I-OTHER
-1	I-OTHER
+Nike	B-MISC
+Air	B-MISC
+Max	B-MISC
+1	B-MISC
 Look	O
 Of	O
 The	O
@@ -5002,8 +5002,8 @@ The	O
 Matthew	B-PER
 Stafford	I-PER
 "	O
-Can	B-OTHER
-Cave	I-OTHER
+Can	B-MISC
+Cave	B-MISC
 "	O
 So	O
 Awesome	O
@@ -5091,8 +5091,8 @@ and	O
 @AndyNcl	O
 using	O
 new	O
-Leica	B-OTHER
-GNSS	I-OTHER
+Leica	B-MISC
+GNSS	B-MISC
 for	O
 first	O
 time	O
@@ -5198,12 +5198,12 @@ comm	O
 http://t.co/IBXayIUyAZ	O
 
 IMGID:118195
-Texas	B-OTHER
-Film	I-OTHER
-Hall	I-OTHER
-of	I-OTHER
-Fame	I-OTHER
-Awards	I-OTHER
+Texas	B-MISC
+Film	B-MISC
+Hall	B-MISC
+of	B-MISC
+Fame	B-MISC
+Awards	B-MISC
 was	O
 an	O
 unforgettable	O
@@ -5264,8 +5264,8 @@ RT	O
 @anniecolbert	O
 :	O
 #USAvsBEL	O
-World	B-OTHER
-Cup	I-OTHER
+World	B-MISC
+Cup	B-MISC
 match	O
 summary	O
 ,	O
@@ -5401,7 +5401,7 @@ RT	O
 Budweiser	B-ORG
 Clydesdales	I-ORG
 at	O
-#MMP	B-OTHER
+#MMP	B-MISC
 to	O
 deliver	O
 the	O
@@ -5582,7 +5582,7 @@ the	O
 defeat	O
 Detroit	B-ORG
 in	O
-OT	B-OTHER
+OT	B-MISC
 for	O
 exhibition	O
 opener	O
@@ -5768,7 +5768,7 @@ RT	O
 Margate	O
 considers	O
 banning	O
-helium	B-OTHER
+helium	B-MISC
 balloon	O
 release	O
 http://t.co/5R98fMdon2	O
@@ -6035,10 +6035,10 @@ Who	O
 will	O
 you	O
 vote	O
-King	B-OTHER
-of	I-OTHER
-the	I-OTHER
-Jungle	I-OTHER
+King	B-MISC
+of	B-MISC
+the	B-MISC
+Jungle	B-MISC
 ?	O
 Kian	B-PER
 or	O
@@ -6379,7 +6379,7 @@ Kerr	I-PER
 have	O
 turned	O
 the	O
-NBA	B-OTHER
+NBA	B-MISC
 Finals	O
 into	O
 a	O
@@ -6752,8 +6752,8 @@ For	O
 Food	O
 :	O
 trading	O
-Hand-Drawn	B-OTHER
-Restaurant	I-OTHER
+Hand-Drawn	B-MISC
+Restaurant	B-MISC
 Signs	O
 for	O
 Lunch	O
@@ -6776,7 +6776,7 @@ will	O
 host	O
 the	O
 2015	O
-Oscars	B-OTHER
+Oscars	B-MISC
 http://t.co/A8O2asMChq	O
 http://t.co/myVONcgHfu,	O
 via	O
@@ -6871,12 +6871,12 @@ I	O
 appreciate	O
 being	O
 named	O
-Legislator	B-OTHER
-of	I-OTHER
-the	I-OTHER
-Year	I-OTHER
+Legislator	B-MISC
+of	B-MISC
+the	B-MISC
+Year	B-MISC
 by	O
-the	I-OTHER
+the	B-MISC
 MI	B-ORG
 Association	I-ORG
 for	O
@@ -6890,8 +6890,8 @@ IMGID:120334
 RT	O
 @engadget	O
 :	O
-Citizen	B-OTHER
-Mars	I-OTHER
+Citizen	B-MISC
+Mars	B-MISC
 :	O
 the	O
 story	O
@@ -7024,7 +7024,7 @@ probably	O
 looking	O
 at	O
 his	O
-twitter	B-OTHER
+twitter	B-MISC
 like	O
 this	O
 http://t.co/JZXyNwB2xA	O
@@ -7044,7 +7044,7 @@ RT	O
 @Betfair	O
 :	O
 If	O
-#Suarez	B-OTHER
+#Suarez	B-MISC
 was	O
 a	O
 horse	O
@@ -7213,7 +7213,7 @@ RT	O
 Happy	O
 birthday	O
 to	O
-#Paralympics	B-OTHER
+#Paralympics	B-MISC
 sprinter	O
 David	B-PER
 Prince	I-PER
@@ -7481,9 +7481,9 @@ HD	O
 FULL	O
 ]	O
 150622	O
-MBC	B-OTHER
-Hwanjung	I-OTHER
-Episode	I-OTHER
+MBC	B-MISC
+Hwanjung	B-MISC
+Episode	B-MISC
 21	O
 with	O
 Lee	B-PER
@@ -7523,10 +7523,10 @@ Kachapin	I-PER
 speaking	O
 at	O
 the	O
-West	B-OTHER
-Pokot	I-OTHER
-Book	I-OTHER
-Donation	I-OTHER
+West	B-MISC
+Pokot	B-MISC
+Book	B-MISC
+Donation	B-MISC
 http://t.co/kb3Rq4kpRG	O
 
 IMGID:74055
@@ -7635,7 +7635,7 @@ gonna	O
 be	O
 Leonardo	B-PER
 for	O
-Halloween	B-OTHER
+Halloween	B-MISC
 http://t.co/3R3H47jPRn	O
 
 IMGID:30318
@@ -7655,12 +7655,12 @@ RT	O
 @janine85thomas	O
 :	O
 @Middlelanecunt	O
-Audi	B-OTHER
-TT	I-OTHER
+Audi	B-MISC
+TT	B-MISC
 #overtakingfreshair	O
 on	O
 the	O
-M40	B-OTHER
+M40	B-MISC
 yesterday	O
 evening	O
 ,	O
@@ -7691,25 +7691,25 @@ http://t.co/OFLNZcIjXX	O
 IMGID:1288858
 For	O
 Katharine	B-PER
-the	I-OTHER
+the	B-MISC
 war	O
 has	O
 just	O
 begun	O
 for	O
 Ash	O
-the	I-OTHER
+the	B-MISC
 war	O
 will	O
 never	O
 end	O
 .	O
-THE	I-OTHER
-FALLEN	I-OTHER
+THE	B-MISC
+FALLEN	B-MISC
 SHADOWS	O
 :	O
-INTO	I-OTHER
-THE	I-OTHER
+INTO	B-MISC
+THE	B-MISC
 LIGHT-	O
 Sept	O
 19	O
@@ -7904,9 +7904,9 @@ golf	O
 skills	O
 at	O
 the	O
-Mike	B-OTHER
-Douglas	I-OTHER
-Show	I-OTHER
+Mike	B-MISC
+Douglas	B-MISC
+Show	B-MISC
 ,	O
 with	O
 Bob	B-PER
@@ -7957,7 +7957,7 @@ for	O
 winners	O
 hit	O
 at	O
-#Wimbledon	B-OTHER
+#Wimbledon	B-MISC
 (	O
 since	O
 1992	O
@@ -7993,10 +7993,10 @@ http://t.co/X6I8Vdb3Rx	O
 IMGID:30226
 @SneakerNews	O
 :	O
-The	B-OTHER
-Jordan	I-OTHER
-10	I-OTHER
-Verde	I-OTHER
+The	B-MISC
+Jordan	B-MISC
+10	B-MISC
+Verde	B-MISC
 "	O
 drops	O
 on	O
@@ -8010,7 +8010,7 @@ http://t.co/PdQCchy6PP"	O
 IMGID:594571
 Democrats	B-ORG
 say	O
-Obamacare	B-OTHER
+Obamacare	B-MISC
 is	O
 "	O
 settled	O
@@ -8021,9 +8021,9 @@ but	O
 want	O
 to	O
 gut	O
-the	B-OTHER
-First	I-OTHER
-Amendment	I-OTHER
+the	B-MISC
+First	B-MISC
+Amendment	B-MISC
 ?	O
 ?	O
 #hypocrites	O
@@ -8201,8 +8201,8 @@ a	O
 playful	O
 ,	O
 five-year-old	O
-Brussels	B-OTHER
-Griffon	I-OTHER
+Brussels	B-MISC
+Griffon	B-MISC
 mix	O
 in	O
 Philadelphia	B-LOC
@@ -8228,7 +8228,7 @@ homosexuals	O
 under	O
 fire	O
 http://t.co/mLlENh9uEt	O
-#hiv	B-OTHER
+#hiv	B-MISC
 http://t.co/jTyuyN5BDS	O
 
 IMGID:73385
@@ -8415,7 +8415,7 @@ lonely	O
 farm	O
 by	O
 perfect28	O
-#D300	B-OTHER
+#D300	B-MISC
 ,	O
 Ireland	B-LOC
 ,	O
@@ -8574,7 +8574,7 @@ Gillz	I-PER
 is	O
 but	O
 her	O
-Instagram	B-OTHER
+Instagram	B-MISC
 captions	O
 are	O
 perfect	O
@@ -8767,8 +8767,8 @@ to	O
 question	O
 the	O
 "	O
-Liberal	B-OTHER
-Fascism	I-OTHER
+Liberal	B-MISC
+Fascism	B-MISC
 "	O
 thesis	O
 .	O
@@ -8783,8 +8783,8 @@ All	O
 Episodes	O
 Of	O
 "	O
-Lizzie	B-OTHER
-McGuire	I-OTHER
+Lizzie	B-MISC
+McGuire	B-MISC
 "	O
 Are	O
 Available	O
@@ -8866,8 +8866,8 @@ IMGID:15309
 RT	O
 @FoodTabloid	O
 :	O
-Brownie	B-OTHER
-Sundae	I-OTHER
+Brownie	B-MISC
+Sundae	B-MISC
 http://t.co/isPuy6UGcA	O
 
 IMGID:964219
@@ -8896,9 +8896,9 @@ RT	O
 :	O
 Niall	B-PER
 during	O
-Drag	B-OTHER
-Me	I-OTHER
-Down	I-OTHER
+Drag	B-MISC
+Me	B-MISC
+Down	B-MISC
 last	O
 night	O
 in	O
@@ -8916,8 +8916,8 @@ Vessels	O
 are	O
 sailing	O
 into	O
-Kiel	B-OTHER
-Week	I-OTHER
+Kiel	B-MISC
+Week	B-MISC
 #BALTOPS2015	O
 http://t.co/RFZ3mRgADs	O
 http://t.co/H4KmMiguL6	O
@@ -9108,9 +9108,9 @@ Hampton	B-LOC
 Square	I-LOC
 for	O
 the	O
-Piccolo	B-OTHER
-Spoleto	I-OTHER
-Finale	I-OTHER
+Piccolo	B-MISC
+Spoleto	B-MISC
+Finale	B-MISC
 !	O
 There	O
 is	O
@@ -9358,11 +9358,11 @@ RT	O
 :	O
 Top	O
 10	O
-Twitter	B-OTHER
+Twitter	B-MISC
 images	O
 from	O
-Davos	B-OTHER
-2015	I-OTHER
+Davos	B-MISC
+2015	B-MISC
 http://t.co/oustm8srlp	O
 http://t.co/yVSSvu9vRE	O
 
@@ -9491,8 +9491,8 @@ nearly	O
 decades	O
 on	O
 the	O
-MDA	B-OTHER
-Telethon	I-OTHER
+MDA	B-MISC
+Telethon	B-MISC
 .	O
 http://t.co/JJlC5PufF9	O
 
@@ -9523,12 +9523,12 @@ to	O
 WB	B-ORG
 gate	I-ORG
 .	O
-The	B-OTHER
-Hobbit	I-OTHER
-Battle	I-OTHER
-of	I-OTHER
-Five	I-OTHER
-Armies	I-OTHER
+The	B-MISC
+Hobbit	B-MISC
+Battle	B-MISC
+of	B-MISC
+Five	B-MISC
+Armies	B-MISC
 awaits	O
 .	O
 http://t.co/WMbz2T2PQh	O
@@ -9586,7 +9586,7 @@ MT	O
 @HistoricalPics	O
 :	O
 Famous	O
-architects	I-OTHER
+architects	B-MISC
 dressed	O
 as	O
 their	O
@@ -9595,8 +9595,8 @@ at	O
 the	O
 Society	O
 of	O
-Beaux-Arts	B-OTHER
-Architects	I-OTHER
+Beaux-Arts	B-MISC
+Architects	B-MISC
 ,	O
 1931	O
 http://t.co/ALbIuyE7BA	O
@@ -9680,7 +9680,7 @@ Dad	I-PER
 .	O
 #sunBurn	O
 #IHSAtrackAndField	O
-#Hipstamatic	B-OTHER
+#Hipstamatic	B-MISC
 #Americana	O
 #BigUp	O
 http://t.co/Quaf59wM	O
@@ -9722,8 +9722,8 @@ Black	O
 &amp	O
 ;	O
 White	O
-Aztec	B-OTHER
-Vans	I-OTHER
+Aztec	B-MISC
+Vans	B-MISC
 .	O
 http://t.co/meAH3FDrbK	O
 
@@ -9921,7 +9921,7 @@ help	O
 shelter	O
 pets	O
 via	O
-#Indiegogo	B-OTHER
+#Indiegogo	B-MISC
 http://t.co/27apsNFJ63	O
 Pls	O
 RT	O
@@ -10110,8 +10110,8 @@ taken	O
 in	O
 front	O
 of	O
-Rocky	B-OTHER
-Statue	I-OTHER
+Rocky	B-MISC
+Statue	B-MISC
 in	O
 Philly	B-LOC
 #catholicedchat	O
@@ -10252,10 +10252,10 @@ for	O
 minifigs	O
 :	O
 "	O
-Fifty	B-OTHER
-Shades	I-OTHER
-of	I-OTHER
-Grey	I-OTHER
+Fifty	B-MISC
+Shades	B-MISC
+of	B-MISC
+Grey	B-MISC
 "	O
 trailer	O
 remade	O
@@ -10323,9 +10323,9 @@ being	O
 caught	O
 in	O
 a	O
-Rugby	B-OTHER
-World	I-OTHER
-Cup	I-OTHER
+Rugby	B-MISC
+World	B-MISC
+Cup	B-MISC
 ticketing	O
 scam	O
 .	O
@@ -10729,7 +10729,7 @@ Evan	B-PER
 Peters	I-PER
 reuniting	O
 for	O
-#AHS	B-OTHER
+#AHS	B-MISC
 :	O
 Hotel	O
 ?	O
@@ -11084,7 +11084,7 @@ IMGID:113438
 RT	O
 @SEXOCRUDO	O
 :	O
-Capricornio	B-OTHER
+Capricornio	B-MISC
 #Horoscopocrudo	O
 http://t.co/38eomF2hXm	O
 
@@ -11100,7 +11100,7 @@ win	O
 others	O
 lose	O
 with	O
-Obamacare	B-OTHER
+Obamacare	B-MISC
 :	O
 http://t.co/Hv1QTh4nso	O
 http://t.co/VVM2xjmqiI	O
@@ -11109,7 +11109,7 @@ IMGID:127593
 RT	O
 @washdcnews	O
 :	O
-Obamacare	B-OTHER
+Obamacare	B-MISC
 dilemma	O
 for	O
 GOP	B-ORG
@@ -11157,7 +11157,7 @@ RT	O
 RT	O
 @mscator	O
 :	O
-Kolo	B-OTHER
+Kolo	B-MISC
 loves	O
 the	O
 sun	O
@@ -11339,11 +11339,11 @@ on	O
 http://t.co/r8YIyqHO9y	O
 
 IMGID:448024
-Facebook	B-OTHER
-Messenger	I-OTHER
+Facebook	B-MISC
+Messenger	B-MISC
 vs	O
-Google	B-OTHER
-Hangouts	I-OTHER
+Google	B-MISC
+Hangouts	B-MISC
 :	O
 Which	O
 is	O
@@ -11413,7 +11413,7 @@ RT	O
 @eliefares	O
 :	O
 How	O
-Israeli	B-OTHER
+Israeli	B-MISC
 cartoonists	O
 are	O
 responding	O
@@ -11457,16 +11457,16 @@ River	I-LOC
 http://t.co/zTFatDO7Li	O
 
 IMGID:118423
-KitKat	B-OTHER
+KitKat	B-MISC
 on	O
-Sony	B-OTHER
-Xperia	I-OTHER
-SP	I-OTHER
+Sony	B-MISC
+Xperia	B-MISC
+SP	B-MISC
 -	O
 confirmed	O
 !	O
 #AndroidKITKAT	O
-#KitKat	B-OTHER
+#KitKat	B-MISC
 #sony	B-ORG
 #xperiasp	O
 #Android	O
@@ -11537,7 +11537,7 @@ by	O
 Mario	B-PER
 Tama	I-PER
 .	O
-Widelux	B-OTHER
+Widelux	B-MISC
 purchase	O
 imminent	O
 http://t.co/ay8hgXXtIq	O
@@ -11598,7 +11598,7 @@ July	O
 For	O
 pics	O
 of	O
-Cylearian	B-OTHER
+Cylearian	B-MISC
 from	O
 the	O
 radio	O
@@ -11638,7 +11638,7 @@ When	O
 ppl	O
 tie	O
 for	O
-Olympic	B-OTHER
+Olympic	B-MISC
 gold	O
 ,	O
 where	O
@@ -11815,8 +11815,8 @@ R	O
 ,	O
 awarding	O
 a	O
-Congressional	B-OTHER
-Medal	I-OTHER
+Congressional	B-MISC
+Medal	B-MISC
 to	O
 the	O
 foot	O
@@ -11835,10 +11835,10 @@ a	O
 review	O
 of	O
 the	O
-Smokehouse	B-OTHER
-Burger	I-OTHER
-at	I-OTHER
-Cambridge	I-OTHER
+Smokehouse	B-MISC
+Burger	B-MISC
+at	B-MISC
+Cambridge	B-MISC
 Common	O
 on	O
 Tasted	B-ORG
@@ -11848,11 +11848,11 @@ http://t.co/JVs2NdQ0	O
 http://t.co/dJmQg3XU	O
 
 IMGID:1766015
-THE	B-OTHER
-KIDNAPPING	I-OTHER
-OF	I-OTHER
-MICHEL	I-OTHER
-HOUELLEBECQ	I-OTHER
+THE	B-MISC
+KIDNAPPING	B-MISC
+OF	B-MISC
+MICHEL	B-MISC
+HOUELLEBECQ	B-MISC
 plays	O
 on	O
 a	O
@@ -11867,9 +11867,9 @@ http://t.co/9FODxE87d5	O
 http://t.co/oFlNbsn60h	O
 
 IMGID:637964
-New	B-OTHER
-Apple	I-OTHER
-TV	I-OTHER
+New	B-MISC
+Apple	B-MISC
+TV	B-MISC
 has	O
 a	O
 glass	O
@@ -11948,8 +11948,8 @@ Man	I-PER
 the	O
 master	O
 of	O
-Wing	B-OTHER
-Chun	I-OTHER
+Wing	B-MISC
+Chun	B-MISC
 ,	O
 sparring	O
 with	O
@@ -11964,7 +11964,7 @@ c	O
 http://t.co/gu96eWPsk4	O
 
 IMGID:801000
-Mormonism	B-OTHER
+Mormonism	B-MISC
 in	O
 Pictures	O
 :	O
@@ -11976,8 +11976,8 @@ in	O
 French	B-LOC
 Polynesia	I-LOC
 http://t.co/vVfkobSGR3	O
-#LDS	B-OTHER
-#Mormon	B-OTHER
+#LDS	B-MISC
+#Mormon	B-MISC
 http://t.co/quMoBN380g	O
 
 IMGID:735597
@@ -12015,7 +12015,7 @@ museum	O
 ,	O
 I	O
 sang	O
-karaoke	B-OTHER
+karaoke	B-MISC
 ,	O
 and	O
 we	O
@@ -12039,8 +12039,8 @@ at	O
 Fowry	B-LOC
 Hotel	I-LOC
 for	O
-Christmas	B-OTHER
-Eve	I-OTHER
+Christmas	B-MISC
+Eve	B-MISC
 reminds	O
 of	O
 @Vineyard	O
@@ -12137,8 +12137,8 @@ superb	O
 .	O
 .	O
 .	O
-Ashton	B-OTHER
-ESG	I-OTHER
+Ashton	B-MISC
+ESG	B-MISC
 http://t.co/JdCnLF90fU	O
 
 IMGID:308887
@@ -12261,7 +12261,7 @@ RT	O
 Boycott	O
 The	O
 2020	O
-Olympics	B-OTHER
+Olympics	B-MISC
 In	O
 Japan	B-LOC
 !	O
@@ -12390,9 +12390,9 @@ IMGID:1154364
 RT	O
 @BestMovieLine	O
 :	O
-Alice	B-OTHER
-in	I-OTHER
-Wonderland	I-OTHER
+Alice	B-MISC
+in	B-MISC
+Wonderland	B-MISC
 http://t.co/MdxLBEQUxB	O
 
 IMGID:7548
@@ -12411,8 +12411,8 @@ cover	O
 for	O
 10	O
 +	O
-Asia	B-OTHER
-Star	I-OTHER
+Asia	B-MISC
+Star	B-MISC
 June	O
 2014	O
 Issue	O
@@ -12491,22 +12491,22 @@ Will	B-PER
 Smith	I-PER
 won	O
 his	O
-Grammy	B-OTHER
-Award	I-OTHER
+Grammy	B-MISC
+Award	B-MISC
 as	O
 "	O
-The	B-OTHER
-Fresh	I-OTHER
-Prince	I-OTHER
+The	B-MISC
+Fresh	B-MISC
+Prince	B-MISC
 "	O
 ,	O
 he	O
 dedicated	O
 it	O
 to	O
-Tupac	B-OTHER
-and	I-OTHER
-Biggie	I-OTHER
+Tupac	B-MISC
+and	B-MISC
+Biggie	B-MISC
 .	O
 http://t.co/RpR8kihnbU	O
 
@@ -12797,8 +12797,8 @@ RT	O
 :	O
 What	O
 if	O
-Iron	B-OTHER
-Man	I-OTHER
+Iron	B-MISC
+Man	B-MISC
 and	O
 R2-D2	O
 traded	O
@@ -12882,9 +12882,9 @@ RT	O
 @adamruebenbeach	O
 :	O
 Happy	O
-St	B-OTHER
-Patricks	I-OTHER
-day	I-OTHER
+St	B-MISC
+Patricks	B-MISC
+day	B-MISC
 http://t.co/7uFYZqSmwF	O
 
 IMGID:347245
@@ -12948,7 +12948,7 @@ The	O
 main	O
 stage	O
 at	O
-Cornbury	B-OTHER
+Cornbury	B-MISC
 .	O
 Off	O
 to	O
@@ -12976,7 +12976,7 @@ Fortune	O
 companies	O
 invest	O
 in	O
-#NASCAR	B-OTHER
+#NASCAR	B-MISC
 :	O
 http://t.co/fiIS9WLycX	O
 http://t.co/z4wTcTspu6	O
@@ -13165,9 +13165,9 @@ my	O
 fave	O
 pieces	O
 from	O
-Dead	B-OTHER
-Funny	I-OTHER
-show	I-OTHER
+Dead	B-MISC
+Funny	B-MISC
+show	B-MISC
 @neo	O
 _	O
 artists	O
@@ -13216,12 +13216,12 @@ IMGID:1398525
 RT	O
 @WildNOutMoments	O
 :	O
-Nick	B-OTHER
-Cannon	I-OTHER
+Nick	B-MISC
+Cannon	B-MISC
 vs	O
-DC	B-OTHER
-Young	I-OTHER
-Fly	I-OTHER
+DC	B-MISC
+Young	B-MISC
+Fly	B-MISC
 http://t.co/8mxLUzfnbX	O
 
 IMGID:645448
@@ -13241,9 +13241,9 @@ DO	O
 NOT	O
 put	O
 a	O
-Mac	B-OTHER
-Book	I-OTHER
-pro	I-OTHER
+Mac	B-MISC
+Book	B-MISC
+pro	B-MISC
 in	O
 your	O
 pocket	O
@@ -13310,9 +13310,9 @@ Crowd	O
 tonight	O
 at	O
 a	O
-US	B-OTHER
-Senate	I-OTHER
-Forum	I-OTHER
+US	B-MISC
+Senate	B-MISC
+Forum	B-MISC
 in	O
 Red	B-LOC
 Oak	I-LOC
@@ -13405,8 +13405,8 @@ the	O
 Mara	B-PER
 Light	I-PER
 by	O
-Richard	B-OTHER
-Costin	I-OTHER
+Richard	B-MISC
+Costin	B-MISC
 /	O
 500px	O
 https	O
@@ -13494,8 +13494,8 @@ IMGID:45757
 Hawks	B-ORG
 are	O
 2015	O
-Stanley	B-OTHER
-cup	I-OTHER
+Stanley	B-MISC
+cup	B-MISC
 winners	O
 http://t.co/tK96r8NqYz	O
 
@@ -13524,8 +13524,8 @@ IMGID:641284
 @JuanMaganMusic	O
 !	O
 !	O
-Dos	B-OTHER
-Grandes	I-OTHER
+Dos	B-MISC
+Grandes	B-MISC
 .	O
 http://t.co/VhUpxDuKgF	O
 
@@ -13617,7 +13617,7 @@ IMGID:692640
 RT	O
 @engadget	O
 :	O
-Bloomberg	B-OTHER
+Bloomberg	B-MISC
 :	O
 Apple	B-ORG
 will	O
@@ -13627,7 +13627,7 @@ buy	O
 and	O
 resell	O
 used	O
-iPhones	B-OTHER
+iPhones	B-MISC
 in	O
 China	O
 http://t.co/Rmw5rNOF59	O
@@ -13780,11 +13780,11 @@ IMGID:534640
 RT	O
 @champssports	O
 :	O
-Nike	B-OTHER
-Kobe	I-OTHER
-10	I-OTHER
-Elite	I-OTHER
-Low	I-OTHER
+Nike	B-MISC
+Kobe	B-MISC
+10	B-MISC
+Elite	B-MISC
+Low	B-MISC
 "	O
 Rivalry	O
 "	O
@@ -13826,7 +13826,7 @@ RT	O
 @ThatDudeMCFLY	O
 :	O
 Ask	O
-Siri	B-OTHER
+Siri	B-MISC
 what	O
 0	O
 divided	O
@@ -13889,8 +13889,8 @@ RT	O
 @TIME	O
 :	O
 The	O
-Sumatran	B-OTHER
-rhino	I-OTHER
+Sumatran	B-MISC
+rhino	B-MISC
 is	O
 now	O
 extinct	O
@@ -13912,8 +13912,8 @@ in	O
 Vermont	B-LOC
 .	O
 Happy	O
-150	B-OTHER
-Nokia	I-OTHER
+150	B-MISC
+Nokia	B-MISC
 !	O
 http://t.co/CBTGFSxHVM	O
 
@@ -14128,7 +14128,7 @@ in	O
 the	O
 US	B-LOC
 .	O
-Lmfao	B-OTHER
+Lmfao	B-MISC
 http://t.co/X5ZWjWby0m	O
 
 IMGID:1346633
@@ -14138,12 +14138,12 @@ of	O
 #Albania	B-LOC
 kicks	O
 off	O
-Completing	B-OTHER
-Europe	I-OTHER
-Whole	I-OTHER
+Completing	B-MISC
+Europe	B-MISC
+Whole	B-MISC
 &amp	O
 ;	O
-Free	I-OTHER
+Free	B-MISC
 w/	O
 support	O
 for	O
@@ -14183,7 +14183,7 @@ Farewell	O
 To	O
 Family	O
 As	O
-NFL	B-OTHER
+NFL	B-MISC
 Season	O
 Begins	O
 http://t.co/dvnPcuugmi	O
@@ -14220,9 +14220,9 @@ RT	O
 :	O
 remember	O
 the	O
-Disney	B-OTHER
-channel	I-OTHER
-games	I-OTHER
+Disney	B-MISC
+channel	B-MISC
+games	B-MISC
 I	O
 had	O
 so	O
@@ -14242,7 +14242,7 @@ Who	O
 is	O
 headed	O
 to	O
-TTD	B-OTHER
+TTD	B-MISC
 ,	O
 Atlanta	B-LOC
 this	O
@@ -14299,8 +14299,8 @@ IMGID:15478
 RT	O
 @AmazingSprtsPic	O
 :	O
-The	B-OTHER
-Trio	I-OTHER
+The	B-MISC
+Trio	B-MISC
 .	O
 http://t.co/tH5jaiOWup	O
 
@@ -14319,7 +14319,7 @@ WITH	O
 OR	O
 WITHOUT	O
 THE	O
-GOP	B-OTHER
+GOP	B-MISC
 RINO	O
 WASHINGTON	B-LOC
 ESTABLISHMENT	O
@@ -14349,7 +14349,7 @@ prisoners	O
 an	O
 education	O
 with	O
-MOOCs	B-OTHER
+MOOCs	B-MISC
 ,	O
 writes	O
 an	O
@@ -14563,8 +14563,8 @@ Center	I-LOC
 ,	O
 no	O
 longer	O
-Ground	B-OTHER
-Zero	I-OTHER
+Ground	B-MISC
+Zero	B-MISC
 .	O
 http://t.co/H4dL8cB	O
 
@@ -14689,7 +14689,7 @@ The	O
 missing	O
 manual	O
 for	O
-SQL	B-OTHER
+SQL	B-MISC
 programmers	O
 ;	O
 )	O
@@ -14750,7 +14750,7 @@ RT	O
 Already	O
 in	O
 the	O
-Vedas	B-OTHER
+Vedas	B-MISC
 http://t.co/I1gEiLyT6h	O
 (via	O
 @Nirmukta)	O
@@ -14782,7 +14782,7 @@ inaugurate	O
 Pacific	B-ORG
 Alliance	I-ORG
 and	O
-#Mercosur	B-OTHER
+#Mercosur	B-MISC
 meeting	O
 http://t.co/ZNE0SV0pqt	O
 http://t.co/G0L768mDd7	O
@@ -14846,10 +14846,10 @@ America	I-LOC
 http://t.co/wonrRCcGkO	O
 #worldgeochat	O
 #geography	O
-#sschat	B-OTHER
+#sschat	B-MISC
 #sstlap	O
-#MSchat	B-OTHER
-#edchat	B-OTHER
+#MSchat	B-MISC
+#edchat	B-MISC
 http://t.co/ZM1AxfT5KE	O
 
 IMGID:94098
@@ -14981,11 +14981,11 @@ of	O
 his	O
 new	O
 book	O
-The	B-OTHER
-Art	I-OTHER
-of	I-OTHER
-Sports	I-OTHER
-Photography	I-OTHER
+The	B-MISC
+Art	B-MISC
+of	B-MISC
+Sports	B-MISC
+Photography	B-MISC
 .	O
 A	O
 fantastic	O
@@ -15065,7 +15065,7 @@ So	O
 this	O
 is	O
 what	O
-Siri	B-OTHER
+Siri	B-MISC
 thinks	O
 my	O
 15-month-old	O
@@ -15143,7 +15143,7 @@ audience	O
 in	O
 DC	B-LOC
 .	O
-#Baldrige	B-OTHER
+#Baldrige	B-MISC
 http://t.co/xKQCHClZ	O
 
 IMGID:74789
@@ -15186,7 +15186,7 @@ UK	B-LOC
 and	O
 Germany	B-LOC
 reduced	O
-CO2	B-OTHER
+CO2	B-MISC
 considerably	O
 ,	O
 but	O
@@ -15206,9 +15206,9 @@ IMGID:636840
 RT	O
 @ItsFoodPorn	O
 :	O
-Buffalo	B-OTHER
-Chicken	I-OTHER
-Fries	I-OTHER
+Buffalo	B-MISC
+Chicken	B-MISC
+Fries	B-MISC
 http://t.co/JMpxcisgHm	O
 
 IMGID:805777
@@ -15386,9 +15386,9 @@ RT	O
 Nastya	B-PER
 Kunskaya	I-PER
 at	O
-Zuhair	B-OTHER
-Murad	I-OTHER
-Fall	I-OTHER
+Zuhair	B-MISC
+Murad	B-MISC
+Fall	B-MISC
 2015	O
 Couture	O
 http://t.co/FxpVbwlLi9	O
@@ -15410,7 +15410,7 @@ an	O
 80-game	O
 suspension	O
 for	O
-Stanzolol	B-OTHER
+Stanzolol	B-MISC
 http://t.co/exkRAfgpoD	O
 
 IMGID:181127
@@ -15459,8 +15459,8 @@ RT	O
 @TSBible	O
 :	O
 RIP	O
-FIFA	B-OTHER
-14	I-OTHER
+FIFA	B-MISC
+14	B-MISC
 .	O
 .	O
 .	O
@@ -15542,7 +15542,7 @@ RT	O
 @IUSouthBend	O
 :	O
 Happy	O
-Thanksgiving	B-OTHER
+Thanksgiving	B-MISC
 everyone	O
 from	O
 Indiana	O
@@ -15670,8 +15670,8 @@ RT	O
 :	O
 "	O
 Happy	O
-Independence	B-OTHER
-Day	I-OTHER
+Independence	B-MISC
+Day	B-MISC
 Indonesia	B-LOC
 :	O
 ^	O
@@ -15708,8 +15708,8 @@ FIFA	B-ORG
 unveils	O
 Russia	B-LOC
 2018	O
-World	B-OTHER
-Cup	I-OTHER
+World	B-MISC
+Cup	B-MISC
 logo	O
 from	O
 space	O
@@ -16004,10 +16004,10 @@ RT	O
 @PulitzerPrize	O
 :	O
 2015	O
-Pulitzer	B-OTHER
-Feature	I-OTHER
-Photography	I-OTHER
-Prize	I-OTHER
+Pulitzer	B-MISC
+Feature	B-MISC
+Photography	B-MISC
+Prize	B-MISC
 goes	O
 to	O
 Daniel	B-PER
@@ -16146,7 +16146,7 @@ Oscar	B-PER
 Guardiola-Rivera	I-PER
 tonight	O
 on	O
-S2N	B-OTHER
+S2N	B-MISC
 #poverty	O
 http://t.co/PWcW8QYdEz	O
 
@@ -16160,7 +16160,7 @@ at	O
 Elland	B-LOC
 Road	I-LOC
 against	O
-#lufc	B-OTHER
+#lufc	B-MISC
 chairman	O
 Ken	B-PER
 Bates	I-PER
@@ -16183,7 +16183,7 @@ Street	I-LOC
 in	O
 the	O
 rain	O
-#LLWS	B-OTHER
+#LLWS	B-MISC
 http://t.co/9QozLHPCaG	O
 
 IMGID:509331
@@ -16209,7 +16209,7 @@ on	O
 governance	O
 responding	O
 to	O
-#Ebola	B-OTHER
+#Ebola	B-MISC
 critiques	O
 http://t.co/vQ41tY4x61	O
 
@@ -16441,7 +16441,7 @@ the	O
 #Redskins	O
 #FedExField	O
 #Stadium	O
-#NFL	B-OTHER
+#NFL	B-MISC
 http://t.co/ySB7JeIin6	O
 
 IMGID:701517
@@ -16517,8 +16517,8 @@ a	O
 signed	O
 copy	O
 of	O
-Mary	B-OTHER
-Barton	I-OTHER
+Mary	B-MISC
+Barton	B-MISC
 "	O
 http://t.co/pjroEHr1sB	O
 http://t.co/lDaIDNoJSX"	O
@@ -16701,7 +16701,7 @@ IMGID:30047
 Best	O
 Product	O
 of	O
-Allah	B-OTHER
+Allah	B-MISC
 .	O
 .	O
 .	O
@@ -16846,7 +16846,7 @@ IMGID:692041
 RT	O
 @verge	O
 :	O
-Reddit	B-OTHER
+Reddit	B-MISC
 needs	O
 to	O
 stop	O
@@ -16883,9 +16883,9 @@ sign	O
 players	O
 at	O
 the	O
-Cape	B-OTHER
-Town	I-OTHER
-Cup	I-OTHER
+Cape	B-MISC
+Town	B-MISC
+Cup	B-MISC
 https	O
 :	O
 //t	O
@@ -17013,8 +17013,8 @@ of	O
 amazing	O
 speakers	O
 at	O
-Digital	B-OTHER
-Health	I-OTHER
+Digital	B-MISC
+Health	B-MISC
 Live-Dubai	O
 May5-7	O
 http://t.co/OuaVfLOgkC	O
@@ -17056,9 +17056,9 @@ at	O
 Quincy	O
 St	O
 and	O
-Blue	B-OTHER
-Hill	I-OTHER
-Ave	I-OTHER
+Blue	B-MISC
+Hill	B-MISC
+Ave	B-MISC
 apparently	O
 captured	O
 AH	B-ORG
@@ -17117,9 +17117,9 @@ RT	O
 Lee	B-PER
 Jonghyun	I-PER
 -	O
-Season	B-OTHER
-Greeting	I-OTHER
-2015	I-OTHER
+Season	B-MISC
+Greeting	B-MISC
+2015	B-MISC
 (	O
 cr	O
 .	O
@@ -17158,7 +17158,7 @@ Ct	B-LOC
 He	O
 specializes	O
 in	O
-DNA	B-OTHER
+DNA	B-MISC
 analysis	O
 #AaronHernandezTrial	O
 http://t.co/nAgs7zh8Ia	O
@@ -17372,9 +17372,9 @@ in	O
 promo	O
 poster	O
 for	O
-SBS	B-OTHER
-Gayo	I-OTHER
-Daejun	I-OTHER
+SBS	B-MISC
+Gayo	B-MISC
+Daejun	B-MISC
 2013	O
 http://t.co/SW06yKU91c	O
 http://t.co/u7h5QmgJ0Q	O
@@ -17514,8 +17514,8 @@ SALE	O
 splendid	O
 1959	O
 Mercedes	B-ORG
-190SL	B-OTHER
-Convertible	I-OTHER
+190SL	B-MISC
+Convertible	B-MISC
 in	O
 showroom	O
 condition	O
@@ -17591,7 +17591,7 @@ fan	O
 unveils	O
 the	O
 "	O
-unibra	B-OTHER
+unibra	B-MISC
 "	O
 to	O
 support	O
@@ -17626,7 +17626,7 @@ IMGID:15962
 Got	O
 this	O
 for	O
-Christmas	B-OTHER
+Christmas	B-MISC
 ,	O
 my	O
 husbands	O
@@ -17662,8 +17662,8 @@ ago	O
 today	O
 ,	O
 the	O
-Berlin	B-OTHER
-Wall	I-OTHER
+Berlin	B-MISC
+Wall	B-MISC
 opened	O
 for	O
 the	O
@@ -17939,9 +17939,9 @@ C	O
 to	O
 host	O
 the	O
-Capital	B-OTHER
-Fourth	I-OTHER
-Concert	I-OTHER
+Capital	B-MISC
+Fourth	B-MISC
+Concert	B-MISC
 !	O
 !	O
 !	O
@@ -17959,9 +17959,9 @@ http://t.co/UUFSgsT7O2	O
 IMGID:426428
 Time	O
 for	O
-Cirque	B-OTHER
-de	I-OTHER
-Piccolo	I-OTHER
+Cirque	B-MISC
+de	B-MISC
+Piccolo	B-MISC
 presented	O
 by	O
 Dancefx	B-PER
@@ -17991,7 +17991,7 @@ hearing	O
 on	O
 Cove	B-LOC
 Point	I-LOC
-#LNG	B-OTHER
+#LNG	B-MISC
 exports	O
 red	O
 is	O
@@ -18055,8 +18055,8 @@ Simon	I-PER
 read	O
 on	O
 moving	O
-The	B-OTHER
-Wire	I-OTHER
+The	B-MISC
+Wire	B-MISC
 from	O
 4	O
 :	O
@@ -18279,8 +18279,8 @@ show	O
 that	O
 they	O
 are	O
-Boston	B-OTHER
-Strong	I-OTHER
+Boston	B-MISC
+Strong	B-MISC
 .	O
 http://t.co/btf6UoEaT8	O
 
@@ -18367,7 +18367,7 @@ shared	O
 a	O
 picture	O
 of	O
-Cthulhu	B-OTHER
+Cthulhu	B-MISC
 in	O
 my	O
 Facebook	B-ORG
@@ -18410,7 +18410,7 @@ by	O
 Chris	B-PER
 Pokorny	I-PER
 #inspiration	O
-#CGE	B-OTHER
+#CGE	B-MISC
 #naturalbeauty	O
 http://t.co/KzbGCf8gnE	O
 
@@ -18519,7 +18519,7 @@ the	O
 of	O
 its	O
 5	O
-FBS	B-OTHER
+FBS	B-MISC
 titles	O
 during	O
 the	O
@@ -18681,11 +18681,11 @@ the	O
 finer	O
 points	O
 of	O
-The	B-OTHER
-Art	I-OTHER
-of	I-OTHER
-Social	I-OTHER
-Media	I-OTHER
+The	B-MISC
+Art	B-MISC
+of	B-MISC
+Social	B-MISC
+Media	B-MISC
 .	O
 http://t.co/ne8ST41jXQ	O
 
@@ -18720,16 +18720,16 @@ ESV	O
 http://t.co/CNwRVfd6Hp	O
 
 IMGID:1086454
-Optimus	B-OTHER
-Prime	I-OTHER
+Optimus	B-MISC
+Prime	B-MISC
 ,	O
-Megatron	B-OTHER
+Megatron	B-MISC
 ,	O
-Bumblebee	B-OTHER
+Bumblebee	B-MISC
 ,	O
-Prowl	B-OTHER
+Prowl	B-MISC
 ,	O
-Starscream	B-OTHER
+Starscream	B-MISC
 .	O
 .	O
 .	O
@@ -18906,8 +18906,8 @@ with	O
 the	O
 family	O
 of	O
-PSI	B-OTHER
-Pabalinas	I-OTHER
+PSI	B-MISC
+Pabalinas	B-MISC
 http://t.co/02gv7XdiZs	O
 
 IMGID:71132
@@ -18960,7 +18960,7 @@ James	B-PER
 4	O
 :	O
 15	O
-ESV	B-OTHER
+ESV	B-MISC
 http://t.co/AYHtKYwLt6	O
 *	O
 http://t.co/pBliH3ZlPT	O
@@ -19012,8 +19012,8 @@ released	O
 his	O
 single	O
 ,	O
-Dead	B-OTHER
-Presidents	I-OTHER
+Dead	B-MISC
+Presidents	B-MISC
 .	O
 http://t.co/KQYjy6rt8I	O
 
@@ -19078,11 +19078,11 @@ Doug	B-PER
 Baldwin	I-PER
 speaking	O
 at	O
-PTA	B-OTHER
+PTA	B-MISC
 convention	O
 .	O
 #gohawks	O
-#momlife	B-OTHER
+#momlife	B-MISC
 http://t.co/ZZ9853tesm	O
 
 IMGID:569506
@@ -19156,13 +19156,13 @@ your	O
 Holiday	O
 shopping	O
 at	O
-Capital	B-OTHER
-Teas	I-OTHER
+Capital	B-MISC
+Teas	B-MISC
 .	O
 Use	O
 the	O
-Coupon	B-OTHER
-Codes	I-OTHER
+Coupon	B-MISC
+Codes	B-MISC
 below	O
 on	O
 http://t.co/RAA8q9ALWj.	O
@@ -19331,9 +19331,9 @@ Sony	B-ORG
 has	O
 announced	O
 that	O
-Bad	B-OTHER
-Boys	I-OTHER
-3	I-OTHER
+Bad	B-MISC
+Boys	B-MISC
+3	B-MISC
 &amp	O
 ;	O
 4	O
@@ -19399,8 +19399,8 @@ IMGID:72147
 RT	O
 @classicNavalAir	O
 :	O
-HMS	B-OTHER
-Hermes	I-OTHER
+HMS	B-MISC
+Hermes	B-MISC
 bouncing	O
 around	O
 the	O
@@ -19606,7 +19606,7 @@ me	O
 .	O
 .	O
 love	O
-Cosmos	B-OTHER
+Cosmos	B-MISC
 .	O
 http://t.co/Smc7zupU9n	O
 
@@ -19668,7 +19668,7 @@ killed	O
 off	O
 on	O
 "	O
-Seinfeld	B-OTHER
+Seinfeld	B-MISC
 "	O
 http://t.co/anPvERk3OS	O
 http://t.co/JR4fYJUuLL	O
@@ -19690,7 +19690,7 @@ winner	O
 at	O
 the	O
 2015	O
-#ESPYS	B-OTHER
+#ESPYS	B-MISC
 .	O
 http://t.co/M8COz5tTIK	O
 
@@ -19756,8 +19756,8 @@ Awesome	O
 Dali	B-PER
 got	O
 an	O
-iPhone	B-OTHER
-6	I-OTHER
+iPhone	B-MISC
+6	B-MISC
 https	O
 :	O
 //t	O
@@ -19793,8 +19793,8 @@ New	O
 In	O
 !	O
 !	O
-Android	B-OTHER
-Netrunner	I-OTHER
+Android	B-MISC
+Netrunner	B-MISC
 Fear	O
 &amp	O
 ;	O
@@ -20034,7 +20034,7 @@ RT	O
 Evan	B-PER
 Peters	I-PER
 appreciation	O
-tweet	B-OTHER
+tweet	B-MISC
 http://t.co/PTEtHXSLTf	O
 
 IMGID:332346
@@ -20181,9 +20181,9 @@ IMGID:1063216
 RT	O
 New	O
 :	O
-Surreal	B-OTHER
-Fluidly-Organic	I-OTHER
-Geometry	I-OTHER
+Surreal	B-MISC
+Fluidly-Organic	B-MISC
+Geometry	B-MISC
 by	O
 David	B-PER
 Brodeur	I-PER
@@ -20206,7 +20206,7 @@ why	O
 you	O
 should	O
 buy	O
-Threads	B-OTHER
+Threads	B-MISC
 !	O
 &gt	O
 ;	O
@@ -20377,7 +20377,7 @@ up	O
 today	O
 '	O
 s	O
-IndyStar	B-OTHER
+IndyStar	B-MISC
 for	O
 this	O
 commemorative	O
@@ -20426,10 +20426,10 @@ on	O
 Oct	O
 18-19	O
 for	O
-Spinal	B-OTHER
-Thrust	I-OTHER
-Manipulation	I-OTHER
-Seminar	I-OTHER
+Spinal	B-MISC
+Thrust	B-MISC
+Manipulation	B-MISC
+Seminar	B-MISC
 http://t.co/Kzk7cRIa4i	O
 http://t.co/Z3zMMxpUAb	O
 
@@ -20495,7 +20495,7 @@ comes	O
 from	O
 business	O
 led	O
-IT	B-OTHER
+IT	B-MISC
 initiatives	O
 ?	O
 Find	O
@@ -20875,7 +20875,7 @@ me	O
 "	O
 #221back	O
 .	O
-#Sherlock	B-OTHER
+#Sherlock	B-MISC
 http://t.co/sJXE1VeFaG	O
 
 IMGID:715514
@@ -20942,7 +20942,7 @@ years	O
 ago	O
 ,	O
 the	O
-iPhone	B-OTHER
+iPhone	B-MISC
 was	O
 released	O
 .	O
@@ -20956,7 +20956,7 @@ http://t.co/Ujkaiqo2GG	O
 IMGID:73345
 Robyn	B-PER
 .	O
-Pritzker	B-OTHER
+Pritzker	B-MISC
 .	O
 Chicago	B-LOC
 summer	O
@@ -20974,8 +20974,8 @@ here	O
 at	O
 the	O
 @IPCAthletics	O
-Grand	B-OTHER
-Prix	I-OTHER
+Grand	B-MISC
+Prix	B-MISC
 in	O
 Dubai	B-LOC
 ,	O
@@ -21095,10 +21095,10 @@ http://t.co/ZqHNSTjh56	O
 IMGID:928957
 The	O
 @LakefieldON	O
-Fairy	B-OTHER
-and	I-OTHER
-Dragon	I-OTHER
-Festival	I-OTHER
+Fairy	B-MISC
+and	B-MISC
+Dragon	B-MISC
+Festival	B-MISC
 is	O
 coming	O
 to	O
@@ -21141,8 +21141,8 @@ for	O
 the	O
 new	O
 "	O
-Fifty	B-OTHER
-Shades	I-OTHER
+Fifty	B-MISC
+Shades	B-MISC
 "	O
 http://t.co/UTvR6t5rnj	O
 http:/…	O
@@ -21198,7 +21198,7 @@ IMGID:122416
 #Lennon	B-PER
 has	O
 a	O
-Bluetooth	B-OTHER
+Bluetooth	B-MISC
 http://t.co/Bhd8cO779H	O
 
 IMGID:20511
@@ -21502,8 +21502,8 @@ RT	O
 people	O
 attended	O
 the	O
-Mahamudra	B-OTHER
-course	I-OTHER
+Mahamudra	B-MISC
+course	B-MISC
 in	O
 Warsaw	B-LOC
 ,	O
@@ -21797,9 +21797,9 @@ RT	O
 Chalino	B-PER
 Sanchez	I-PER
 -	O
-Nieves	B-OTHER
-De	I-OTHER
-Enero	I-OTHER
+Nieves	B-MISC
+De	B-MISC
+Enero	B-MISC
 http://t.co/fs29bvzwFP	O
 
 IMGID:62981
@@ -21936,8 +21936,8 @@ IMGID:1016986
 RT	O
 @ALLCAPSTEENWOLF	O
 :	O
-Wildest	B-OTHER
-Dreams	I-OTHER
+Wildest	B-MISC
+Dreams	B-MISC
 //	O
 Taylor	B-PER
 Swift	I-PER
@@ -21979,8 +21979,8 @@ http://t.co/G55OZYxGnD	O
 IMGID:74896
 the	O
 "	O
-Malory	B-OTHER
-Garman	I-OTHER
+Malory	B-MISC
+Garman	B-MISC
 starter	O
 kit	O
 "	O
@@ -21988,14 +21988,14 @@ kit	O
 http://t.co/iA8OX7z6I8	O
 
 IMGID:114817
-Greenwich	B-OTHER
-Street	I-OTHER
-Party	I-OTHER
+Greenwich	B-MISC
+Street	B-MISC
+Party	B-MISC
 &amp	O
 ;	O
-Charity	I-OTHER
-Drag	I-OTHER
-Race	I-OTHER
+Charity	B-MISC
+Drag	B-MISC
+Race	B-MISC
 this	O
 evening	O
 from	O
@@ -22092,7 +22092,7 @@ RT	O
 @MDWilsonSA	O
 :	O
 River	I-LOC
-Walk	I-OTHER
+Walk	B-MISC
 passerby	O
 discovers	O
 body	O
@@ -22265,9 +22265,9 @@ IMGID:16138
 RT	O
 @ItsFoodPorn	O
 :	O
-Caramel	B-OTHER
-ice	I-OTHER
-cream	I-OTHER
+Caramel	B-MISC
+ice	B-MISC
+cream	B-MISC
 .	O
 http://t.co/j0Kq8eHX1G	O
 
@@ -22353,11 +22353,11 @@ Gridley	B-LOC
 .	O
 "	O
 -	O
-USS	B-OTHER
-Laboon	I-OTHER
+USS	B-MISC
+Laboon	B-MISC
 (	O
-DDG	B-OTHER
-58	I-OTHER
+DDG	B-MISC
+58	B-MISC
 )	O
 conducts	O
 a	O
@@ -22602,7 +22602,7 @@ music	O
 is	O
 over	O
 :	O
-iTunes	B-OTHER
+iTunes	B-MISC
 and	O
 digital	O
 song	O
@@ -22629,7 +22629,7 @@ this	O
 Thursday	O
 at	O
 7PM	O
-est	B-OTHER
+est	B-MISC
 .	O
 Tweet	O
 him	O
@@ -22666,8 +22666,8 @@ IMGID:907597
 Robert	B-PER
 Walter	I-PER
 -	O
-Winter	B-OTHER
-Wonderland	I-OTHER
+Winter	B-MISC
+Wonderland	B-MISC
 http://t.co/7q4gWPFiDc	O
 
 IMGID:119880
@@ -22768,7 +22768,7 @@ IMGID:621904
 ---	O
 Sent	O
 by	O
-WhatsApp	B-OTHER
+WhatsApp	B-MISC
 http://t.co/jclYptzNPx	O
 
 IMGID:64621
@@ -22799,7 +22799,7 @@ Exposed	O
 :	O
 This	O
 is	O
-Voldemort	B-OTHER
+Voldemort	B-MISC
 http://t.co/VRaNxubmSF	O
 
 IMGID:37459
@@ -22828,7 +22828,7 @@ woman	O
 to	O
 win	O
 an	O
-Olympic	B-OTHER
+Olympic	B-MISC
 gold	O
 medal	O
 ,	O
@@ -22937,11 +22937,11 @@ will	O
 you	O
 be	O
 celebrating	O
-National	B-OTHER
-Arts	I-OTHER
+National	B-MISC
+Arts	B-MISC
 in	O
-Education	B-OTHER
-Week	I-OTHER
+Education	B-MISC
+Week	B-MISC
 ?	O
 #ArtsEd	O
 http://t.co/XKx9DKUf2V	O
@@ -22951,14 +22951,14 @@ IMGID:618311
 RT	O
 @RoisinMcfadden	O
 :	O
-Loughgiel	B-OTHER
-Irish	I-OTHER
-Dancers	I-OTHER
+Loughgiel	B-MISC
+Irish	B-MISC
+Dancers	B-MISC
 win	O
 the	O
-World	B-OTHER
-Dance	I-OTHER
-Championships	I-OTHER
+World	B-MISC
+Dance	B-MISC
+Championships	B-MISC
 2015	O
 @llangollen	O
 _	O
@@ -23001,8 +23001,8 @@ IMGID:113621
 RT	O
 @LkwdSchools	O
 :	O
-Lakewood	B-OTHER
-Project	I-OTHER
+Lakewood	B-MISC
+Project	B-MISC
 in	O
 concert	O
 now	O
@@ -23110,8 +23110,8 @@ his	O
 goal	O
 .	O
 @didierdrogba	O
-#CFC	B-OTHER
-#Chelsea	B-OTHER
+#CFC	B-MISC
+#Chelsea	B-MISC
 http://t.co/fi8D51EsR8	O
 
 IMGID:988031
@@ -23330,8 +23330,8 @@ If	O
 Disney	B-ORG
 makes	O
 this	O
-Princess	B-OTHER
-Diaries	I-OTHER
+Princess	B-MISC
+Diaries	B-MISC
 film	O
 without	O
 Julie	B-PER
@@ -23416,8 +23416,8 @@ IMGID:127413
 RT	O
 @iSaveEVERYDAY	O
 :	O
-Mason	B-OTHER
-Jar	I-OTHER
+Mason	B-MISC
+Jar	B-MISC
 No	O
 Bake	O
 Strawberry	O
@@ -23444,14 +23444,14 @@ IMGID:1746697
 Coming	O
 soon	O
 on	O
-Disney	B-OTHER
-Channel	I-OTHER
+Disney	B-MISC
+Channel	B-MISC
 http://t.co/nSpzi8kW7I	O
 
 IMGID:695
-HTC	B-OTHER
-One	I-OTHER
-M9	I-OTHER
+HTC	B-MISC
+One	B-MISC
+M9	B-MISC
 http://t.co/TVQV2BJNBi	O
 
 IMGID:13002
@@ -23465,8 +23465,8 @@ N	O
 .	O
 Fights	O
 for	O
-Humanitarian	B-OTHER
-Agenda	I-OTHER
+Humanitarian	B-MISC
+Agenda	B-MISC
 in	O
 Middle	B-LOC
 East	I-LOC
@@ -23497,10 +23497,10 @@ http://t.co/6QjygfE5c9	O
 http://t.co/2bQLGS0V…	O
 
 IMGID:474326
-Miami	B-OTHER
-Pre	I-OTHER
-Construction	I-OTHER
-Condos	I-OTHER
+Miami	B-MISC
+Pre	B-MISC
+Construction	B-MISC
+Condos	B-MISC
 |	O
 http://t.co/MQMS0x2yFG	O
 http://t.co/GKqwLVFT6P	O
@@ -23548,8 +23548,8 @@ the	O
 lauch	O
 of	O
 the	O
-Huawei	B-OTHER
-P8	I-OTHER
+Huawei	B-MISC
+P8	B-MISC
 #IgniteP8	O
 #MTNP8	O
 http://t.co/xxfDyLaUqT	O
@@ -23565,9 +23565,9 @@ today	O
 ,	O
 Biggie	B-PER
 released	O
-Life	B-OTHER
-After	I-OTHER
-Death	I-OTHER
+Life	B-MISC
+After	B-MISC
+Death	B-MISC
 .	O
 The	O
 album	O
@@ -23627,7 +23627,7 @@ K	O
 :	O
 San	B-PER
 E	I-PER
-Instagram	B-OTHER
+Instagram	B-MISC
 update	O
 with	O
 EXO	B-ORG
@@ -23788,8 +23788,8 @@ and	O
 James	B-PER
 Richardson	I-PER
 on	O
-Football	B-OTHER
-Italia	I-OTHER
+Football	B-MISC
+Italia	B-MISC
 .	O
 What	O
 a	O
@@ -23910,9 +23910,9 @@ author	O
 of	O
 Vagina	O
 :	O
-A	I-OTHER
-New	I-OTHER
-Biography	I-OTHER
+A	B-MISC
+New	B-MISC
+Biography	B-MISC
 .	O
 Awaiting	O
 her	O
@@ -24223,7 +24223,7 @@ IMGID:73365
 Nieuwe	O
 McLaren	O
 570S	O
-Coupe	I-OTHER
+Coupe	B-MISC
 met	O
 328	O
 km/u	O
@@ -24561,8 +24561,8 @@ RT	O
 :	O
 Jury	O
 condemns	O
-Boston	B-OTHER
-Marathon	I-OTHER
+Boston	B-MISC
+Marathon	B-MISC
 bomber	O
 Dzhokhar	B-PER
 Tsarnaev	I-PER
@@ -24656,9 +24656,9 @@ RT	O
 :	O
 Sabrina	O
 ,	O
-The	I-OTHER
-Teenage	I-OTHER
-Witch	I-OTHER
+The	B-MISC
+Teenage	B-MISC
+Witch	B-MISC
 (	O
 1996-2003	O
 )	O
@@ -24708,9 +24708,9 @@ http://t.co/2QcoKPOee2	O
 http://t.co/9Pyrg2Ar2a	O
 
 IMGID:532053
-Fire	B-OTHER
-and	I-OTHER
-Ice	I-OTHER
+Fire	B-MISC
+and	B-MISC
+Ice	B-MISC
 :	O
 Some	O
 of	O
@@ -24900,10 +24900,10 @@ IMGID:415829
 RT	O
 @thehill	O
 :	O
-Clinton	B-OTHER
-campaign	I-OTHER
+Clinton	B-MISC
+campaign	B-MISC
 hires	O
-Olympic	B-OTHER
+Olympic	B-MISC
 figure	O
 skater	O
 :	O
@@ -25110,8 +25110,8 @@ IMGID:15738
 RT	O
 @FlLMOGRAPHY	O
 :	O
-Pulp	B-OTHER
-Fiction	I-OTHER
+Pulp	B-MISC
+Fiction	B-MISC
 (	O
 1994	O
 )	O
@@ -25228,9 +25228,9 @@ Manual	O
 Therapy	O
 Approach	O
 to	O
-Cervical	B-OTHER
-Spine	I-OTHER
-Pathology	I-OTHER
+Cervical	B-MISC
+Spine	B-MISC
+Pathology	B-MISC
 in	O
 Astoria	B-LOC
 ,	O
@@ -25420,9 +25420,9 @@ talked	O
 Jordans	B-PER
 on	O
 "	O
-House	B-OTHER
-of	I-OTHER
-Style	I-OTHER
+House	B-MISC
+of	B-MISC
+Style	B-MISC
 "	O
 :	O
 http://t.co/4zwcbLV9vo	O
@@ -25523,7 +25523,7 @@ RT	O
 :	O
 Study	O
 :	O
-Gerbils	B-OTHER
+Gerbils	B-MISC
 Were	O
 Actual	O
 Cause	O
@@ -25542,10 +25542,10 @@ a	O
 review	O
 of	O
 the	O
-Hot	B-OTHER
-Chocolate	I-OTHER
-at	I-OTHER
-Orinoco	I-OTHER
+Hot	B-MISC
+Chocolate	B-MISC
+at	B-MISC
+Orinoco	B-MISC
 on	O
 Tasted	B-ORG
 Menu	I-ORG
@@ -25558,9 +25558,9 @@ Have	O
 you	O
 heard	O
 ?	O
-Elastic	B-OTHER
-Cloud	I-OTHER
-Storage	I-OTHER
+Elastic	B-MISC
+Cloud	B-MISC
+Storage	B-MISC
 is	O
 free	O
 &amp	O
@@ -25615,10 +25615,10 @@ of	O
 Intercom	B-ORG
 describes	O
 the	O
-Job	B-OTHER
-To	I-OTHER
-Be	I-OTHER
-Done	I-OTHER
+Job	B-MISC
+To	B-MISC
+Be	B-MISC
+Done	B-MISC
 approach	O
 in	O
 this	O
@@ -25637,8 +25637,8 @@ RT	O
 @Forbes	O
 :	O
 "	O
-American	B-OTHER
-Sniper	I-OTHER
+American	B-MISC
+Sniper	B-MISC
 "	O
 had	O
 a	O
@@ -25699,7 +25699,7 @@ VERY	O
 high	O
 praise	O
 for	O
-Kentucky	B-OTHER
+Kentucky	B-MISC
 in	O
 his	O
 press	O
@@ -25820,11 +25820,11 @@ The	O
 day-to-day	O
 life	O
 of	O
-HIV	B-OTHER
+HIV	B-MISC
 .	O
 Crucial	O
 to	O
-HIV	B-OTHER
+HIV	B-MISC
 #ddj	O
 story	O
 w/	O
@@ -25863,7 +25863,7 @@ IMGID:2113947
 RT	O
 @Fou2adaMasr	O
 :	O
-#Benghazi	B-OTHER
+#Benghazi	B-MISC
 @sirtatters	O
 Clinton	B-PER
 approved	O
@@ -25898,8 +25898,8 @@ IMGID:1740589
 RT	O
 @NME	O
 :	O
-Suicide	B-OTHER
-Squad	I-OTHER
+Suicide	B-MISC
+Squad	B-MISC
 -	O
 how	O
 Jared	B-PER
@@ -25913,8 +25913,8 @@ of	O
 his	O
 own	O
 as	O
-The	B-OTHER
-Joker	I-OTHER
+The	B-MISC
+Joker	B-MISC
 http://t.co/OJlcmKVlBS	O
 http://t.co/iXpDk2m3Qp	O
 
@@ -25992,10 +25992,10 @@ IMGID:46142
 RT	O
 @verge	O
 :	O
-Fast	B-OTHER
-and	I-OTHER
-Furious	I-OTHER
-7	I-OTHER
+Fast	B-MISC
+and	B-MISC
+Furious	B-MISC
+7	B-MISC
 actually	O
 dropped	O
 those	O
@@ -26106,8 +26106,8 @@ our	O
 fav	O
 canyon	O
 from	O
-twin	B-OTHER
-otter	I-OTHER
+twin	B-MISC
+otter	B-MISC
 .	O
 .	O
 .	O
@@ -26152,11 +26152,11 @@ Join	O
 us	O
 tomorrow	O
 for	O
-Stand	B-OTHER
-Against	I-OTHER
-Racism	I-OTHER
-Poetry	I-OTHER
-Night	I-OTHER
+Stand	B-MISC
+Against	B-MISC
+Racism	B-MISC
+Poetry	B-MISC
+Night	B-MISC
 in	O
 the	O
 Black	B-LOC
@@ -26176,10 +26176,10 @@ http://t.co/pDXMVn0UuO	O
 
 IMGID:594226
 {	O
-The	B-OTHER
-Seth	I-OTHER
-Leibsohn	I-OTHER
-Show	I-OTHER
+The	B-MISC
+Seth	B-MISC
+Leibsohn	B-MISC
+Show	B-MISC
 !	O
 }	O
 TONIGHT	O
@@ -26471,7 +26471,7 @@ RT	O
 @EarthPix	O
 :	O
 Baby	O
-Chipmunk	B-OTHER
+Chipmunk	B-MISC
 Sleeping	O
 |	O
 Photo	O
@@ -26677,10 +26677,10 @@ Maureen	B-PER
 Flowers	I-PER
 for	O
 hosting	O
-International	B-OTHER
-Homeless	I-OTHER
-Animals	I-OTHER
-Day	I-OTHER
+International	B-MISC
+Homeless	B-MISC
+Animals	B-MISC
+Day	B-MISC
 Vigil	O
 at	O
 Kospia	B-LOC
@@ -26716,10 +26716,10 @@ Scientist	O
 Creates	O
 an	O
 Amazing	O
-3D	B-OTHER
-Printed	I-OTHER
-Electric	I-OTHER
-Violin	I-OTHER
+3D	B-MISC
+Printed	B-MISC
+Electric	B-MISC
+Violin	B-MISC
 -	O
 http://t.co/micbM55W9T	O
 http://t.co/sIsBreJulA	O
@@ -26916,8 +26916,8 @@ IMGID:496
 RT	O
 @MOVIEMEMORlES	O
 :	O
-Forrest	B-OTHER
-Gump	I-OTHER
+Forrest	B-MISC
+Gump	B-MISC
 http://t.co/kbhj7fJGld	O
 
 IMGID:73079
@@ -26930,8 +26930,8 @@ Zr	O
 .	O
 Ms	O
 .	O
-Karel	I-OTHER
-Doorman	I-OTHER
+Karel	B-MISC
+Doorman	B-MISC
 .	O
 http://t.co/O5RhRbKxjM	O
 
@@ -26944,8 +26944,8 @@ how	O
 he	O
 spent	O
 the	O
-TED	B-OTHER
-prize	I-OTHER
+TED	B-MISC
+prize	B-MISC
 @TEDxUFM	O
 http://t.co/BfKPiy2eak	O
 http://t.co/a0YhGMBnRA	O
@@ -26997,13 +26997,13 @@ IMGID:1485362
 RT	O
 @BabyAnimalGifs	O
 :	O
-Winston	B-OTHER
+Winston	B-MISC
 ,	O
 the	O
 7	O
 week	O
 old	O
-Corgi	B-OTHER
+Corgi	B-MISC
 puppy	O
 http://t.co/XUsBSatkfx	O
 
@@ -27013,7 +27013,7 @@ RT	O
 :	O
 OMG	O
 the	O
-PS4	B-OTHER
+PS4	B-MISC
 wears	O
 my	O
 name	O
@@ -27058,15 +27058,15 @@ RT	O
 :	O
 Yep	O
 ,	O
-Twilight	B-OTHER
+Twilight	B-MISC
 is	O
 a	O
 better	O
 love	O
 story	O
 than	O
-Captain	B-OTHER
-Swan	I-OTHER
+Captain	B-MISC
+Swan	B-MISC
 any	O
 day	O
 .	O
@@ -27143,11 +27143,11 @@ How	O
 You	O
 Can	O
 Use	O
-#Twitter	B-OTHER
+#Twitter	B-MISC
 to	O
 Grow	O
 a	O
-#Facebook	B-OTHER
+#Facebook	B-MISC
 Group	O
 of	O
 Over	O
@@ -27185,14 +27185,14 @@ males	O
 1	O
 female	O
 .	O
-March	B-OTHER
-of	I-OTHER
-the	I-OTHER
-Penguins	I-OTHER
+March	B-MISC
+of	B-MISC
+the	B-MISC
+Penguins	B-MISC
 is	O
 open	O
 to	O
-the	I-OTHER
+the	B-MISC
 public	O
 this	O
 year	O
@@ -27222,19 +27222,19 @@ denied	O
 (	O
 #apple	B-ORG
 #applelive	O
-#iPhone6	B-OTHER
+#iPhone6	B-MISC
 http://t.co/56aARPmS2t	O
 
 IMGID:34543
 RT	O
 @paul1kirby	O
 :	O
-Dynasty	B-OTHER
+Dynasty	B-MISC
 is	O
 becoming	O
 the	O
-soap	B-OTHER
-opera	I-OTHER
+soap	B-MISC
+opera	B-MISC
 of	O
 US	B-LOC
 politics	O
@@ -27564,8 +27564,8 @@ IMGID:520997
 RT	O
 @matthewrex	O
 :	O
-Lion-O	B-OTHER
-Richie	I-OTHER
+Lion-O	B-MISC
+Richie	B-MISC
 http://t.co/y9C7R2j0OW	O
 
 IMGID:1738703
@@ -27609,7 +27609,7 @@ RT	O
 :	O
 RT	O
 if	O
-TVD	B-OTHER
+TVD	B-MISC
 changed	O
 your	O
 life	O
@@ -27808,7 +27808,7 @@ not	O
 trying	O
 to	O
 play	O
-superhero	B-OTHER
+superhero	B-MISC
 .	O
 #journalists	O
 might	O
@@ -27946,13 +27946,13 @@ in	O
 Colorado	B-LOC
 .	O
 #spacex	B-ORG
-#CRS7	B-OTHER
+#CRS7	B-MISC
 #science	O
 http://t.co/G4uDB21Yqv	O
 
 IMGID:126814
 Happy	O
-Thanksgiving	B-OTHER
+Thanksgiving	B-MISC
 from	O
 the	O
 Hassler	B-LOC
@@ -28163,9 +28163,9 @@ there	O
 http://t.co/chtO6wrSPs	O
 
 IMGID:478177
-Flash	B-OTHER
-Flood	I-OTHER
-Watch	I-OTHER
+Flash	B-MISC
+Flood	B-MISC
+Watch	B-MISC
 in	O
 effect	O
 for	O
@@ -28188,8 +28188,8 @@ http://t.co/Ddn0gWZsVd	O
 IMGID:425873
 One	O
 Man	O
-Star	B-OTHER
-Wars	I-OTHER
+Star	B-MISC
+Wars	B-MISC
 at	O
 @theatre	O
 _	O
@@ -28237,7 +28237,7 @@ http://t.co/5QWtntR9d0	O
 IMGID:1896735
 I	O
 think	O
-Mickey	B-OTHER
+Mickey	B-MISC
 is	O
 happy	O
 to	O
@@ -28433,7 +28433,7 @@ a	O
 voice	O
 message	O
 on	O
-Flitto	B-OTHER
+Flitto	B-MISC
 https	O
 :	O
 //t	O
@@ -28542,9 +28542,9 @@ IMGID:1063738
 RT	O
 New	O
 :	O
-Freaky	B-OTHER
-Human	I-OTHER
-Typeface	I-OTHER
+Freaky	B-MISC
+Human	B-MISC
+Typeface	B-MISC
 by	O
 JC	O
 Debroize	O
@@ -28638,7 +28638,7 @@ via	O
 http://t.co/cwP1txPSiw	O
 
 IMGID:2058595
-#APEC	B-OTHER
+#APEC	B-MISC
 #FuntaSea	O
 by	O
 the	O
@@ -28835,8 +28835,8 @@ RT	O
 :	O
 The	O
 Zhangye	B-LOC
-Danxia	B-OTHER
-landform	I-OTHER
+Danxia	B-MISC
+landform	B-MISC
 in	O
 Gansu	B-LOC
 ,	O
@@ -28881,8 +28881,8 @@ Harvard	B-ORG
 and	O
 C	O
 on	O
-NBC	B-OTHER
-Sports	I-OTHER
+NBC	B-MISC
+Sports	B-MISC
 #GoCrimson	O
 http://t.co/lJfukvBg	O
 
@@ -28979,8 +28979,8 @@ Cons	O
 of	O
 making	O
 a	O
-New	B-OTHER
-Years	I-OTHER
+New	B-MISC
+Years	B-MISC
 resolution	O
 !	O
 https	O
@@ -29179,8 +29179,8 @@ http://t.co/V66geSCFVE	O
 IMGID:1328598
 #HappySaturday	O
 from	O
-Menara	B-OTHER
-Gardens	I-OTHER
+Menara	B-MISC
+Gardens	B-MISC
 !	O
 Wish	O
 you	O
@@ -29232,15 +29232,15 @@ health	O
 effects	O
 ,	O
 eg	O
-asthma	B-OTHER
+asthma	B-MISC
 #mnleg	O
 @MNCleanEnergy	O
 http://t.co/cACywzxMoU	O
 
 IMGID:117357
 Happy	O
-Labor	B-OTHER
-Day	I-OTHER
+Labor	B-MISC
+Day	B-MISC
 !	O
 Check	O
 out	O
@@ -29288,7 +29288,7 @@ qualifies	O
 for	O
 2014	O
 Sochi	B-LOC
-Olympics	B-OTHER
+Olympics	B-MISC
 http://t.co/i8tv42lARc	O
 #coolrunnings	O
 
@@ -29342,7 +29342,7 @@ the	O
 giveaway	O
 of	O
 the	O
-Larry	B-OTHER
+Larry	B-MISC
 sweatshirt	O
 now	O
 ?	O
@@ -29671,8 +29671,8 @@ his	O
 debut	O
 single	O
 ,	O
-Brooklyn	B-OTHER
-Zoo	I-OTHER
+Brooklyn	B-MISC
+Zoo	B-MISC
 .	O
 http://t.co/7T7BLpleZP	O
 
@@ -29680,7 +29680,7 @@ IMGID:113606
 Oh	O
 yes	O
 ,	O
-ViPR	B-OTHER
+ViPR	B-MISC
 2	O
 .	O
 0	O
@@ -29736,11 +29736,11 @@ church	O
 RT	O
 @MTV	O
 :	O
-Nominees	B-OTHER
+Nominees	B-MISC
 for	O
-Best	B-OTHER
-Rock	I-OTHER
-Video	I-OTHER
+Best	B-MISC
+Rock	B-MISC
+Video	B-MISC
 are	O
 out	O
 !	O
@@ -29860,7 +29860,7 @@ Apple	B-ORG
 '	O
 s	O
 latest	O
-iOS	B-OTHER
+iOS	B-MISC
 update	O
 is	O
 bad	O
@@ -29875,9 +29875,9 @@ IMGID:460492
 RT	O
 @ACPressEin	O
 :	O
-Miss	B-OTHER
-New	I-OTHER
-Jeresy	I-OTHER
+Miss	B-MISC
+New	B-MISC
+Jeresy	B-MISC
 @lingiannini	O
 and	O
 @lindseypetrosh	O
@@ -29902,7 +29902,7 @@ series	O
 ,	O
 Iggy	B-PER
 Azalea	I-PER
-#lolla	B-OTHER
+#lolla	B-MISC
 http://t.co/CcDi5rwaGk	O
 
 IMGID:68616
@@ -29945,7 +29945,7 @@ IMGID:426598
 Photo	O
 made	O
 by	O
-Instaweather	B-OTHER
+Instaweather	B-MISC
 http://t.co/15FkzWGsj0	O
 
 IMGID:601727
@@ -29981,7 +29981,7 @@ RT	O
 :	O
 Things	O
 get	O
-emotional	B-OTHER
+emotional	B-MISC
 when	O
 Jimmy	B-PER
 and	O
@@ -29993,8 +29993,8 @@ Stiller	I-PER
 have	O
 an	O
 "	O
-Emotional	B-OTHER
-Interview	I-OTHER
+Emotional	B-MISC
+Interview	B-MISC
 "	O
 !	O
 https	O
@@ -30056,7 +30056,7 @@ IMGID:594009
 Healthcare	O
 worker	O
 handles	O
-#Ebola	B-OTHER
+#Ebola	B-MISC
 patient	O
 ,	O
 then	O
@@ -30171,8 +30171,8 @@ http://t.co/uSTqiZ…	O
 IMGID:15910
 @Outfitldeas	O
 :	O
-Dream	B-OTHER
-Catcher	I-OTHER
+Dream	B-MISC
+Catcher	B-MISC
 Earrings&amp	O
 ;	O
 gt	O
@@ -30243,8 +30243,8 @@ http:…	O
 IMGID:67716
 @thei100	O
 :	O
-Fox	B-OTHER
-News	I-OTHER
+Fox	B-MISC
+News	B-MISC
 admits	O
 Bill	B-PER
 O	O
@@ -30311,7 +30311,7 @@ IMGID:34236
 RT	O
 @TMVtweetz	O
 :	O
-Arbor	B-OTHER
+Arbor	B-MISC
 spends	O
 his	O
 days	O
@@ -30454,7 +30454,7 @@ IMGID:619794
 RT	O
 @eci	O
 _	O
-ttip	B-OTHER
+ttip	B-MISC
 :	O
 The	O
 human	O
@@ -30466,9 +30466,9 @@ of	O
 Berliners	O
 demand	O
 Stop	O
-TTIP	B-OTHER
+TTIP	B-MISC
 and	O
-CETA	B-OTHER
+CETA	B-MISC
 .	O
 #a18doa	O
 http://t.co/IH71GQW2kH	O
@@ -30502,7 +30502,7 @@ some	O
 noise	O
 on	O
 ESPN	B-ORG
-GameDay	B-OTHER
+GameDay	B-MISC
 !	O
 http://t.co/ERtKg74vhV	O
 
@@ -30589,8 +30589,8 @@ IMGID:6241
 RT	O
 @ToddAlstrom	O
 :	O
-Banryu	B-OTHER
-Ichi	I-OTHER
+Banryu	B-MISC
+Ichi	B-MISC
 (	O
 #sake/#beer	O
 hybrid	O
@@ -30676,8 +30676,8 @@ the	O
 will	O
 make	O
 the	O
-Super	B-OTHER
-Bowl	I-OTHER
+Super	B-MISC
+Bowl	B-MISC
 :	O
 http://t.co/UsQj5CSTXU	O
 http://t.co/tuIA2SPqS1	O
@@ -30710,7 +30710,7 @@ IMGID:1296761
 RT	O
 @ImSoBuffalo	O
 :	O
-Buffalo	B-OTHER
+Buffalo	B-MISC
 girls	O
 do	O
 it	O
@@ -30747,8 +30747,8 @@ the	O
 anniversary	O
 of	O
 the	O
-Seneca	B-OTHER
-Falls	I-OTHER
+Seneca	B-MISC
+Falls	B-MISC
 Convention—a	O
 milestone	O
 for	O
@@ -30873,7 +30873,7 @@ http://t.co/ueBxJW4vvo	O
 http://t.co/2H18DV2QYj	O
 
 IMGID:73519
-#Lolla	B-OTHER
+#Lolla	B-MISC
 and	O
 Chicago	B-LOC
 at	O
@@ -30941,7 +30941,7 @@ West	B-LOC
 Village	I-LOC
 it	O
 is	O
-Cortados	B-OTHER
+Cortados	B-MISC
 and	O
 Football	O
 http://t.co/oCJlANhXGl	O
@@ -31039,7 +31039,7 @@ fans	O
 of	O
 #AfghanProverbs	O
 in	O
-#Pashto	B-OTHER
+#Pashto	B-MISC
 too	O
 !	O
 @AfghanEverythin	O
@@ -31154,8 +31154,8 @@ http://t.co/KbMsoKSUv4	O
 http://t.co/7jR9i1QP7f	O
 
 IMGID:74899
-Chicken	B-OTHER
-Alfredo	I-OTHER
+Chicken	B-MISC
+Alfredo	B-MISC
 made	O
 for	O
 me	O
@@ -31280,7 +31280,7 @@ Cordal	I-PER
 http://t.co/1N6ScuLiEC	O
 
 IMGID:35677
-Batman	B-OTHER
+Batman	B-MISC
 knows	O
 how	O
 to	O
@@ -31315,7 +31315,7 @@ Costco	B-ORG
 is	O
 giving	O
 employees	O
-Thanksgiving	B-OTHER
+Thanksgiving	B-MISC
 off	O
 WITH	O
 pay	O
@@ -31452,7 +31452,7 @@ A	O
 member	O
 of	O
 the	O
-Himba	B-OTHER
+Himba	B-MISC
 tribe	O
 of	O
 Northern	B-LOC
@@ -31555,10 +31555,10 @@ That	O
 s	O
 when	O
 my	O
-Brady	B-OTHER
+Brady	B-MISC
 vs	O
 .	O
-Manning	I-OTHER
+Manning	B-MISC
 book	O
 is	O
 released	O
@@ -31602,12 +31602,12 @@ successful	O
 flight	O
 of	O
 the	O
-Wright	B-OTHER
-Flyer	I-OTHER
+Wright	B-MISC
+Flyer	B-MISC
 ,	O
 by	O
-Wright	B-OTHER
-brothers	I-OTHER
+Wright	B-MISC
+brothers	B-MISC
 ,	O
 110	O
 yrs	O
@@ -31855,7 +31855,7 @@ for	O
 7th	O
 in	O
 the	O
-#NFL	B-OTHER
+#NFL	B-MISC
 .	O
 #Chargers	O
 http://t.co/Gm2QuiqYQL	O
@@ -31904,9 +31904,9 @@ how	O
 to	O
 clean	O
 up	O
-Latin	B-OTHER
-American	I-OTHER
-democracy	I-OTHER
+Latin	B-MISC
+American	B-MISC
+democracy	B-MISC
 http://t.co/NqbFfmNnip	O
 http://t.co/zAL3TeF6KI	O
 
@@ -32334,7 +32334,7 @@ APAC	O
 :	O
 US	B-ORG
 Marine	I-ORG
-F-18s	B-OTHER
+F-18s	B-MISC
 Land	O
 at	O
 Taiwan	B-LOC
@@ -32379,11 +32379,11 @@ Stethoscope	O
 that	O
 links	O
 w/	O
-#EHR	B-OTHER
+#EHR	B-MISC
 now	O
 has	O
-FDA	B-OTHER
-Clearance	I-OTHER
+FDA	B-MISC
+Clearance	B-MISC
 http://t.co/MPWVvcprpc	O
 http://t.co/Qlvx8Ae6sJ	O
 
@@ -32502,8 +32502,8 @@ RT	O
 :	O
 story	O
 of	O
-scott	B-OTHER
-McCalls	I-OTHER
+scott	B-MISC
+McCalls	B-MISC
 life	O
 http://t.co/W5Q7QvvR2u	O
 
@@ -32546,9 +32546,9 @@ http://t.co/6GCxTeoDTf	O
 http://t.co/nB11uv0O9O	O
 
 IMGID:73789
-Tel	B-OTHER
-Aviv	I-OTHER
-Pride	I-OTHER
+Tel	B-MISC
+Aviv	B-MISC
+Pride	B-MISC
 http://t.co/EN0ZQfPIjT	O
 
 IMGID:128571
@@ -32684,7 +32684,7 @@ http://t.co/2Dztw2Epft	O
 http://t.co/CSCNwjgweO	O
 
 IMGID:33
-#ExtremeIroning	B-OTHER
+#ExtremeIroning	B-MISC
 #NuffSaid	O
 http://t.co/PdMvDsIArA	O
 
@@ -32692,8 +32692,8 @@ IMGID:1319280
 RT	O
 @Rosetreeme	O
 :	O
-Mochy	B-OTHER
-Moch	I-OTHER
+Mochy	B-MISC
+Moch	B-MISC
 and	O
 the	O
 Funky	O
@@ -32835,8 +32835,8 @@ by	O
 to	O
 present	O
 the	O
-Qatar	B-OTHER
-Open	I-OTHER
+Qatar	B-MISC
+Open	B-MISC
 trophy	O
 !	O
 http://t.co/ta2RxbhXop	O
@@ -32905,7 +32905,7 @@ RT	O
 @tedcruz	O
 :	O
 "	O
-ObamaCare	B-OTHER
+ObamaCare	B-MISC
 has	O
 driven	O
 health	O
@@ -33151,15 +33151,15 @@ Guru	O
 )	O
 drop	O
 "	O
-Hard	B-OTHER
-to	I-OTHER
-Earn	I-OTHER
+Hard	B-MISC
+to	B-MISC
+Earn	B-MISC
 "	O
 http://t.co/Pf7pDJy2rk	O
 
 IMGID:113499
 A	O
-Phoenix	B-OTHER
+Phoenix	B-MISC
 in	O
 Saginaw	B-LOC
 http://t.co/OG3f5TiJZM	O
@@ -33252,10 +33252,10 @@ IMGID:45289
 RT	O
 @FemalePains	O
 :	O
-Alice	B-OTHER
-in	I-OTHER
-Wonderland	I-OTHER
-2	I-OTHER
+Alice	B-MISC
+in	B-MISC
+Wonderland	B-MISC
+2	B-MISC
 ,	O
 2016	O
 http://t.co/MKuJFD7FvA	O
@@ -33351,8 +33351,8 @@ RT	O
 Woman	O
 takes	O
 down	O
-Confederate	B-OTHER
-flag	I-OTHER
+Confederate	B-MISC
+flag	B-MISC
 from	O
 SC	B-LOC
 State	I-LOC
@@ -33374,7 +33374,7 @@ Fiore	I-PER
 at	O
 @BernhardtInc	O
 at	O
-#hpmkt	B-OTHER
+#hpmkt	B-MISC
 http://t.co/C04FibY5QZ	O
 
 IMGID:447186
@@ -33390,16 +33390,16 @@ http://t.co/Nz9vvDLW	O
 IMGID:1471428
 Celebrate	O
 an	O
-Earth	B-OTHER
-Day	I-OTHER
+Earth	B-MISC
+Day	B-MISC
 with	O
 Mari	B-LOC
 Vanna	I-LOC
 DC	I-LOC
 !	O
-Russian	B-OTHER
-Farm	I-OTHER
-salad	I-OTHER
+Russian	B-MISC
+Farm	B-MISC
+salad	B-MISC
 is	O
 only	O
 $	O
@@ -33708,11 +33708,11 @@ other	O
 amazing	O
 ladies	O
 as	O
-Extraordinary	B-OTHER
-Women	I-OTHER
-of	I-OTHER
-Jefferson	I-OTHER
-Co	I-OTHER
+Extraordinary	B-MISC
+Women	B-MISC
+of	B-MISC
+Jefferson	B-MISC
+Co	B-MISC
 .	O
 http://t.co/cJMlUzbERx	O
 
@@ -33800,9 +33800,9 @@ Lauren	B-PER
 Holiday	I-PER
 is	O
 a	O
-World	B-OTHER
-Cup	I-OTHER
-Champion	I-OTHER
+World	B-MISC
+Cup	B-MISC
+Champion	B-MISC
 !	O
 !	O
 !	O
@@ -33818,8 +33818,8 @@ action	O
 from	O
 the	O
 @IPCAthletics	O
-Grand	B-OTHER
-Prix	I-OTHER
+Grand	B-MISC
+Prix	B-MISC
 in	O
 Brisbane	B-LOC
 ,	O
@@ -33833,10 +33833,10 @@ http://t.co/Jh8g85tDJ0	O
 
 IMGID:127879
 @Blizzardcs	O
-My	B-OTHER
-Giant	I-OTHER
-Nagrand	I-OTHER
-Cherry	I-OTHER
+My	B-MISC
+Giant	B-MISC
+Nagrand	B-MISC
+Cherry	B-MISC
 says	O
 I	O
 will	O
@@ -33967,7 +33967,7 @@ RT	O
 @NBCSports	O
 :	O
 The	O
-NFL	B-OTHER
+NFL	B-MISC
 will	O
 crack	O
 down	O
@@ -34135,10 +34135,10 @@ Park	I-LOC
 http://t.co/CJdm2uyET8	O
 
 IMGID:1376478
-LOST	B-OTHER
-IN	I-OTHER
-THE	I-OTHER
-SUN	I-OTHER
+LOST	B-MISC
+IN	B-MISC
+THE	B-MISC
+SUN	B-MISC
 by	O
 Lisa	B-PER
 Graff	I-PER
@@ -34260,8 +34260,8 @@ RT	O
 The	O
 one	O
 "	O
-Harry	B-OTHER
-Potter	I-OTHER
+Harry	B-MISC
+Potter	B-MISC
 "	O
 character	O
 J	O
@@ -34352,8 +34352,8 @@ RT	O
 #FBF	O
 to	O
 the	O
-Plymouth	B-OTHER
-Superbird	I-OTHER
+Plymouth	B-MISC
+Superbird	B-MISC
 that	O
 Helped	O
 the	O
@@ -34443,11 +34443,11 @@ SUB	O
 HD	O
 ]	O
 150625	O
-SBS	B-OTHER
-MTV	I-OTHER
-The	B-OTHER
-Show	I-OTHER
-BTS	I-OTHER
+SBS	B-MISC
+MTV	B-MISC
+The	B-MISC
+Show	B-MISC
+BTS	B-MISC
 with	O
 EXO	B-ORG
 http://t.co/pHFcBPk5Gu	O
@@ -34474,7 +34474,7 @@ Zr	O
 .	O
 Ms	O
 .	O
-Urania	I-OTHER
+Urania	B-MISC
 .	O
 http://t.co/Wjc0Vf6j0T	O
 http://t.co/oq5dcApQPx	O
@@ -34540,8 +34540,8 @@ RT	O
 17	O
 days	O
 until	O
-the	B-OTHER
-Masters	I-OTHER
+the	B-MISC
+Masters	B-MISC
 #cominginapril	O
 #themasters	O
 http://t.co/afohy1YK18	O
@@ -34666,7 +34666,7 @@ RT	O
 @NFIB	O
 :	O
 The	O
-#SBET	B-OTHER
+#SBET	B-MISC
 index	O
 went	O
 nowhere	O
@@ -34715,7 +34715,7 @@ RT	O
 A	O
 5	O
 megabyte	O
-IBM	B-OTHER
+IBM	B-MISC
 hard	O
 disk	O
 is	O
@@ -35051,11 +35051,11 @@ RT	O
 @nytimes	O
 :	O
 Can	O
-brain-scanning	B-OTHER
+brain-scanning	B-MISC
 help	O
 save	O
-Freudian	B-OTHER
-psychoanalysis	I-OTHER
+Freudian	B-MISC
+psychoanalysis	B-MISC
 ?	O
 http://t.co/jl6SgHna2X	O
 http://t.co/htHQmrfIlM	O
@@ -35094,7 +35094,7 @@ defensive	O
 player	O
 in	O
 the	O
-NFL	B-OTHER
+NFL	B-MISC
 and	O
 I	O
 want	O
@@ -35144,8 +35144,8 @@ IMGID:414697
 Check	O
 out	O
 the	O
-Sky	B-OTHER
-Bars	I-OTHER
+Sky	B-MISC
+Bars	B-MISC
 in	O
 Kuala	B-LOC
 Lumpur	I-LOC
@@ -35236,7 +35236,7 @@ complete	O
 http://t.co/JZcjDiOmDw	O
 
 IMGID:654702
-Oscar	B-OTHER
+Oscar	B-MISC
 bait	O
 http://t.co/dyXnfJZKtW	O
 Netflix	B-ORG
@@ -35448,7 +35448,7 @@ I	O
 finally	O
 fixed	O
 the	O
-CSS	B-OTHER
+CSS	B-MISC
 script	O
 error	O
 on	O
@@ -35498,7 +35498,7 @@ Peter	B-PER
 Angelos	I-PER
 took	O
 to	O
-Twitter	B-OTHER
+Twitter	B-MISC
 over	O
 the	O
 weekend	O
@@ -35528,10 +35528,10 @@ My	O
 oldest	O
 camera	O
 1938	O
-Zeiss	B-OTHER
-Super	I-OTHER
-B	I-OTHER
-532/16	I-OTHER
+Zeiss	B-MISC
+Super	B-MISC
+B	B-MISC
+532/16	B-MISC
 with	O
 Tesser	O
 f2	O
@@ -35589,8 +35589,8 @@ at	O
 the	O
 Elton	B-PER
 John	I-PER
-Oscar	B-OTHER
-Party	I-OTHER
+Oscar	B-MISC
+Party	B-MISC
 http://t.co/jqGjlswDGx	O
 
 IMGID:933946
@@ -35701,9 +35701,9 @@ Pictures	O
 from	O
 2015	O
 @BHHSRealEstate	O
-Elite	B-OTHER
-Circle	I-OTHER
-Conference	I-OTHER
+Elite	B-MISC
+Circle	B-MISC
+Conference	B-MISC
 in	O
 Washington	B-LOC
 D	O
@@ -35793,7 +35793,7 @@ RT	O
 Marco	B-PER
 Rubio	I-PER
 at	O
-CPAC	B-OTHER
+CPAC	B-MISC
 :	O
 an	O
 immigrant	O
@@ -35827,12 +35827,12 @@ IMGID:625007
 RT	O
 @HerpMapper	O
 :	O
-Lampropeltis	B-OTHER
-spp	I-OTHER
+Lampropeltis	B-MISC
+spp	B-MISC
 .	O
 observations	O
 in	O
-HerpMapper	B-OTHER
+HerpMapper	B-MISC
 .	O
 Photos	O
 courtesy	O
@@ -35860,8 +35860,8 @@ U	O
 .	O
 S	O
 .	O
-World	B-OTHER
-Cup	I-OTHER
+World	B-MISC
+Cup	B-MISC
 history	O
 and	O
 5th	O
@@ -35912,10 +35912,10 @@ IMGID:783238
 RT	O
 @SneakerTicker	O
 :	O
-Nike	B-OTHER
-Air	I-OTHER
-Max	I-OTHER
-90	I-OTHER
+Nike	B-MISC
+Air	B-MISC
+Max	B-MISC
+90	B-MISC
 HYP	O
 ID	O
 http://t.co/HbUoGBaTAp	O
@@ -36018,7 +36018,7 @@ engine	O
 and	O
 the	O
 new	O
-E23	B-OTHER
+E23	B-MISC
 http://t.co/sl6y4gjPNQ	O
 http://t.co/9qSivfwxim	O
 
@@ -36061,13 +36061,13 @@ RT	O
 UP	O
 NEXT	O
 :	O
-NFL	B-OTHER
+NFL	B-MISC
 Football	O
-Follies	B-OTHER
+Follies	B-MISC
 -	O
-Follies	B-OTHER
-on	I-OTHER
-Parade	I-OTHER
+Follies	B-MISC
+on	B-MISC
+Parade	B-MISC
 !	O
 STREAM	O
 :	O
@@ -36114,12 +36114,12 @@ To	O
 Know	O
 About	O
 "	O
-American	B-OTHER
-Horror	I-OTHER
+American	B-MISC
+Horror	B-MISC
 Story	O
 :	O
-Freak	I-OTHER
-Show	I-OTHER
+Freak	B-MISC
+Show	B-MISC
 "	O
 http://t.co/zpNNwHXtHz	O
 http://t.co/1UbESFMyt0	O
@@ -36204,10 +36204,10 @@ draft	O
 lineup	O
 @AmherstAleHouse	O
 New-	O
-Abita	B-OTHER
-Wrought	I-OTHER
-Iron	I-OTHER
-IPA	I-OTHER
+Abita	B-MISC
+Wrought	B-MISC
+Iron	B-MISC
+IPA	B-MISC
 http://t.co/By3qLPo6U3	O
 
 IMGID:1763137
@@ -36409,7 +36409,7 @@ secretly	O
 help	O
 Saudis	B-LOC
 make	O
-Plutonium	B-OTHER
+Plutonium	B-MISC
 A-bomb	O
 lol	O
 http://t.co/2e1r6tOfKG	O
@@ -36432,10 +36432,10 @@ and	O
 Portuguese	O
 Navy	O
 Ship	O
-DON	B-OTHER
-FRANCISCO	I-OTHER
-DE	I-OTHER
-ALMEIDA	I-OTHER
+DON	B-MISC
+FRANCISCO	B-MISC
+DE	B-MISC
+ALMEIDA	B-MISC
 conduct	O
 #NATO	B-ORG
 exercises	O
@@ -36453,9 +36453,9 @@ tickets	O
 now	O
 for	O
 the	O
-2013	B-OTHER
-Hop	I-OTHER
-Fest	I-OTHER
+2013	B-MISC
+Hop	B-MISC
+Fest	B-MISC
 in	O
 San	B-LOC
 Ramon	I-LOC
@@ -36542,7 +36542,7 @@ Everything	O
 is	O
 better	O
 with	O
-Batman	B-OTHER
+Batman	B-MISC
 .	O
 http://t.co/VEAmnYoipN	O
 
@@ -36667,8 +36667,8 @@ the	O
 on	O
 bringing	O
 the	O
-Lombardi	B-OTHER
-Trophy	I-OTHER
+Lombardi	B-MISC
+Trophy	B-MISC
 back	O
 home	O
 to	O
@@ -36745,9 +36745,9 @@ York	I-LOC
 City	I-LOC
 From	O
 The	O
-International	B-OTHER
-Space	I-OTHER
-Station	I-OTHER
+International	B-MISC
+Space	B-MISC
+Station	B-MISC
 http://t.co/j60wf5jPCJ	O
 
 IMGID:1767337
@@ -36772,12 +36772,12 @@ http://t.co/wnvLRkOldL	O
 http://t.co/eV2uNv2axR	O
 
 IMGID:1827685
-The	B-OTHER
-Woman	I-OTHER
-Who	I-OTHER
-Swims	I-OTHER
-With	I-OTHER
-Sharks	I-OTHER
+The	B-MISC
+Woman	B-MISC
+Who	B-MISC
+Swims	B-MISC
+With	B-MISC
+Sharks	B-MISC
 By	O
 Juan	B-PER
 Oliphant	I-PER
@@ -37007,7 +37007,7 @@ a	O
 stick	O
 at	O
 the	O
-Valentina	B-OTHER
+Valentina	B-MISC
 cup	O
 !	O
 http://t.co/0HqwnC1nrH	O
@@ -37016,8 +37016,8 @@ IMGID:110033
 RT	O
 @wcnc	O
 :	O
-Giant	B-OTHER
-Minion	I-OTHER
+Giant	B-MISC
+Minion	B-MISC
 blocks	O
 traffic	O
 on	O
@@ -37047,7 +37047,7 @@ on	O
 board	O
 camera	O
 .	O
-#WRC	B-OTHER
+#WRC	B-MISC
 http://t.co/5hRjO1lZwp	O
 
 IMGID:700237
@@ -37119,9 +37119,9 @@ bad	O
 the	O
 ugly	O
 of	O
-Vegan	B-OTHER
-Food	I-OTHER
-Fest	I-OTHER
+Vegan	B-MISC
+Food	B-MISC
+Fest	B-MISC
 in	O
 #Toronto	B-LOC
 http://t.co/BhuLn8pZaG	O
@@ -37131,10 +37131,10 @@ via	O
 blogto	O
 
 IMGID:124191
-Google	B-OTHER
-Maps	I-OTHER
+Google	B-MISC
+Maps	B-MISC
 has	O
-Waze	B-OTHER
+Waze	B-MISC
 data	O
 in	O
 it	O
@@ -37416,7 +37416,7 @@ Kendrick	B-PER
 Perkins	I-PER
 as	O
 an	O
-NBA	B-OTHER
+NBA	B-MISC
 player	O
 http://t.co/ZX2tmYuXMM	O
 
@@ -37516,7 +37516,7 @@ IMGID:74874
 RT	O
 @CauseWereGuys	O
 :	O
-Disney	B-OTHER
+Disney	B-MISC
 and	O
 Pixar	B-ORG
 will	O
@@ -37571,10 +37571,10 @@ Atalanta	B-LOC
 ,	O
 seen	O
 from	O
-HNLMS	B-OTHER
-Johan	I-OTHER
-de	I-OTHER
-Witt	I-OTHER
+HNLMS	B-MISC
+Johan	B-MISC
+de	B-MISC
+Witt	B-MISC
 in	O
 the	O
 Indian	B-LOC
@@ -37614,9 +37614,9 @@ Alex	B-PER
 Salmond	I-PER
 arrive	O
 at	O
-Labour	B-OTHER
-spring	I-OTHER
-conference	I-OTHER
+Labour	B-MISC
+spring	B-MISC
+conference	B-MISC
 in	O
 Birmingham	B-LOC
 http://t.co/BWE1WohTDV	O
@@ -37811,7 +37811,7 @@ the	O
 lighting	O
 of	O
 the	O
-Christmas	B-OTHER
+Christmas	B-MISC
 tree	O
 at	O
 Brooklyn	B-LOC
@@ -37845,8 +37845,8 @@ George	I-PER
 shows	O
 off	O
 the	O
-Hyperdunk	B-OTHER
-2015	I-OTHER
+Hyperdunk	B-MISC
+2015	B-MISC
 http://t.co/R9tI2a21wf	O
 http://t.co/st4VXEEBpN	O
 
@@ -38054,8 +38054,8 @@ RT	O
 Marines	O
 land	O
 an	O
-MV-22	B-OTHER
-Osprey	I-OTHER
+MV-22	B-MISC
+Osprey	B-MISC
 on	O
 a	O
 Dutch	O
@@ -38100,11 +38100,11 @@ IMGID:1897389
 RT	O
 @SheeeRatchet	O
 :	O
-Bill	B-OTHER
-Nye	I-OTHER
-the	I-OTHER
-Science	I-OTHER
-Guy	I-OTHER
+Bill	B-MISC
+Nye	B-MISC
+the	B-MISC
+Science	B-MISC
+Guy	B-MISC
 http://t.co/P84Dlz44wl	O
 
 IMGID:575961
@@ -38116,11 +38116,11 @@ a	O
 great	O
 time	O
 participating	O
-International	B-OTHER
-Walk	I-OTHER
-to	I-OTHER
-School	I-OTHER
-Day	I-OTHER
+International	B-MISC
+Walk	B-MISC
+to	B-MISC
+School	B-MISC
+Day	B-MISC
 !	O
 http://t.co/W5W2t1yP	O
 
@@ -38150,7 +38150,7 @@ http://t.co/cERjSNVsmz	O
 IMGID:1132706
 Celebrating	O
 the	O
-Christmas	B-OTHER
+Christmas	B-MISC
 spirit	O
 .	O
 Special	O
@@ -38172,8 +38172,8 @@ IMGID:319006
 RT	O
 @CNET	O
 :	O
-Apple	B-OTHER
-Watch	I-OTHER
+Apple	B-MISC
+Watch	B-MISC
 effect	O
 :	O
 How	O
@@ -38184,7 +38184,7 @@ has	O
 developers	O
 rethinking	O
 their	O
-iPhone	B-OTHER
+iPhone	B-MISC
 apps	O
 http://t.co/3wcu2RhAsC	O
 http://t.co/3yG9m8OMdo	O
@@ -38289,7 +38289,7 @@ wont	O
 even	O
 buy	O
 me	O
-McDonalds	B-OTHER
+McDonalds	B-MISC
 but	O
 ok	O
 http://t.co/agSGJcy7m9	O
@@ -38299,19 +38299,19 @@ The	O
 playbill	O
 from	O
 "	O
-Feeling	B-OTHER
-Electric	I-OTHER
+Feeling	B-MISC
+Electric	B-MISC
 "	O
 which	O
 became	O
 the	O
-Pulitzer	B-OTHER
-Prize	I-OTHER
+Pulitzer	B-MISC
+Prize	B-MISC
 winning	O
 "	O
-Next	B-OTHER
-to	I-OTHER
-Normal	I-OTHER
+Next	B-MISC
+to	B-MISC
+Normal	B-MISC
 "	O
 .	O
 #FestivalFlashback	O
@@ -38466,7 +38466,7 @@ is	O
 the	O
 avatar	O
 that	O
-iCloud	B-OTHER
+iCloud	B-MISC
 gave	O
 m	O
 http://t.co/BsWO8eSs	O
@@ -38527,7 +38527,7 @@ near	O
 Mill	B-LOC
 -	O
 The	O
-HOV	B-OTHER
+HOV	B-MISC
 and	O
 left	O
 lanes	O
@@ -38563,7 +38563,7 @@ Jen	B-PER
 ;	O
 Jennifer	B-PER
 on	O
-#HIMYM	B-OTHER
+#HIMYM	B-MISC
 set	O
 http://t.co/Wc7JWtXid3	O
 
@@ -38574,8 +38574,8 @@ why	O
 I	O
 love	O
 my	O
-94	B-OTHER
-Honda	I-OTHER
+94	B-MISC
+Honda	B-MISC
 .	O
 #fb	B-ORG
 http://t.co/lT9Cj5i9BE	O
@@ -38689,7 +38689,7 @@ days	O
 ;	O
 watch	O
 "	O
-Frozen	B-OTHER
+Frozen	B-MISC
 "	O
 on	O
 repeat	O
@@ -38807,8 +38807,8 @@ http://t.co/dThvt18nio	O
 http://t.co/A653UOe5ZM	O
 
 IMGID:1156269
-#Nissan	B-OTHER
-LEAF	I-OTHER
+#Nissan	B-MISC
+LEAF	B-MISC
 --	O
 the	O
 official	O
@@ -38859,8 +38859,8 @@ found	O
 guilty	O
 in	O
 2013	O
-Boston	B-OTHER
-Marathon	I-OTHER
+Boston	B-MISC
+Marathon	B-MISC
 bombing	O
 http://t.co/kyk9MEQZ6G	O
 http://t.co/1Kgo23SNQo	O
@@ -38871,7 +38871,7 @@ RT	O
 :	O
 Lunch	O
 at	O
-Annona	B-OTHER
+Annona	B-MISC
 #Toronto	B-LOC
 http://t.co/kjgvqy59Jw	O
 
@@ -39212,8 +39212,8 @@ s	O
 racially	O
 biased	O
 "	O
-bicycle	B-OTHER
-blitzkrieg	I-OTHER
+bicycle	B-MISC
+blitzkrieg	B-MISC
 "	O
 shows	O
 there	O
@@ -39357,9 +39357,9 @@ RT	O
 :	O
 Out	O
 with	O
-Buster	B-OTHER
-the	I-OTHER
-Bus	I-OTHER
+Buster	B-MISC
+the	B-MISC
+Bus	B-MISC
 in	O
 Mankato	B-LOC
 ,	O
@@ -39371,7 +39371,7 @@ with	O
 small	O
 kids	O
 about	O
-bus	I-OTHER
+bus	B-MISC
 safety	O
 !	O
 http://t.co/YjSsi3jpUA	O
@@ -39418,9 +39418,9 @@ RT	O
 Amazon	B-ORG
 review	O
 for	O
-THE	B-OTHER
-LEOPARD	I-OTHER
-VANGUARD	I-OTHER
+THE	B-MISC
+LEOPARD	B-MISC
+VANGUARD	B-MISC
 .	O
 http://t.co/E4g0gBzaP3	O
 #darkfantasy	O
@@ -39463,7 +39463,7 @@ IMGID:849
 RT	O
 @BestMovieLine	O
 :	O
-Zombieland	B-OTHER
+Zombieland	B-MISC
 http://t.co/hSfUTBpYR9	O
 
 IMGID:15176
@@ -39473,10 +39473,10 @@ RT	O
 20	O
 mins	O
 into	O
-crunchyroll	B-OTHER
-and	I-OTHER
-chill	I-OTHER
-and	I-OTHER
+crunchyroll	B-MISC
+and	B-MISC
+chill	B-MISC
+and	B-MISC
 she	O
 gives	O
 you	O
@@ -39677,7 +39677,7 @@ everything	O
 Michelle	B-PER
 ~	O
 @trendcurve	O
-#hpmkt	B-OTHER
+#hpmkt	B-MISC
 Nordic	O
 look	O
 from	O
@@ -39961,7 +39961,7 @@ RT	O
 :	O
 Wyoming	B-LOC
 rejects	O
-K-12	B-OTHER
+K-12	B-MISC
 science	O
 standards	O
 for	O
@@ -40023,8 +40023,8 @@ Now	O
 you	O
 can	O
 reduce	O
-Microsoft	B-OTHER
-Exchange	I-OTHER
+Microsoft	B-MISC
+Exchange	B-MISC
 storage	O
 requirements	O
 by	O
@@ -40059,7 +40059,7 @@ along	O
 with	O
 our	O
 #GoldenGlobes	O
-Bingo	B-OTHER
+Bingo	B-MISC
 tonight	O
 !	O
 http://t.co/w3prVHXyG5	O
@@ -40106,8 +40106,8 @@ http://t.co/QlZKpNE6DD	O
 IMGID:1034727
 Review	O
 of	O
-Wolf	B-OTHER
-Hall	I-OTHER
+Wolf	B-MISC
+Hall	B-MISC
 ,	O
 Episode	O
 1	O
@@ -40119,7 +40119,7 @@ by	O
 @Tudorscribe	O
 http://t.co/ybUNQXD91i	O
 #WolfHall	O
-#Tudors	B-OTHER
+#Tudors	B-MISC
 http://t.co/oaPrxYGyvk	O
 
 IMGID:67318
@@ -40147,7 +40147,7 @@ http://t.co/xvcbT4ucro	O
 
 IMGID:112393
 The	O
-Mobile	I-OTHER
+Mobile	B-MISC
 Support	O
 App	O
 you	O
@@ -40156,9 +40156,9 @@ be	O
 missing	O
 !	O
 Download	O
-EMC	B-OTHER
-Mobile	I-OTHER
-2	I-OTHER
+EMC	B-MISC
+Mobile	B-MISC
+2	B-MISC
 for	O
 your	O
 iPad/Android	O
@@ -40336,20 +40336,20 @@ RT	O
 Google	B-ORG
 Mexico	I-ORG
 celebrated	O
-Independence	B-OTHER
-Day	I-OTHER
+Independence	B-MISC
+Day	B-MISC
 2013	O
 with	O
 a	O
-Doodle	B-OTHER
+Doodle	B-MISC
 http://t.co/k0ZOu8Rmxv	O
 
 IMGID:16027
 RT	O
 @SlLVERSCREENS	O
 :	O
-Blue	B-OTHER
-Velvet	I-OTHER
+Blue	B-MISC
+Velvet	B-MISC
 (	O
 1986	O
 )	O
@@ -40382,8 +40382,8 @@ Jon	B-PER
 Stewart	I-PER
 as	O
 "	O
-Daily	B-OTHER
-Show	I-OTHER
+Daily	B-MISC
+Show	B-MISC
 "	O
 host	O
 http://t.co/hKGrage8W1	O
@@ -40536,8 +40536,8 @@ RT	O
 @joejonas	O
 :	O
 Morning	O
-FaceTime	B-OTHER
-Peekaboo	B-OTHER
+FaceTime	B-MISC
+Peekaboo	B-MISC
 with	O
 our	O
 niece	O
@@ -40720,8 +40720,8 @@ RT	O
 @ArtPicsChannel	O
 :	O
 The	O
-Pink	B-OTHER
-Studio	I-OTHER
+Pink	B-MISC
+Studio	B-MISC
 ,	O
 1911	O
 by	O
@@ -40782,7 +40782,7 @@ http://t.co/rNfyvtZcVs	O
 
 IMGID:72278
 The	O
-Trib	B-OTHER
+Trib	B-MISC
 sent	O
 @stacystclair	O
 and	O
@@ -40796,7 +40796,7 @@ one	O
 of	O
 us	O
 made	O
-WSJ	B-OTHER
+WSJ	B-MISC
 '	O
 s	O
 Year	O
@@ -40845,9 +40845,9 @@ brilliant	O
 Jon	B-PER
 Snow	I-PER
 closes	O
-UK	B-OTHER
-Channel	I-OTHER
-4	I-OTHER
+UK	B-MISC
+Channel	B-MISC
+4	B-MISC
 news	O
 about	O
 an	O
@@ -40948,7 +40948,7 @@ http://t.co/KyGuVRLbco	O
 IMGID:93023
 Set	O
 your	O
-DVR	B-OTHER
+DVR	B-MISC
 for	O
 Elevate	B-ORG
 Life	I-ORG
@@ -40968,7 +40968,7 @@ at	O
 for	O
 service	O
 !	O
-#KDFI	B-OTHER
+#KDFI	B-MISC
 #channel27	O
 #or7	O
 http://t.co/QyU2Vx5xpJ	O
@@ -40999,11 +40999,11 @@ in	O
 :	O
 the	O
 failed	O
-Bay	B-OTHER
-of	I-OTHER
-Pigs	I-OTHER
+Bay	B-MISC
+of	B-MISC
+Pigs	B-MISC
 invasion	O
-of	I-OTHER
+of	B-MISC
 Cuba	B-LOC
 http://t.co/HyfBS2JgyH	O
 http://t.co/bQdu2eVvnd	O
@@ -41047,8 +41047,8 @@ to	O
 score	O
 in	O
 a	O
-CL	B-OTHER
-Final	I-OTHER
+CL	B-MISC
+Final	B-MISC
 !	O
 http://t.co/f1p9vhhurG	O
 
@@ -41090,9 +41090,9 @@ IMGID:284664
 RT	O
 @caroleannmarie	O
 :	O
-Still	B-OTHER
-and	I-OTHER
-Motion	I-OTHER
+Still	B-MISC
+and	B-MISC
+Motion	B-MISC
 by	O
 Bluephynex	B-PER
 http://t.co/NTl1yA2G53	O
@@ -41132,7 +41132,7 @@ IMGID:116609
 RT	O
 @Ticketbud	O
 :	O
-Ticketbud	B-OTHER
+Ticketbud	B-MISC
 thrilled	O
 to	O
 introduce	O
@@ -41179,7 +41179,7 @@ http://t.co/kSIC516eri	O
 http://t.co/4eD3lzzKR4	O
 
 IMGID:615149
-NBDC	B-OTHER
+NBDC	B-MISC
 @ViscardiCenter	O
 &amp	O
 ;	O
@@ -41334,8 +41334,8 @@ Paul	B-PER
 Rodriguez	I-PER
 for	O
 a	O
-PATRIOTIC	B-OTHER
-evening	I-OTHER
+PATRIOTIC	B-MISC
+evening	B-MISC
 :	O
 http://t.co/v98SJPWFDA	O
 http://t.co/wFuT2Mtrhb	O
@@ -41622,9 +41622,9 @@ IMGID:1086011
 Latest	O
 issue	O
 of	O
-International	B-OTHER
-Plastics	I-OTHER
-News	I-OTHER
+International	B-MISC
+Plastics	B-MISC
+News	B-MISC
 for	O
 Asia	B-LOC
 is	O
@@ -41649,7 +41649,7 @@ Commencement	O
 Sheryl	B-PER
 Sandberg	I-PER
 (	O
-MBA	B-OTHER
+MBA	B-MISC
 1993	O
 )	O
 shares	O
@@ -41745,7 +41745,7 @@ has	O
 decided	O
 to	O
 sell	O
-FT	B-OTHER
+FT	B-MISC
 ,	O
 announcement	O
 due	O
@@ -41999,8 +41999,8 @@ RT	O
 BREAKING	O
 :	O
 Reigning	O
-NBA	B-OTHER
-MVP	I-OTHER
+NBA	B-MISC
+MVP	B-MISC
 Kevin	B-PER
 Durant	I-PER
 to	O
@@ -42021,8 +42021,8 @@ RELEASE	O
 DATE	O
 :	O
 The	O
-Air	B-OTHER
-Jordan	I-OTHER
+Air	B-MISC
+Jordan	B-MISC
 14	O
 "	O
 Sport	O
@@ -42081,7 +42081,7 @@ http://t.co/8tTxgnctfM	O
 
 IMGID:13216
 Loch	B-LOC
-Ard	I-OTHER
+Ard	B-MISC
 in	O
 Loch	B-LOC
 Lomond	I-LOC
@@ -42119,8 +42119,8 @@ Bart	I-PER
 on	O
 being	O
 crowned	O
-Miss	B-OTHER
-Ohio	I-OTHER
+Miss	B-MISC
+Ohio	B-MISC
 2014	O
 !	O
 #MissAmerica	O
@@ -42149,7 +42149,7 @@ more	O
 all	O
 came	O
 from	O
-Rab3a	B-OTHER
+Rab3a	B-MISC
 http://t.co/XD9MesUBJG	O
 
 IMGID:603442
@@ -42194,10 +42194,10 @@ Le	I-PER
 Fur	I-PER
 broke	O
 the	O
-400m	B-OTHER
-T44	I-OTHER
-WORLD	I-OTHER
-RECORD	I-OTHER
+400m	B-MISC
+T44	B-MISC
+WORLD	B-MISC
+RECORD	B-MISC
 &gt	O
 ;	O
 http://t.co/8r3kqZ2dF5	O
@@ -42239,12 +42239,12 @@ consultant	O
 and	O
 faculty	O
 of	O
-Hands-On	B-OTHER
-Seminars	I-OTHER
+Hands-On	B-MISC
+Seminars	B-MISC
 and	O
-Survival	B-OTHER
-Strategies	I-OTHER
-Intl	I-OTHER
+Survival	B-MISC
+Strategies	B-MISC
+Intl	B-MISC
 .	O
 http://t.co/i1R2i5bl2p	O
 
@@ -42274,11 +42274,11 @@ Optical	O
 Store	O
 ,	O
 new	O
-Kodak	B-OTHER
-Lens	I-OTHER
-Folding	I-OTHER
-Reading	I-OTHER
-Glasses	I-OTHER
+Kodak	B-MISC
+Lens	B-MISC
+Folding	B-MISC
+Reading	B-MISC
+Glasses	B-MISC
 http://t.co/vkpXGBq1Mf	O
 http://t.co/H5b10vNwre	O
 
@@ -42303,10 +42303,10 @@ Forbes	I-PER
 at	O
 opening	O
 of	O
-Faith	B-OTHER
-Rooted	I-OTHER
-Organizing	I-OTHER
-Conference	I-OTHER
+Faith	B-MISC
+Rooted	B-MISC
+Organizing	B-MISC
+Conference	B-MISC
 at	O
 Union	B-LOC
 Theological	I-LOC
@@ -42414,16 +42414,16 @@ friends	O
 is	O
 must	O
 see	O
-TV	B-OTHER
+TV	B-MISC
 RT	O
 @nflnetwork	O
 :	O
-A	B-OTHER
-Football	I-OTHER
+A	B-MISC
+Football	B-MISC
 Life	O
 :	O
-Sean	I-OTHER
-Taylor	I-OTHER
+Sean	B-MISC
+Taylor	B-MISC
 .	O
 http://t.co/IgDErLEgN2	O
 
@@ -42574,7 +42574,7 @@ IMGID:619471
 @Foodmancing	O
 My	O
 sweet	O
-Lulu	B-OTHER
+Lulu	B-MISC
 sends	O
 her	O
 puppy	O
@@ -42670,9 +42670,9 @@ IMGID:900312
 RT	O
 @PulpLibrarian	O
 :	O
-The	B-OTHER
-Ring-A-Ding	I-OTHER
-UFOs	I-OTHER
+The	B-MISC
+Ring-A-Ding	B-MISC
+UFOs	B-MISC
 ,	O
 by	O
 Bob	B-PER
@@ -42752,8 +42752,8 @@ IMGID:620397
 RT	O
 @verge	O
 :	O
-Asus	B-OTHER
-ZenWatch	I-OTHER
+Asus	B-MISC
+ZenWatch	B-MISC
 review	O
 http://t.co/Gw51h29Qvw	O
 http://t.co/HtsVvlARhr	O
@@ -42769,8 +42769,8 @@ at	O
 Argos	B-ORG
 and	O
 the	O
-Fin	B-OTHER
-Review	I-OTHER
+Fin	B-MISC
+Review	B-MISC
 .	O
 The	O
 perks	O
@@ -42806,7 +42806,7 @@ IMGID:31976
 RT	O
 @SlLVERSCREENS	O
 :	O
-Aquamarine	B-OTHER
+Aquamarine	B-MISC
 (	O
 2006	O
 )	O
@@ -42960,8 +42960,8 @@ the	O
 Women	O
 '	O
 s	O
-World	I-OTHER
-Cup	I-OTHER
+World	B-MISC
+Cup	B-MISC
 http://t.co/b7VcndVhBG	O
 http://t.co/Xt519BQMs2	O
 
@@ -43354,8 +43354,8 @@ shares	O
 details	O
 of	O
 his	O
-Ghostbusters	B-OTHER
-reboot	I-OTHER
+Ghostbusters	B-MISC
+reboot	B-MISC
 cameo	O
 http://t.co/QVjUYukOI9	O
 http://t.co/hqshqhgjMF	O
@@ -43367,8 +43367,8 @@ RT	O
 Brisbane	B-LOC
 International	O
 2015	O
-Kids	B-OTHER
-Day	I-OTHER
+Kids	B-MISC
+Day	B-MISC
 .	O
 #Federer	O
 #KidsDay	O
@@ -43415,7 +43415,7 @@ to	O
 play	O
 in	O
 the	O
-NBA	B-OTHER
+NBA	B-MISC
 .	O
 They	O
 were	O
@@ -43436,7 +43436,7 @@ USS	O
 Icefish	O
 .	O
 After	O
-#WWII	B-OTHER
+#WWII	B-MISC
 she	O
 served	O
 in	O
@@ -43445,8 +43445,8 @@ Royal	B-ORG
 Netherlands	I-ORG
 Navy	I-ORG
 as	O
-HNLMS	B-OTHER
-Walrus	I-OTHER
+HNLMS	B-MISC
+Walrus	B-MISC
 @USNavy	O
 http://t…	O
 
@@ -43469,7 +43469,7 @@ IMGID:424186
 A	O
 giant	O
 inflatable	O
-Minion	B-OTHER
+Minion	B-MISC
 flew	O
 loose	O
 &amp	O
@@ -43509,7 +43509,7 @@ to	O
 play	O
 in	O
 the	O
-NBA	B-OTHER
+NBA	B-MISC
 .	O
 They	O
 were	O
@@ -43680,7 +43680,7 @@ day	O
 in	O
 1994	O
 .	O
-#F1	B-OTHER
+#F1	B-MISC
 #RIPRoland	O
 http://t.co/QQrBLa2RiW	O
 
@@ -43772,7 +43772,7 @@ be	O
 quarantined	O
 after	O
 treating	O
-Ebola	B-OTHER
+Ebola	B-MISC
 patients	O
 http://t.co/0iH6UgZZg6	O
 
@@ -43833,7 +43833,7 @@ to	O
 attending	O
 the	O
 7/7	O
-Iftar	B-OTHER
+Iftar	B-MISC
 at	O
 the	O
 Elland	B-LOC
@@ -43898,8 +43898,8 @@ also	O
 went	O
 to	O
 eat	O
-Haidilao	B-OTHER
-Hotpot	I-OTHER
+Haidilao	B-MISC
+Hotpot	B-MISC
 today	O
 too	O
 ^	O
@@ -43973,7 +43973,7 @@ http://t.co/k2qAD0Q69p	O
 IMGID:1008871
 Noordhoek	B-LOC
 Beach	I-LOC
-#iphone	B-OTHER
+#iphone	B-MISC
 #capetown	O
 http://t.co/iviFhYcp	O
 
@@ -43995,9 +43995,9 @@ the	O
 @InsideFerrari	O
 garage	O
 during	O
-#FP1	B-OTHER
-#USGP	B-OTHER
-#F1	B-OTHER
+#FP1	B-MISC
+#USGP	B-MISC
+#F1	B-MISC
 http://t.co/LnTfv68ak5	O
 
 IMGID:117232
@@ -44154,9 +44154,9 @@ since	O
 http://t.co/nVzI8hbW3V	O
 
 IMGID:859938
-Mothers	B-OTHER
-Rugby	I-OTHER
-jerseys	I-OTHER
+Mothers	B-MISC
+Rugby	B-MISC
+jerseys	B-MISC
 presented	O
 by	O
 our	O
@@ -44192,9 +44192,9 @@ IMGID:1725357
 RT	O
 @Disneyland	O
 :	O
-Sleeping	B-OTHER
-Beauty	I-OTHER
-Castle	I-OTHER
+Sleeping	B-MISC
+Beauty	B-MISC
+Castle	B-MISC
 is	O
 officially	O
 ready	O
@@ -44233,7 +44233,7 @@ RT	O
 _	O
 Quining	O
 :	O
-Anaconda	B-OTHER
+Anaconda	B-MISC
 won	O
 over	O
 Alright	O
@@ -44273,8 +44273,8 @@ Thomas	B-PER
 Struth	I-PER
 photo	O
 in	O
-AIC	B-OTHER
-exhibit	I-OTHER
+AIC	B-MISC
+exhibit	B-MISC
 .	O
 I	O
 saw	O
@@ -44434,7 +44434,7 @@ price	O
 of	O
 2	O
 until	O
-#xmas	B-OTHER
+#xmas	B-MISC
 .	O
 http://t.co/cFwRUJ5Lcg	O
 
@@ -44918,8 +44918,8 @@ After	O
 years	O
 ,	O
 the	O
-Hubble	B-OTHER
-telescope	I-OTHER
+Hubble	B-MISC
+telescope	B-MISC
 is	O
 still	O
 surprising	O
@@ -45014,7 +45014,7 @@ of	O
 Diana	B-PER
 .	O
 3stars	O
-#Diana	B-OTHER
+#Diana	B-MISC
 #MMNR	O
 http://t.co/uPiZXzwX76	O
 
@@ -45111,7 +45111,7 @@ in	O
 her	O
 mentions	O
 .	O
-#Catfish	B-OTHER
+#Catfish	B-MISC
 http://t.co/xUbVQLBTav	O
 
 IMGID:507339
@@ -45357,10 +45357,10 @@ IMGID:1001880
 RT	O
 @THNKHTNK	O
 :	O
-VOGUE	B-OTHER
-FASHION	I-OTHER
-NIGHT	I-OTHER
-OUT	I-OTHER
+VOGUE	B-MISC
+FASHION	B-MISC
+NIGHT	B-MISC
+OUT	B-MISC
 with	O
 Jan	B-PER
 Taminiau	I-PER
@@ -45382,7 +45382,7 @@ urges	O
 @CSSKodiaks	O
 and	O
 all	O
-MUN	B-OTHER
+MUN	B-MISC
 to	O
 be	O
 global	O
@@ -45421,12 +45421,12 @@ chatting	O
 http://t.co/SPogkANHmt	O
 
 IMGID:1294217
-Portrait	B-OTHER
-of	I-OTHER
-a	I-OTHER
-Lady	I-OTHER
-in	I-OTHER
-Green	I-OTHER
+Portrait	B-MISC
+of	B-MISC
+a	B-MISC
+Lady	B-MISC
+in	B-MISC
+Green	B-MISC
 ,	O
 Jacobo	B-PER
 Pontormo	I-PER
@@ -45484,7 +45484,7 @@ Windows	O
 Made	O
 from	O
 Stacked	O
-Laser-Cut	B-OTHER
+Laser-Cut	B-MISC
 Paper	O
 by	O
 Eric	B-PER
@@ -45618,7 +45618,7 @@ Cool	O
 You	O
 tried	O
 the	O
-Ramadhan	B-OTHER
+Ramadhan	B-MISC
 :	O
 )	O
 RT	O
@@ -45934,7 +45934,7 @@ red	O
 carpet	O
 at	O
 the	O
-CFDAs	B-OTHER
+CFDAs	B-MISC
 !	O
 http://t.co/Lzcntz1BV6	O
 
@@ -45944,13 +45944,13 @@ RT	O
 :	O
 Announcing	O
 the	O
-SF	B-OTHER
-Immigrant	I-OTHER
-Right	I-OTHER
-to	I-OTHER
-Civil	I-OTHER
-Counsel	I-OTHER
-Program	I-OTHER
+SF	B-MISC
+Immigrant	B-MISC
+Right	B-MISC
+to	B-MISC
+Civil	B-MISC
+Counsel	B-MISC
+Program	B-MISC
 with	O
 @lccrbayarea	O
 http://t.co/xxfZZSuMF0	O
@@ -45996,7 +45996,7 @@ com	O
 The	O
 day	O
 the	O
-Kursk	B-OTHER
+Kursk	B-MISC
 sank	O
 :	O
 15	O
@@ -46017,9 +46017,9 @@ IMGID:1435983
 RT	O
 @theIMEU	O
 :	O
-Gaza	B-OTHER
-Film	I-OTHER
-Festival	I-OTHER
+Gaza	B-MISC
+Film	B-MISC
+Festival	B-MISC
 in	O
 Shujaiya	B-LOC
 http://t.co/U8GXrhha0x	O
@@ -46081,8 +46081,8 @@ Okwiri	B-PER
 Oduor	I-PER
 wins	O
 2014	O
-Caine	B-OTHER
-Prize	I-OTHER
+Caine	B-MISC
+Prize	B-MISC
 for	O
 African	O
 writing	O
@@ -46122,7 +46122,7 @@ us	O
 a	O
 follow	O
 .	O
-#Instagram	B-OTHER
+#Instagram	B-MISC
 #Tea	O
 http://t.co/Fu8ttm0UDB	O
 
@@ -46219,8 +46219,8 @@ http://t.co/iVCkXPCtyJ	O
 IMGID:489084
 This	O
 weeks	O
-Mary	B-OTHER
-Poppins	I-OTHER
+Mary	B-MISC
+Poppins	B-MISC
 shows	O
 are	O
 SOLD	O
@@ -46267,8 +46267,8 @@ RT	O
 _	O
 theinspiration	O
 :	O
-Dirt	B-OTHER
-Art	I-OTHER
+Dirt	B-MISC
+Art	B-MISC
 by	O
 Tamara	B-PER
 Navarro	I-PER
@@ -46333,9 +46333,9 @@ RT	O
 .	O
 @PixieLott	O
 attended	O
-Moschino	B-OTHER
-fashion	I-OTHER
-show	I-OTHER
+Moschino	B-MISC
+fashion	B-MISC
+show	B-MISC
 earlier	O
 today	O
 .	O
@@ -46384,7 +46384,7 @@ YouTube	B-ORG
 is	O
 launching	O
 an	O
-Android	B-OTHER
+Android	B-MISC
 #app	O
 for	O
 #children	O
@@ -46613,7 +46613,7 @@ http://t.co/1czcuhF6wN	O
 
 IMGID:63874
 The	O
-Mohawk	B-OTHER
+Mohawk	B-MISC
 is	O
 back	O
 .	O
@@ -46655,7 +46655,7 @@ My	O
 new	O
 puppy	O
 named	O
-Dobby	B-OTHER
+Dobby	B-MISC
 .	O
 http://t.co/Mslgpzw2tq	O
 
@@ -46684,7 +46684,7 @@ tried	O
 to	O
 make	O
 a	O
-CoD	B-OTHER
+CoD	B-MISC
 clone	O
 .	O
 -	O
@@ -46696,16 +46696,16 @@ RT	O
 :	O
 Also	O
 love	O
-macarons	B-OTHER
+macarons	B-MISC
 ,	O
 from	O
 Laduree	B-LOC
 in	O
 Paris	B-LOC
 or	O
-Maison	B-OTHER
-Christian	I-OTHER
-Faure	I-OTHER
+Maison	B-MISC
+Christian	B-MISC
+Faure	B-MISC
 in	O
 Montreal	B-LOC
 .	O
@@ -46769,8 +46769,8 @@ IMGID:575955
 PGA	B-ORG
 students	O
 make	O
-lava	B-OTHER
-lamps	I-OTHER
+lava	B-MISC
+lamps	B-MISC
 in	O
 science	O
 class	O
@@ -46898,9 +46898,9 @@ IMGID:31912
 RT	O
 @DepressedDarth	O
 :	O
-Hipster	B-OTHER
-Star	I-OTHER
-Wars	I-OTHER
+Hipster	B-MISC
+Star	B-MISC
+Wars	B-MISC
 http://t.co/nz7NO4lGVM	O
 
 IMGID:111718
@@ -46934,8 +46934,8 @@ Closer	O
 Classic	O
 Writings	O
 on	O
-Graphic	B-OTHER
-Design	I-OTHER
+Graphic	B-MISC
+Design	B-MISC
 by	O
 Michael	B-PER
 Bierut	I-PER
@@ -46944,9 +46944,9 @@ http://t.co/eRNBMSWfM6	O
 
 IMGID:67006
 Finding	O
-California	B-OTHER
-oil	I-OTHER
-spill	I-OTHER
+California	B-MISC
+oil	B-MISC
+spill	B-MISC
 '	O
 s	O
 cause	O
@@ -47024,7 +47024,7 @@ Pictures	O
 :	O
 Priests	O
 inaugurate	O
-Romanian	B-OTHER
+Romanian	B-MISC
 church	O
 built	O
 entirely	O
@@ -47124,7 +47124,7 @@ idea	O
 from	O
 @WIRED	O
 :	O
-Kano	B-OTHER
+Kano	B-MISC
 ,	O
 a	O
 DYI	O
@@ -47232,11 +47232,11 @@ Ozil	B-PER
 with	O
 the	O
 new	O
-Adidas	B-OTHER
-Ace	I-OTHER
+Adidas	B-MISC
+Ace	B-MISC
 .	O
 @adidasfootball	O
-#Adidas	B-OTHER
+#Adidas	B-MISC
 http://t.co/dsERCKXjBW	O
 
 IMGID:30607
@@ -47476,9 +47476,9 @@ Video	O
 Seth	B-PER
 Rollins	I-PER
 crashes	O
-The	B-OTHER
-Daily	I-OTHER
-Show	I-OTHER
+The	B-MISC
+Daily	B-MISC
+Show	B-MISC
 http://t.co/GM47sgSOXq	O
 http://t.co/KNmI0cq2qY	O
 
@@ -47488,8 +47488,8 @@ RT	O
 :	O
 1942	O
 :	O
-Propaganda	B-OTHER
-Cat	I-OTHER
+Propaganda	B-MISC
+Cat	B-MISC
 Brings	O
 Soviet	B-LOC
 a	O
@@ -47511,8 +47511,8 @@ Parenting	O
 Moments	O
 In	O
 The	O
-Animal	B-OTHER
-Kingdom	I-OTHER
+Animal	B-MISC
+Kingdom	B-MISC
 http://t.co/LYLlxwdiJj	O
 http://t.co/NeTjZZtAON	O
 
@@ -47528,8 +47528,8 @@ of	O
 yourself	O
 saying	O
 Happy	O
-Pi	B-OTHER
-Day	I-OTHER
+Pi	B-MISC
+Day	B-MISC
 and	O
 we	O
 may	O
@@ -47538,7 +47538,7 @@ tonight	O
 '	O
 s	O
 @PBS	O
-NewsHour	B-OTHER
+NewsHour	B-MISC
 broadcast	O
 with	O
 it	O
@@ -47563,7 +47563,7 @@ Best	O
 photo	O
 ever	O
 .	O
-#oscars	B-OTHER
+#oscars	B-MISC
 http://t.co/C9U5NOtGap	O
 
 IMGID:1814634
@@ -47589,7 +47589,7 @@ IMGID:72327
 RT	O
 @DavidFurstNYT	O
 :	O
-TIME	B-OTHER
+TIME	B-MISC
 released	O
 their	O
 picks	O
@@ -47677,8 +47677,8 @@ IMGID:768121
 RT	O
 @elivalley	O
 :	O
-The	B-OTHER
-Forward	I-OTHER
+The	B-MISC
+Forward	B-MISC
 launches	O
 its	O
 new	O
@@ -47690,9 +47690,9 @@ back-page	O
 ad	O
 for	O
 annexed	O
-West	B-OTHER
-Bank	I-OTHER
-wine	I-OTHER
+West	B-MISC
+Bank	B-MISC
+wine	B-MISC
 #lchaim	O
 http://t.co/cpO4bC16bv	O
 
@@ -47757,9 +47757,9 @@ his	O
 squad	O
 look	O
 like	O
-The	B-OTHER
-Purge	I-OTHER
-3	I-OTHER
+The	B-MISC
+Purge	B-MISC
+3	B-MISC
 http://t.co/8LC8oFcf56	O
 
 IMGID:71611
@@ -47771,7 +47771,7 @@ Cool	O
 :	O
 Shooting	O
 the	O
-MGM	B-OTHER
+MGM	B-MISC
 logo	O
 in	O
 1924	O
@@ -47795,7 +47795,7 @@ RT	O
 :	O
 Ukraine	B-LOC
 remembers	O
-WW2	B-OTHER
+WW2	B-MISC
 with	O
 Europe	B-LOC
 rather	O
@@ -47818,7 +47818,7 @@ Disney	B-ORG
 collection	O
 all	O
 on	O
-VHS	B-OTHER
+VHS	B-MISC
 http://t.co/qfP5BqN8Yg	O
 
 IMGID:1929777
@@ -47959,10 +47959,10 @@ IMGID:117382
 Get	O
 Pink	O
 with	O
-Mocha	B-OTHER
+Mocha	B-MISC
 Spoke	O
 for	O
-Valentines	B-OTHER
+Valentines	B-MISC
 :	O
 #Grenada	B-LOC
 http://t.co/hdDCbVy0S4	O
@@ -48007,11 +48007,11 @@ drawn	O
 from	O
 his	O
 book	O
-Against	B-OTHER
-a	I-OTHER
-Tide	I-OTHER
-of	I-OTHER
-Evil	I-OTHER
+Against	B-MISC
+a	B-MISC
+Tide	B-MISC
+of	B-MISC
+Evil	B-MISC
 .	O
 http://t.co/mv5Z6Q7Etn	O
 
@@ -48082,8 +48082,8 @@ include	O
 diving	O
 into	O
 the	O
-Data	B-OTHER
-Lake	I-OTHER
+Data	B-MISC
+Lake	B-MISC
 :	O
 http://t.co/FYSRXdBazA	O
 http://t.co/Wz5Jdzf35D	O
@@ -48158,8 +48158,8 @@ New	O
 @CompuwareAPM	O
 survey	O
 reveals	O
-Cloud	B-OTHER
-SLAs	I-OTHER
+Cloud	B-MISC
+SLAs	B-MISC
 are	O
 lacking	O
 .	O
@@ -48206,7 +48206,7 @@ Valley	I-LOC
 Tags	O
 gymnastics	O
 meet	O
-#Olympics	B-OTHER
+#Olympics	B-MISC
 http://t.co/GsAOkLezE2	O
 
 IMGID:12730
@@ -48215,8 +48215,8 @@ http://t.co/wMuX1wVZYg	O
 need	O
 a	O
 new	O
-Marshall	B-OTHER
-Plan	I-OTHER
+Marshall	B-MISC
+Plan	B-MISC
 for	O
 the	O
 world"	O
@@ -48368,7 +48368,7 @@ IMGID:497201
 RT	O
 @Dauragon	O
 :	O
-Simpsons	B-OTHER
+Simpsons	B-MISC
 predicted	O
 indie	O
 games	O
@@ -48570,7 +48570,7 @@ Still	O
 Defends	O
 Area	B-LOC
 51	I-LOC
-UFO	B-OTHER
+UFO	B-MISC
 info	O
 25	O
 Years	O
@@ -48702,8 +48702,8 @@ back	O
 in	O
 time	O
 with	O
-Eroica	B-OTHER
-Britannia	I-OTHER
+Eroica	B-MISC
+Britannia	B-MISC
 in	O
 #Bakewell	B-LOC
 http://t.co/sftFha4ju1	O
@@ -48843,8 +48843,8 @@ Island	I-LOC
 Gateway	O
 to	O
 the	O
-American	B-OTHER
-Dream	I-OTHER
+American	B-MISC
+Dream	B-MISC
 http://t.co/43hVkz4sQG	O
 via	O
 @BBCWitness	O
@@ -48905,10 +48905,10 @@ RT	O
 MTA	B-ORG
 Unamused	O
 By	O
-Lord	B-OTHER
-Of	I-OTHER
-The	I-OTHER
-Rings	I-OTHER
+Lord	B-MISC
+Of	B-MISC
+The	B-MISC
+Rings	B-MISC
 Service	O
 Advisory	O
 Sign	O
@@ -48942,8 +48942,8 @@ Join	O
 :	O
 Undisputed	O
 Truth	O
-Broadway	B-OTHER
-Show	I-OTHER
+Broadway	B-MISC
+Show	B-MISC
 at	O
 Dubai	B-LOC
 World	I-LOC
@@ -49075,7 +49075,7 @@ INFO	O
 150911	O
 Deng	O
 Chao	O
-weibo	B-OTHER
+weibo	B-MISC
 update	O
 #Luhan	B-PER
 #LuhanRunningManChina	O
@@ -49156,8 +49156,8 @@ his	O
 moment	O
 with	O
 the	O
-Stanley	B-OTHER
-Cup	I-OTHER
+Stanley	B-MISC
+Cup	B-MISC
 .	O
 #BlackhawksRally	O
 photos	O
@@ -49199,9 +49199,9 @@ http://t.co/nXBqIuafIe	O
 
 IMGID:468856
 @UN	O
-World	B-OTHER
-Health	I-OTHER
-Day	I-OTHER
+World	B-MISC
+Health	B-MISC
+Day	B-MISC
 is	O
 coming	O
 up	O
@@ -49215,7 +49215,7 @@ water	O
 is	O
 linked	O
 to	O
-health	I-OTHER
+health	B-MISC
 :	O
 http://t.co/Qie7j1YpfH	O
 http://t.co/plivLVnJlH	O
@@ -49253,8 +49253,8 @@ Russia	B-LOC
 ,	O
 Qatar	B-LOC
 winning	O
-World	B-OTHER
-Cup	I-OTHER
+World	B-MISC
+Cup	B-MISC
 bids	O
 .	O
 http://t.co/dOScMXR7js	O
@@ -49290,7 +49290,7 @@ We	O
 are	O
 holding	O
 a	O
-CSIA	B-OTHER
+CSIA	B-MISC
 Level	O
 1	O
 course	O
@@ -49388,7 +49388,7 @@ RT	O
 :	O
 Another	O
 brand-new	O
-#NH90	B-OTHER
+#NH90	B-MISC
 for	O
 the	O
 NLD	B-ORG
@@ -49409,7 +49409,7 @@ RT	O
 airport	I-LOC
 .	O
 Free	O
-wi-fi	B-OTHER
+wi-fi	B-MISC
 .	O
 Shame	O
 on	O
@@ -49440,8 +49440,8 @@ RT	O
 @DrKhouryCDC	O
 :	O
 Happy	O
-New	B-OTHER
-Year	I-OTHER
+New	B-MISC
+Year	B-MISC
 from	O
 the	O
 CDC	B-ORG
@@ -49482,7 +49482,7 @@ RT	O
 @NicholasHopton	O
 :	O
 Great	O
-#Christmas	B-OTHER
+#Christmas	B-MISC
 carols	O
 concert	O
 @	O
@@ -49539,8 +49539,8 @@ http://t.co/3vbPIXMyCy	O
 IMGID:639126
 ICYMI	O
 :	O
-Nikon	B-OTHER
-D5500	I-OTHER
+Nikon	B-MISC
+D5500	B-MISC
 review	O
 :	O
 Is	O
@@ -49828,7 +49828,7 @@ American	I-ORG
 Red	I-ORG
 Cross	I-ORG
 in	O
-WWII	B-OTHER
+WWII	B-MISC
 |	O
 http://t.co/qMmRTTsVFO	O
 http://t.co/rw05jZqXxB	O
@@ -49965,8 +49965,8 @@ RT	O
 @GovDelivery	O
 wins	O
 the	O
-Progress	B-OTHER
-Minnesota	I-OTHER
+Progress	B-MISC
+Minnesota	B-MISC
 award	O
 for	O
 job	O
@@ -50012,9 +50012,9 @@ RT	O
 :	O
 Breaking	O
 :	O
-House	B-OTHER
-of	I-OTHER
-Cards	I-OTHER
+House	B-MISC
+of	B-MISC
+Cards	B-MISC
 season	O
 three	O
 is	O
@@ -50087,7 +50087,7 @@ http://t.co/ulh0vLYI7j	O
 http://t.co/pKUvSA26Es	O
 
 IMGID:414991
-Silat	B-OTHER
+Silat	B-MISC
 in	O
 Malaysia	B-LOC
 ,	O
@@ -50100,7 +50100,7 @@ arts	O
 .	O
 #MyFest2015	O
 #MalaysiaTrulyAsia	O
-#Silat	B-OTHER
+#Silat	B-MISC
 #MartialArts	O
 #ttot	O
 http://t.co/XCQq8WrHOf	O
@@ -50170,8 +50170,8 @@ IMGID:741078
 RT	O
 @TheHungerGames	O
 :	O
-Squad	B-OTHER
-451	I-OTHER
+Squad	B-MISC
+451	B-MISC
 prepares	O
 to	O
 take	O
@@ -50249,7 +50249,7 @@ demonstrate	O
 how	O
 to	O
 administer	O
-Naloxone	B-OTHER
+Naloxone	B-MISC
 .	O
 http://t.co/YkfbZYWsjl	O
 
@@ -50281,9 +50281,9 @@ is	O
 nominated	O
 for	O
 the	O
-Jack	B-OTHER
-Adams	I-OTHER
-Award	I-OTHER
+Jack	B-MISC
+Adams	B-MISC
+Award	B-MISC
 --&gt	O
 ;	O
 http://t.co/9M4Q7Ts6wP	O
@@ -50631,7 +50631,7 @@ am	O
 I	O
 not	O
 at	O
-NYFF	B-OTHER
+NYFF	B-MISC
 this	O
 year	O
 ,	O
@@ -50676,8 +50676,8 @@ great	O
 day	O
 for	O
 the	O
-Catholic	B-OTHER
-Church	I-OTHER
+Catholic	B-MISC
+Church	B-MISC
 in	O
 Africa	B-LOC
 .	O
@@ -50704,7 +50704,7 @@ http://t.co/w7jSMe93Fj	O
 http://t.co/HgZVsJdZJd	O
 
 IMGID:345386
-FitBrit	B-OTHER
+FitBrit	B-MISC
 winners	O
 Gwen	B-PER
 and	O
@@ -50713,8 +50713,8 @@ showing	O
 off	O
 their	O
 new	O
-Nite	B-OTHER
-watches	I-OTHER
+Nite	B-MISC
+watches	B-MISC
 :	O
 )	O
 http://t.co/IFqYtKZr	O
@@ -50730,11 +50730,11 @@ Governors	O
 for	O
 the	O
 3rd	O
-National	B-OTHER
-and	I-OTHER
-County	I-OTHER
-Government	I-OTHER
-Summit	I-OTHER
+National	B-MISC
+and	B-MISC
+County	B-MISC
+Government	B-MISC
+Summit	B-MISC
 at	O
 State	B-LOC
 House	I-LOC
@@ -50820,7 +50820,7 @@ RT	O
 John	B-PER
 Lennon	I-PER
 sniffing	O
-Coke	B-OTHER
+Coke	B-MISC
 http://t.co/XYOymazJlb	O
 
 IMGID:357114
@@ -50858,7 +50858,7 @@ Leonardo	B-PER
 DiCaprio	I-PER
 deserves	O
 an	O
-#Oscar	B-OTHER
+#Oscar	B-MISC
 for	O
 looking	O
 so	O
@@ -50895,7 +50895,7 @@ support	O
 public	O
 schools	O
 in	O
-NYC	B-OTHER
+NYC	B-MISC
 .	O
 Show	O
 us	O
@@ -50980,7 +50980,7 @@ day	O
 for	O
 Yamaha	B-ORG
 in	O
-#MotoGP	B-OTHER
+#MotoGP	B-MISC
 !	O
 Podium	O
 photo	O
@@ -50994,7 +50994,7 @@ old	O
 photos	O
 on	O
 my	O
-iPod	B-OTHER
+iPod	B-MISC
 .	O
 Why	O
 is	O
@@ -51169,12 +51169,12 @@ IMGID:35974
 RT	O
 @FlLMOGRAPHY	O
 :	O
-Alicia	B-OTHER
-Silverstone	I-OTHER
-for	I-OTHER
-Rolling	I-OTHER
-Stone	I-OTHER
-Magazine	I-OTHER
+Alicia	B-MISC
+Silverstone	B-MISC
+for	B-MISC
+Rolling	B-MISC
+Stone	B-MISC
+Magazine	B-MISC
 (	O
 1995	O
 )	O
@@ -51185,10 +51185,10 @@ Our	O
 team	O
 at	O
 the	O
-FMG	B-OTHER
-Dragon	I-OTHER
-Boat	I-OTHER
-Fest	I-OTHER
+FMG	B-MISC
+Dragon	B-MISC
+Boat	B-MISC
+Fest	B-MISC
 today	O
 .	O
 They	O
@@ -51283,7 +51283,7 @@ RT	O
 :	O
 With	O
 "	O
-Selma	B-OTHER
+Selma	B-MISC
 ,	O
 "	O
 Ava	B-PER
@@ -51403,8 +51403,8 @@ http://t.co/zXv4a1hBCy	O
 
 IMGID:65804
 Happy	O
-Memorial	B-OTHER
-Day	I-OTHER
+Memorial	B-MISC
+Day	B-MISC
 ,	O
 folks	O
 .	O
@@ -51436,7 +51436,7 @@ the	O
 sidelines	O
 watching	O
 the	O
-Huskies	B-OTHER
+Huskies	B-MISC
 warm	O
 up	O
 .	O
@@ -51533,9 +51533,9 @@ in	I-ORG
 the	I-ORG
 District	I-ORG
 during	O
-FIELD	B-OTHER
-TRIP	I-OTHER
-FRIDAY	I-OTHER
+FIELD	B-MISC
+TRIP	B-MISC
+FRIDAY	B-MISC
 !	O
 #3TVFieldTrip	O
 http://t.co/cOnA7it5YR	O
@@ -51576,9 +51576,9 @@ Mkduk	I-PER
 -	O
 This	O
 Is	O
-Hip	B-OTHER
-Hop	I-OTHER
-Mixtape	I-OTHER
+Hip	B-MISC
+Hop	B-MISC
+Mixtape	B-MISC
 July	O
 17-19	O
 .	O
@@ -51673,13 +51673,13 @@ Angeles	I-LOC
 http://t.co/7zpy7etTOe	O
 
 IMGID:109535
-BLACK	I-OTHER
+BLACK	B-MISC
 ICE	O
 :	O
 AN	O
-AURORA	B-OTHER
-BLACK	I-OTHER
-NOVEL	I-OTHER
+AURORA	B-MISC
+BLACK	B-MISC
+NOVEL	B-MISC
 coming	O
 soon	O
 !	O
@@ -51753,8 +51753,8 @@ waking	O
 up	O
 to	O
 a	O
-white	B-OTHER
-Christmas	I-OTHER
+white	B-MISC
+Christmas	B-MISC
 .	O
 Picture	O
 via	O
@@ -51762,7 +51762,7 @@ via	O
 webcam	O
 .	O
 #cawx	O
-#tahoe	B-OTHER
+#tahoe	B-MISC
 http://t.co/PEeD0GpvuF	O
 
 IMGID:21103
@@ -51807,8 +51807,8 @@ Longacre	I-PER
 on	O
 being	O
 crowned	O
-Miss	B-OTHER
-Delaware	I-OTHER
+Miss	B-MISC
+Delaware	B-MISC
 2014	O
 !	O
 #MissAmerica	O
@@ -51973,8 +51973,8 @@ a	O
 review	O
 of	O
 the	O
-Empire	B-OTHER
-Eggs	I-OTHER
+Empire	B-MISC
+Eggs	B-MISC
 at	O
 Zaftigs	B-LOC
 Delicatessen	I-LOC
@@ -51993,8 +51993,8 @@ Curiosity	O
 Rover	O
 Drills	O
 Into	O
-Mars	B-OTHER
-Rock	I-OTHER
+Mars	B-MISC
+Rock	B-MISC
 ,	O
 Finds	O
 Water	O
@@ -52006,12 +52006,12 @@ RT	O
 @SportsNation	O
 :	O
 When	O
-Mufasa	B-OTHER
+Mufasa	B-MISC
 dies	O
 in	O
 the	O
-Lion	B-OTHER
-King	I-OTHER
+Lion	B-MISC
+King	B-MISC
 :	O
 http://t.co/z86Cll3F7P	O
 
@@ -52031,8 +52031,8 @@ IMGID:70337
 RT	O
 @AmherstAleHouse	O
 :	O
-Crown	B-OTHER
-Royal	I-OTHER
+Crown	B-MISC
+Royal	B-MISC
 BBQ	O
 Wings	O
 on	O
@@ -52074,9 +52074,9 @@ IMGID:819987
 Humbling	O
 to	O
 attend	O
-Gold	B-OTHER
-Star	I-OTHER
-families	I-OTHER
+Gold	B-MISC
+Star	B-MISC
+families	B-MISC
 event	O
 in	O
 Peoria	B-LOC
@@ -52090,7 +52090,7 @@ gave	O
 all	O
 and	O
 their	O
-families	I-OTHER
+families	B-MISC
 .	O
 http://t.co/s8DKX1kuHM	O
 
@@ -52161,12 +52161,12 @@ IMGID:36550
 When	O
 Bey	B-PER
 added	O
-Throw	B-OTHER
-That	I-OTHER
-Ass	I-OTHER
-In	I-OTHER
-A	I-OTHER
-Circle	I-OTHER
+Throw	B-MISC
+That	B-MISC
+Ass	B-MISC
+In	B-MISC
+A	B-MISC
+Circle	B-MISC
 to	O
 her	O
 set	O
@@ -52183,8 +52183,8 @@ Cleveland	B-LOC
 Heights	I-LOC
 jail	O
 -	O
-WSMV	B-OTHER
-Channel	I-OTHER
+WSMV	B-MISC
+Channel	B-MISC
 4	O
 http://t.co/LrLdTDCK4n	O
 &lt;	O
@@ -52274,7 +52274,7 @@ RT	O
 @CavsNtn	O
 :	O
 The	O
-NBA	B-OTHER
+NBA	B-MISC
 emoji	O
 sheet	O
 .	O
@@ -52291,8 +52291,8 @@ RT	O
 Who	O
 wins	O
 the	O
-Sugar	B-OTHER
-Bowl	I-OTHER
+Sugar	B-MISC
+Bowl	B-MISC
 ?	O
 Retweet	O
 for	O
@@ -52434,8 +52434,8 @@ the	O
 Uganda	B-ORG
 Cranes	I-ORG
 in	O
-Afcon	B-OTHER
-Qualifier	I-OTHER
+Afcon	B-MISC
+Qualifier	B-MISC
 in	O
 Comoros	B-LOC
 http://t.co/iaMgKgPyF9	O
@@ -52577,8 +52577,8 @@ http://t.co/rVCqgTXyz7	O
 
 IMGID:12664
 Happy	O
-Fathers	B-OTHER
-Day	I-OTHER
+Fathers	B-MISC
+Day	B-MISC
 !	O
 !	O
 http://t.co/WcFbyvCPVT	O
@@ -52658,7 +52658,7 @@ Hillary	B-PER
 Clinton	I-PER
 playing	O
 a	O
-Gameboy	B-OTHER
+Gameboy	B-MISC
 on	O
 a	O
 flight	O
@@ -52708,8 +52708,8 @@ forward	O
 to	O
 hearing	O
 from	O
-Somerset	B-OTHER
-Ward	I-OTHER
+Somerset	B-MISC
+Ward	B-MISC
 candidates	O
 on	O
 transportation	O
@@ -52744,15 +52744,15 @@ today	O
 at	O
 #VMworld	O
 ,	O
-VMware	B-OTHER
-EVO	I-OTHER
-SDDC	I-OTHER
+VMware	B-MISC
+EVO	B-MISC
+SDDC	B-MISC
 Manager	O
 :	O
 rapidly	O
 build	O
 complete	O
-SDDC	I-OTHER
+SDDC	B-MISC
 w/	O
 automative	O
 lifecycle	O
@@ -52846,7 +52846,7 @@ about	O
 He	O
 signed	O
 a	O
-NLI	B-OTHER
+NLI	B-MISC
 to	O
 play	O
 golf	O
@@ -52972,13 +52972,13 @@ http://t.co/TevsuCtO6z	O
 IMGID:8513
 Announcing	O
 :	O
-Kinesio	B-OTHER
-Taping	I-OTHER
+Kinesio	B-MISC
+Taping	B-MISC
 Advanced	O
 Whole	O
 Body	O
 :	O
-KT3	B-OTHER
+KT3	B-MISC
 November	O
 23	O
 ,	O
@@ -53019,9 +53019,9 @@ Hammer	I-PER
 http://t.co/zvtgALmM	O
 
 IMGID:807471
-Amore	B-OTHER
-e	I-OTHER
-Psiche	I-OTHER
+Amore	B-MISC
+e	B-MISC
+Psiche	B-MISC
 :	O
 inspirations	O
 from	O
@@ -53029,7 +53029,7 @@ Italy	B-LOC
 http://t.co/mbivG9QXa3	O
 #italy	B-LOC
 #inspirations	O
-#amore	B-OTHER
+#amore	B-MISC
 http://t.co/gqZybO6gY6	O
 http://t.co/utpISAwFDC	O
 
@@ -53122,7 +53122,7 @@ beautiful	O
 camel	O
 is	O
 called	O
-Camille	B-OTHER
+Camille	B-MISC
 .	O
 @AladdinUAE	O
 http://t.co/bU3Xb2JwOR	O
@@ -53291,9 +53291,9 @@ Gomez	I-PER
 take	O
 on	O
 the	O
-Dizzy	B-OTHER
-Penalty	I-OTHER
-challenge	I-OTHER
+Dizzy	B-MISC
+Penalty	B-MISC
+challenge	B-MISC
 :	O
 http://t.co/eF6gGCCWFM	O
 http://t.co/VvImv2WqSF	O
@@ -53491,9 +53491,9 @@ Stairs	O
 K	O
 +	O
 S	O
-Architects	I-OTHER
-#Arquitectura	B-OTHER
-#Interiorismo	B-OTHER
+Architects	B-MISC
+#Arquitectura	B-MISC
+#Interiorismo	B-MISC
 http://t.co/LBSbruXpkY	O
 
 IMGID:140720
@@ -53522,9 +53522,9 @@ RT	O
 @SoReIatable	O
 :	O
 "	O
-The	B-OTHER
-Last	I-OTHER
-Kiss	I-OTHER
+The	B-MISC
+Last	B-MISC
+Kiss	B-MISC
 "	O
 .	O
 .	O
@@ -53543,12 +53543,12 @@ RT	O
 :	O
 Michael	B-PER
 Moore	I-PER
-on	I-OTHER
+on	B-MISC
 the	O
 "	O
-War	B-OTHER
-on	I-OTHER
-Terror	I-OTHER
+War	B-MISC
+on	B-MISC
+Terror	B-MISC
 "	O
 .	O
 http://t.co/U1PSnx0Hmb	O
@@ -53614,8 +53614,8 @@ RT	O
 @NewStatesman	O
 :	O
 Segregated	O
-Mardi	B-OTHER
-Gras	I-OTHER
+Mardi	B-MISC
+Gras	B-MISC
 in	O
 Alabama	B-LOC
 tells	O
@@ -53667,7 +53667,7 @@ it	O
 ;	O
 Listen	O
 to	O
-Wings	B-OTHER
+Wings	B-MISC
 by	O
 Delta	B-PER
 Goodrem	I-PER
@@ -53743,8 +53743,8 @@ animals	O
 hidden	O
 in	O
 the	O
-London	B-OTHER
-Underground	I-OTHER
+London	B-MISC
+Underground	B-MISC
 map	O
 http://t.co/66TCEAJgf5	O
 http://t.co/u0cdNWHVd7	O
@@ -53783,7 +53783,7 @@ RT	O
 @blissfulfiction	O
 :	O
 the	O
-oscars	B-OTHER
+oscars	B-MISC
 was	O
 a	O
 monumental	O
@@ -54058,7 +54058,7 @@ IMGID:35972
 RT	O
 @SlLVERSCREENS	O
 :	O
-Coraline	B-OTHER
+Coraline	B-MISC
 (	O
 2009	O
 )	O
@@ -54078,7 +54078,7 @@ stand	O
 on	O
 Mars	O
 with	O
-Curiosity	B-OTHER
+Curiosity	B-MISC
 http://t.co/txVIQOIvWO	O
 http://t.co/AqPSnitk9r	O
 
@@ -54126,8 +54126,8 @@ Assembly	I-LOC
 ,	O
 but	O
 the	O
-soap	B-OTHER
-opera	I-OTHER
+soap	B-MISC
+opera	B-MISC
 continues	O
 MORE	O
 :	O
@@ -54209,7 +54209,7 @@ we	O
 get	O
 3	O
 way	O
-FaceTime	B-OTHER
+FaceTime	B-MISC
 &amp	O
 ;	O
 better	O
@@ -54337,10 +54337,10 @@ s	O
 front	O
 page	O
 of	O
-The	B-OTHER
-New	I-OTHER
-York	I-OTHER
-Times	I-OTHER
+The	B-MISC
+New	B-MISC
+York	B-MISC
+Times	B-MISC
 http://t.co/Rtc2j80mes	O
 http://t.co/U9uAIEo3e4	O
 
@@ -54435,8 +54435,8 @@ with	O
 the	O
 help	O
 of	O
-Shea	B-OTHER
-Weber	I-OTHER
+Shea	B-MISC
+Weber	B-MISC
 &amp	O
 ;	O
 Pekka	B-PER
@@ -54464,8 +54464,8 @@ RT	O
 @janickibionrg	O
 :	O
 The	O
-Omni	B-OTHER
-Processor	I-OTHER
+Omni	B-MISC
+Processor	B-MISC
 is	O
 taking	O
 shape	O
@@ -54512,11 +54512,11 @@ IMGID:701960
 RT	O
 @gameinformer	O
 :	O
-Minecraft	B-OTHER
+Minecraft	B-MISC
 Arrives	O
 On	O
-PlayStation	B-OTHER
-4	I-OTHER
+PlayStation	B-MISC
+4	B-MISC
 Today	O
 ,	O
 Vita	O
@@ -54532,14 +54532,14 @@ RT	O
 "	O
 Scared	O
 :	O
-Ten	B-OTHER
-Tales	I-OTHER
-of	I-OTHER
-Horror	I-OTHER
+Ten	B-MISC
+Tales	B-MISC
+of	B-MISC
+Horror	B-MISC
 "	O
 Fantasy&amp	O
 ;	O
-horror	I-OTHER
+horror	B-MISC
 stories	O
 by	O
 10	O
@@ -54686,13 +54686,13 @@ America	B-LOC
 !	O
 Test	O
 your	O
-IQ	B-OTHER
+IQ	B-MISC
 on	O
 US	B-LOC
 presidents	O
 with	O
 this	O
-#Kahoot	B-OTHER
+#Kahoot	B-MISC
 :	O
 http://t.co/t8uzFIBFge	O
 http://t.co/j7GXgfR1b7	O
@@ -54728,17 +54728,17 @@ IMGID:73408
 RT	O
 @Raytheon	O
 :	O
-Apache	B-OTHER
-helicopters	I-OTHER
+Apache	B-MISC
+helicopters	B-MISC
 get	O
 an	O
 arsenal	O
 boost	O
 with	O
 air-to-air	O
-Stinger	B-OTHER
-missile	I-OTHER
-system	I-OTHER
+Stinger	B-MISC
+missile	B-MISC
+system	B-MISC
 :	O
 http://t.co/o34S3fuWox	O
 http://t.co/tr1I5mDII9	O
@@ -54757,7 +54757,7 @@ driving	O
 after	O
 crashing	O
 his	O
-Ferrari	B-OTHER
+Ferrari	B-MISC
 .	O
 (	O
 @Sport	O
@@ -54905,9 +54905,9 @@ Fri	O
 .	O
 morning	O
 near	O
-Toronto	B-OTHER
-General	I-OTHER
-Hospital	I-OTHER
+Toronto	B-MISC
+General	B-MISC
+Hospital	B-MISC
 .	O
 http://t.co/PCuXrpYJqX	O
 
@@ -54937,7 +54937,7 @@ man	O
 is	O
 dying	O
 of	O
-Ebola	B-OTHER
+Ebola	B-MISC
 right	O
 outside	O
 a	O
@@ -54961,10 +54961,10 @@ hands-on	O
 preview	O
 of	O
 the	O
-Dell	B-OTHER
-Venue	I-OTHER
-10	I-OTHER
-7000	I-OTHER
+Dell	B-MISC
+Venue	B-MISC
+10	B-MISC
+7000	B-MISC
 tablet	O
 http://t.co/L9cxZRSYH1	O
 http://t.co/UOvOCyRgff	O
@@ -55121,7 +55121,7 @@ Will	O
 Kill	O
 On	O
 "	O
-SNL	B-OTHER
+SNL	B-MISC
 "	O
 http://t.co/kF1lYjXZIx	O
 http://t.co/ro8JsGBTnD	O
@@ -55348,8 +55348,8 @@ roof	O
 is	O
 on	O
 ,	O
-Centre	B-OTHER
-Court	I-OTHER
+Centre	B-MISC
+Court	B-MISC
 is	O
 back	O
 in	O
@@ -55456,7 +55456,7 @@ to	O
 be	O
 holding	O
 an	O
-Olympic	B-OTHER
+Olympic	B-MISC
 gold	O
 medal	O
 and	O
@@ -55596,8 +55596,8 @@ RT	O
 @BuzzFeed	O
 :	O
 7	O
-World	B-OTHER
-Cup	I-OTHER
+World	B-MISC
+Cup	B-MISC
 Watching	O
 Positions	O
 http://t.co/i7hR0A9lGv	O
@@ -55696,8 +55696,8 @@ at	O
 Reading	O
 &amp	O
 ;	O
-Leeds	B-OTHER
-Festival	I-OTHER
+Leeds	B-MISC
+Festival	B-MISC
 this	O
 weekend	O
 !	O
@@ -55760,8 +55760,8 @@ James	I-PER
 should	O
 be	O
 the	O
-Finals	B-OTHER
-MVP	I-OTHER
+Finals	B-MISC
+MVP	B-MISC
 whether	O
 the	O
 Cavs	B-ORG
@@ -56035,8 +56035,8 @@ RT	O
 @KingMiller	O
 _	O
 :	O
-Incredible	B-OTHER
-poem	I-OTHER
+Incredible	B-MISC
+poem	B-MISC
 .	O
 http://t.co/hF5Lgno1GP	O
 
@@ -56194,8 +56194,8 @@ http://t.co/nNBIkG7QI8	O
 
 IMGID:781136
 1969	O
-Plymouth	B-OTHER
-Barracuda	I-OTHER
+Plymouth	B-MISC
+Barracuda	B-MISC
 http://t.co/jVbJaFeO8j	O
 
 IMGID:38419
@@ -56303,7 +56303,7 @@ motion	O
 is	O
 N/NW	O
 .	O
-#tahoe	B-OTHER
+#tahoe	B-MISC
 #cawx	O
 http://t.co/Jxl0rc3wcZ	O
 
@@ -56482,7 +56482,7 @@ How	O
 to	O
 Write	O
 a	O
-Linkedin	B-OTHER
+Linkedin	B-MISC
 Profile	O
 That	O
 Lets	O
@@ -56722,9 +56722,9 @@ RT	O
 FC	B-ORG
 BARCELONA	I-ORG
 ARE	O
-COPA	B-OTHER
-DEL	I-OTHER
-REY	I-OTHER
+COPA	B-MISC
+DEL	B-MISC
+REY	B-MISC
 2014-15	O
 CHAMPIONS	O
 http://t.co/OAlF8GbZNy	O
@@ -57135,8 +57135,8 @@ today	O
 Jay	B-PER
 Z	I-PER
 released	O
-The	B-OTHER
-Blueprint	I-OTHER
+The	B-MISC
+Blueprint	B-MISC
 .	O
 http://t.co/7DPu8Uo8ZX	O
 
@@ -57240,8 +57240,8 @@ IMGID:73899
 RT	O
 @SteveBellone	O
 :	O
-Suffolk	B-OTHER
-County	I-OTHER
+Suffolk	B-MISC
+County	B-MISC
 ,	O
 GET	O
 READY	O
@@ -57251,9 +57251,9 @@ RUN	O
 The	O
 first	O
 inaugural	O
-Suffolk	B-OTHER
-County	I-OTHER
-Marathon	I-OTHER
+Suffolk	B-MISC
+County	B-MISC
+Marathon	B-MISC
 will	O
 be	O
 on	O
@@ -57322,9 +57322,9 @@ hat	O
 Fonda	B-PER
 wore	O
 in	O
-MY	B-OTHER
-DARLING	I-OTHER
-CLEMENTINE	I-OTHER
+MY	B-MISC
+DARLING	B-MISC
+CLEMENTINE	B-MISC
 .	O
 #TCMFF	O
 #BelatedTweet	O
@@ -57410,8 +57410,8 @@ today	O
 for	O
 our	O
 upcoming	O
-Live	B-OTHER
-DVD	I-OTHER
+Live	B-MISC
+DVD	B-MISC
 .	O
 http://t.co/EhCZ9bXpuy	O
 
@@ -57457,9 +57457,9 @@ TONIGHT	O
 8-9PM	O
 /	O
 BBC	B-ORG
-THREE	B-OTHER
-COUNTIES	I-OTHER
-RADIO	I-OTHER
+THREE	B-MISC
+COUNTIES	B-MISC
+RADIO	B-MISC
 /	O
 @RockyNti	O
 #BBCintroducing	O
@@ -57524,7 +57524,7 @@ at	O
 Nike	B-ORG
 waiting	O
 for	O
-POTUS	B-OTHER
+POTUS	B-MISC
 address	O
 on	O
 trade	O
@@ -57561,7 +57561,7 @@ IMGID:39
 are	O
 you	O
 DJ	O
-Snapchat	B-OTHER
+Snapchat	B-MISC
 ?	O
 http://t.co/qXQQNnrt8w	O
 
@@ -57864,10 +57864,10 @@ Smith	I-PER
 Otis	B-PER
 Campbell	I-PER
 on	O
-The	B-OTHER
-Andy	I-OTHER
-Griffith	I-OTHER
-Show	I-OTHER
+The	B-MISC
+Andy	B-MISC
+Griffith	B-MISC
+Show	B-MISC
 )	O
 played	O
 drunk	O
@@ -57908,8 +57908,8 @@ IMGID:63999
 RT	O
 @KNegandhiESPN	O
 :	O
-Sandy	B-OTHER
-Hook	I-OTHER
+Sandy	B-MISC
+Hook	B-MISC
 2	O
 years	O
 later	O
@@ -57989,9 +57989,9 @@ third	O
 at	O
 the	O
 2014	O
-Western	B-OTHER
-States	I-OTHER
-100	I-OTHER
+Western	B-MISC
+States	B-MISC
+100	B-MISC
 in	O
 15	O
 :	O
@@ -57999,7 +57999,7 @@ in	O
 :	O
 42	O
 .	O
-#WS100	B-OTHER
+#WS100	B-MISC
 http://t.co/NY7bl9Y5FF	O
 
 IMGID:557354
@@ -58041,7 +58041,7 @@ RT	O
 _	O
 :	O
 When	O
-Bae	B-OTHER
+Bae	B-MISC
 is	O
 watching	O
 the	O
@@ -58066,9 +58066,9 @@ Hair	O
 to	O
 #win	O
 this	O
-#Coach	B-OTHER
-Daisy	I-OTHER
-Madras	I-OTHER
+#Coach	B-MISC
+Daisy	B-MISC
+Madras	B-MISC
 #Handbag	O
 perfect	O
 for	O
@@ -58260,8 +58260,8 @@ schooled	O
 Nancy	B-PER
 Grace	I-PER
 on	O
-marijuana	B-OTHER
-legalization	I-OTHER
+marijuana	B-MISC
+legalization	B-MISC
 .	O
 http://t.co/LfBwMeagXz	O
 #Happy420	O
@@ -58276,8 +58276,8 @@ s	O
 Mile	O
 results	O
 from	O
-Morton	B-OTHER
-Games	I-OTHER
+Morton	B-MISC
+Games	B-MISC
 in	O
 Ireland	B-LOC
 .	O
@@ -58455,7 +58455,7 @@ RT	O
 :	O
 Die	O
 ,	O
-calories	B-OTHER
+calories	B-MISC
 die	O
 !	O
 http://t.co/HKq16IeoVT	O
@@ -58513,13 +58513,13 @@ RT	O
 @mashabletech	O
 :	O
 The	O
-LG	B-OTHER
-G4	I-OTHER
+LG	B-MISC
+G4	B-MISC
 vs	O
 .	O
 its	O
 biggest	O
-Android	B-OTHER
+Android	B-MISC
 competition	O
 http://t.co/xwk2Gkh0gQ	O
 http://t.co/7nh8j0nB0v	O
@@ -58580,8 +58580,8 @@ But	O
 will	O
 this	O
 "	O
-Star	B-OTHER
-Wars	I-OTHER
+Star	B-MISC
+Wars	B-MISC
 "	O
 -themed	O
 plane	O
@@ -58590,8 +58590,8 @@ able	O
 to	O
 make	O
 the	O
-Kessel	B-OTHER
-Run	I-OTHER
+Kessel	B-MISC
+Run	B-MISC
 in	O
 12	O
 parsecs	O
@@ -58611,7 +58611,7 @@ and	O
 Johnny	B-PER
 Cash	I-PER
 of	O
-Eurovision	B-OTHER
+Eurovision	B-MISC
 http://t.co/TO0J6uNlwS	O
 
 IMGID:119211
@@ -58647,8 +58647,8 @@ chance	O
 to	O
 catch	O
 the	O
-Magna	B-OTHER
-Carta	I-OTHER
+Magna	B-MISC
+Carta	B-MISC
 !	O
 http://t.co/POZ3u6oCBO	O
 #MagnaCarta	O
@@ -58817,8 +58817,8 @@ http://t.co/9qp709Asb9	O
 http://t.…	O
 
 IMGID:1430267
-Mochacinno	B-OTHER
-Milkshake	I-OTHER
+Mochacinno	B-MISC
+Milkshake	B-MISC
 ~	O
 And	O
 learn	O
@@ -58827,7 +58827,7 @@ to	O
 make	O
 the	O
 perfect	O
-milkshake	I-OTHER
+milkshake	B-MISC
 !	O
 http://t.co/u7kdaXROFx	O
 http://t.co/SFtRLNBU5X	O
@@ -59008,7 +59008,7 @@ http://t.co/iBzNeXSZb3	O
 IMGID:125818
 I	O
 think	O
-#Curiosity	B-OTHER
+#Curiosity	B-MISC
 looks	O
 like	O
 Wall-e	O
@@ -59055,8 +59055,8 @@ the	O
 season	O
 of	O
 "	O
-The	B-OTHER
-Voice	I-OTHER
+The	B-MISC
+Voice	B-MISC
 "	O
 http://t.co/glrkGKTDeG	O
 http://t.co/ZeB1mv6k6L	O
@@ -59100,7 +59100,7 @@ camera	O
 His	O
 bosses	O
 at	O
-Kodak	B-OTHER
+Kodak	B-MISC
 weren	O
 '	O
 t	O
@@ -59150,7 +59150,7 @@ football	O
 player	O
 in	O
 the	O
-NFL	B-OTHER
+NFL	B-MISC
 right	O
 now	O
 .	O
@@ -59172,8 +59172,8 @@ known	O
 as	O
 Spock	B-PER
 from	O
-Star	B-OTHER
-Trek	I-OTHER
+Star	B-MISC
+Trek	B-MISC
 ,	O
 has	O
 died	O
@@ -59209,7 +59209,7 @@ the	O
 best	O
 kind	O
 .	O
-#RG14	B-OTHER
+#RG14	B-MISC
 #Nadal	B-PER
 #Djokovic	B-PER
 http://t.co/wlgHR2UDyi	O
@@ -59222,8 +59222,8 @@ practice	O
 first	O
 for	O
 the	O
-Stanley	B-OTHER
-Cup	I-OTHER
+Stanley	B-MISC
+Cup	B-MISC
 Final	O
 at	O
 Amalie	B-LOC
@@ -59291,9 +59291,9 @@ would	O
 http://t.co/E4iYKgpA2f	O
 
 IMGID:569220
-The	B-OTHER
-Road	I-OTHER
-Not	I-OTHER
+The	B-MISC
+Road	B-MISC
+Not	B-MISC
 Taken-	O
 poem	O
 by	O

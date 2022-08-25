@@ -54,7 +54,7 @@ def evaluate(model, dataloader, W_e2n, accelerator, test_ESD=False):
     pred_tags = []
     true_tags = []
     with torch.no_grad():
-        for inputs, labels, ESD_labels in tqdm(
+        for inputs, labels, ESD_labels,_ in tqdm(
                 dataloader,
                 unit='batch',
                 total=len(dataloader) + 1,

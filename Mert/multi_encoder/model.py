@@ -118,7 +118,7 @@ class MultiEncoderBase(nn.Module):
         encoder = cls(config)
         model = MultiEncoderOutput(encoder=encoder)
         model.load_state_dict(ckpt["model_state_dict"])
-        return encoder
+        return model.encoder
 
 
 class MultiEncoder(MultiEncoderBase):

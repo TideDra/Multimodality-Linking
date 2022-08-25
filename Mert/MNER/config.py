@@ -3,6 +3,7 @@ import torch
 class Config:
     id2tag={0:'O',1:'B-PER',2:'I-PER',3:'B-LOC',4:'I-LOC',5:'B-ORG',6:'I-ORG',7:'B-MISC',8:'I-MISC'}
     tag2id={'O':0,'B-PER':1,'I-PER':2,'B-LOC':3,'I-LOC':4,'B-ORG':5,'I-ORG':6,'B-MISC':7,'I-MISC':8}
+    b2m={1:2,3:4,5:6,7:8}
     ESD_id2tag={0:'O',1:'B',2:'I'}
     ESD_tag2id={'O':0,'B':1,'I':2}
 
@@ -10,7 +11,7 @@ class Config:
 
     special_token_tagid=0
     max_length=128
-    test_text_path='./data/Twitter2015/test.txt'
+    test_text_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/test.txt'
     test_img_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/images'
     test_cache_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/data/Twitter2017/test_cache'
 
@@ -30,6 +31,7 @@ class Config:
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     MultiEncoder_no_MCA_model_path='/home/zero_lag/Document/srtp/exp_data/MultiEncoder_pretrained/me-flickr_2.pkl'
+    MultiEncoderV1_model_path='/home/zero_lag/Document/srtp/exp_data/MultiEncoder_pretrained/mev1-flickr_1.pkl'
     checkpoint_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/checkpoint'
     max_checkpoint_num=2
 
