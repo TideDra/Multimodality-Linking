@@ -10,7 +10,8 @@ accelerator.free_memory()
 from apex.optimizers import FusedAdam
 import logging
 
-from Datasets.EntityLink_dataset import getEntityLinkDataLoader
+from Datasets.EntityLink_dataset import getEntityLinkDataLoader,EntityLinkDatasetConfig
+dataset_config=EntityLinkDatasetConfig()
 logger = getlogger('Mert')
 if accelerator.is_main_process:
     logger.info('Loading packages...')
@@ -19,11 +20,11 @@ from multi_encoder.model import MultiEncoderV2_2
 
 from torch.utils.tensorboard import SummaryWriter
 import torch
-from transformers import get_scheduler,AutoModel
+from transformers import get_scheduler,AutoModel,BertTokenizerFast
 import warnings
 from time import time
 from Recall_entity.config import config
-from Recall_entity.utils import train,evaluate,getlogger,save_model
+from Recall_entity.utils import train,evaluateV2,getlogger,save_model
 from Recall_entity.loss import TripletLoss
 #silence logs
 warnings.filterwarnings("ignore")
@@ -71,6 +72,7 @@ if __name__ == '__main__':
 
     criterion=TripletLoss
     best_acc=0
+    entity_processor=BertTokenizerFast.from_pretrained('bert-base-cased')
     for epoch in range(config.epochs):
         loss = train(multimodel, entity_model,criterion,train_dataloader, optimizer, lr_scheduler,
                      epoch + 1, writer, accelerator)
@@ -79,12 +81,10 @@ if __name__ == '__main__':
             writer.add_scalar('train/epoch_loss', loss, epoch + 1)
         accelerator.print('\n')
 
-        acc=evaluate(multimodel,entity_model,val_dataloader,accelerator)
-        if acc>best_acc:
-            best_acc=acc
-            name = f'{model_name}_epoch_{epoch+1}_acc_{acc}_{round(time())}.bin'
-            if accelerator.is_main_process:
-                save_model(multimodel, name, accelerator)
+        acc=evaluateV2(multimodel,entity_model,entity_processor,val_dataloader,accelerator,dataset_config.KG_path)
+        name = f'{model_name}_epoch_{epoch+1}_acc_{str(acc)}_{round(time())}.bin'
+        if accelerator.is_main_process:
+            save_model(multimodel, name, accelerator)
     accelerator.print(
             '------------------------------------------------------------------------------------------')
     if accelerator.is_main_process:

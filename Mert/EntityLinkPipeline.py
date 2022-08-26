@@ -27,9 +27,9 @@ def EntityLinkPipeline(query_text, query_image, multi_model, NER_model, entity_m
         mention_pos = entities[idx]['token_ids']
         entity_s, entity_e = mention_pos[0],mention_pos[-1]
         if entity_e>entity_s:
-            entity_embedding = torch.mean(query_embedding[idx][entity_s:entity_e], dim=0)
+            entity_embedding = torch.mean(query_embedding[entity_s:entity_e+1], dim=0)
         else:
-            entity_embedding=query_embedding[idx][entity_s]
+            entity_embedding=query_embedding[entity_s]
         api_results = client.get(query=mention)
         candidate_ids = []
         candidate_abs = []
