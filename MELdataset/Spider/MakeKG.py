@@ -35,13 +35,13 @@ def make_abstract(entity_id: str, client: WikiClient):
 
     abstract = {}
     for pk, pv in property_ids.items():
-        if not entity['claims'].get(pv):
+        if entity['claims'].get(pv):
             pk_value = ''
             for item in entity['claims'][pv]:
-                if not item['mainsnak'].get('datavalue'):
+                if item['mainsnak'].get('datavalue'):
                     pk_id = item['mainsnak']['datavalue']['value']['id']
                     pk_entity = client.get(pk_id)
-                    if not pk_entity['labels'].get('en'):
+                    if pk_entity['labels'].get('en'):
                         if pk_value == '':
                             pk_value = pk_entity['labels']['en']['value']
                         else:
