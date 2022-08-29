@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import sys
@@ -5,9 +6,10 @@ import torch
 from torch import Tensor
 from .config import config
 from tqdm import tqdm
-
-
-
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from Datasets.EntityLink_dataset import abs_dict_to_str
+import random
 def train(multi_model, entity_model, criterion, dataloader, optimizer, lr_scheduler, epoch, writer,
           accelerator):
     multi_model.train()
@@ -95,11 +97,121 @@ def evaluate(multi_model, entity_model, dataloader, accelerator):
     accelerator.print(f'accuracy:{acc}')
     return  acc
 
+def trainV2(multi_model, entity_model, criterion, dataloader, optimizer, lr_scheduler, epoch, writer,
+          accelerator):
+    multi_model.train()
+    entity_model.eval()
+    total_loss = 0.0
+    with tqdm(enumerate(dataloader, start=1),
+              unit='batch',
+              total=len(dataloader),
+              desc='epoch:{}/{}'.format(epoch, config.epochs),
+              disable=not accelerator.is_local_main_process) as tbar:
+        for batch_num, (multi_input, mention_token_pos, positive_inputs, negative_inputs) in tbar:
+            text_embedding = multi_model(**multi_input).text_embeddings
+
+            positive_embedding:Tensor = entity_model(**positive_inputs).last_hidden_state[:,0]
+            negative_embedding = []
+            anchor_embedding = []
+            for idx, _ in enumerate(negative_inputs):
+                #negative_inputs(list).size:(batchsize,candidate_num)
+                entity_embedding = text_embedding[idx][0]
+                entity_embedding_repeats = entity_embedding.repeat(len(positive_embedding), 1)
+                similarities = torch.cosine_similarity(entity_embedding_repeats,
+                                                       positive_embedding)
+                top2_neighbour=similarities.topk(2)[1].tolist()
+                nearest_candidate_idx=top2_neighbour[0] if top2_neighbour[0]!=idx else top2_neighbour[1]
+                nearest_candidate_embedding = positive_embedding[nearest_candidate_idx]
+                negative_embedding.append(nearest_candidate_embedding)
+                anchor_embedding.append(entity_embedding)
+
+            negative_embedding = torch.stack(negative_embedding)
+            anchor_embedding = torch.stack(anchor_embedding)
+
+            loss = criterion(anchor_embedding, positive_embedding, negative_embedding)
+            optimizer.zero_grad()
+            accelerator.backward(loss)
+            optimizer.step()
+            lr_scheduler.step()
+            loss = accelerator.gather(loss)
+            total_loss += loss.item()
+            if accelerator.is_main_process:
+                writer.add_scalar('train/batch_loss',
+                                  loss.item(),
+                                  len(dataloader) * (epoch - 1) + batch_num)
+            tbar.set_postfix(loss="%.4f" % (total_loss / batch_num))
+            tbar.update()
+    return total_loss
+
+def evaluateV2(multi_model, entity_model,entity_processor, dataloader, accelerator,kg_path):
+    multi_model.eval()
+    entity_model.eval()
+    top1_num=0
+    top5_num=0
+    top10_num=0
+    top20_num=0
+    total_num=0
+    kg_emb=get_kg_embeddings(kg_path=kg_path,processor=entity_processor,model=entity_model)
+    with torch.no_grad():
+        for (multi_input, mention_token_pos, positive_inputs,
+                  negative_inputs) in tqdm(dataloader,
+                                           unit='batch',
+                                           total=len(dataloader) + 1,
+                                           desc='Evaluating...',
+                                           disable=not accelerator.is_local_main_process):
+            multi_input=multi_input.to(accelerator.device)
+            positive_inputs=positive_inputs.to(accelerator.device)
+            text_embedding = multi_model(**multi_input).text_embeddings
+            positive_embedding = entity_model(**positive_inputs).last_hidden_state[:,0]
+            for idx,_ in enumerate(negative_inputs):
+                #negative_inputs(list).size:(batchsize,candidate_num)
+                entity_s, entity_e = mention_token_pos[idx]
+                if entity_e>entity_s:
+                    entity_embedding = torch.mean(text_embedding[idx][entity_s:entity_e], dim=0)
+                else:
+                    entity_embedding=text_embedding[idx][entity_s]
+                search_results_embeddings=torch.cat([positive_embedding[idx].unsqueeze(0),kg_emb],dim=0)
+                entity_embedding_repeats=entity_embedding.repeat(len(search_results_embeddings),1)
+                similarities = torch.cosine_similarity(entity_embedding_repeats,
+                                                       search_results_embeddings)
+                top1=similarities.topk(1,sorted=False)[1]
+                top5=similarities.topk(5,sorted=False)[1]
+                top10=similarities.topk(10,sorted=False)[1]
+                top20=similarities.topk(20,sorted=False)[1]
+                top1_num += (0 in top1)
+                top5_num += (0 in top5)
+                top10_num += (0 in top10)
+                top20_num += (0 in top20)
+                total_num+=1
+
+    top1_acc=top1_num/total_num
+    top5_acc=top5_num/total_num
+    top10_acc=top10_num/total_num
+    top20_acc=top20_num/total_num
+    accelerator.print(f'Top1:{top1_acc},Top5:{top5_acc},Top10:{top10_acc},Top20:{top20_acc}')
+    return  [top1_acc,top5_acc,top10_acc,top20_acc]
+
+def get_kg_embeddings(kg_path,processor,model,num=64):
+    with open(kg_path,'r') as f:
+        kg:dict=json.load(f)
+    kg_abs=[]
+    sample_keys=random.sample(kg.keys(),num)
+    for key in sample_keys:
+        kg_abs.append(abs_dict_to_str(kg[key]))
+    kg_embeddings_input=processor(kg_abs,
+                                  return_tensors="pt",
+                                  padding="max_length",
+                                  max_length=128,
+                                  truncation=True)
+    kg_embeddings_input=kg_embeddings_input.to(model.device)
+    kg_embeddings=model(**kg_embeddings_input).last_hidden_state[:,0]
+    return kg_embeddings
+
 def save_model(model, name, accelerator):
     accelerator.print('Saving checkpoint...\n')
     accelerator.wait_for_everyone()
     unwrapped_model = accelerator.unwrap_model(model)
-    model_name = name.split('_epoch')[0]
+    model_name = model.__class__.__name__
     checkpoint_path = config.checkpoint_path
     if model_name not in os.listdir(checkpoint_path):
         os.mkdir(os.path.join(checkpoint_path, model_name))
