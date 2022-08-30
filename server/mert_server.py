@@ -28,6 +28,7 @@ def base64_pil(base64_str: str):
 
 
 app = create_app(__name__)
+app.logger.info("Create app")
 service = MertService(app.logger)
 
 
