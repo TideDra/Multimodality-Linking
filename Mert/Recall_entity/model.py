@@ -52,5 +52,15 @@ class MertForEL(nn.Module):
     @classmethod
     def from_pretrained(cls, f, *args, **kwargs):
         model = cls(*args, **kwargs)
-        model.load_state_dict(torch.load(f, map_location="cpu"))
+        state_dict = torch.load(f, map_location="cpu")
+        if "fc.weight" in state_dict:
+            state_dict2 = {
+                "0.weight": state_dict["fc.weight"],
+                "0.bias": state_dict["fc.bias"],
+                "2.weight": state_dict["classifier.weight"],
+                "2.bias": state_dict["classifier.bias"],
+            }
+            model.seq.load_state_dict(state_dict2)
+        else:
+            model.load_state_dict(state_dict)
         return model
