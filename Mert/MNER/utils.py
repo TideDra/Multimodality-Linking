@@ -138,9 +138,10 @@ def NERpipeline(model, text=None, img=None, inputs=None, W_e2n=None):
             elif word_tag[0] == 'B' and recording == True:
                 _, last_entity_end = inputs.word_to_chars(b, word_id - 1)
                 entities.append({
-                    'entity': text[b][entity_head:last_entity_end],
+                    'entity': text[b][entity_head : last_entity_end],
                     'type': entity_type,
-                    'token_ids': token_ids
+                    'token_ids': token_ids,
+                    'pos': entity_head,
                 })
                 token_ids = []
                 token_ids = [i for i in range(token_start, token_end)]
@@ -151,9 +152,10 @@ def NERpipeline(model, text=None, img=None, inputs=None, W_e2n=None):
             elif word_tag[0] == 'O' and recording == True:
                 _, last_entity_end = inputs.word_to_chars(b, word_id - 1)
                 entities.append({
-                    'entity': text[b][entity_head:last_entity_end],
+                    'entity': text[b][entity_head : last_entity_end],
                     'type': entity_type,
-                    'token_ids': token_ids
+                    'token_ids': token_ids,
+                    'pos': entity_head,
                 })
                 recording = False
                 token_ids = []
