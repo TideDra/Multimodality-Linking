@@ -1,3 +1,4 @@
+from pathlib import Path
 from .config import config
 import torch
 from tqdm import tqdm
@@ -106,7 +107,7 @@ def NERpipeline(model, text=None, img=None, inputs=None, W_e2n=None):
                                   truncation=True)
     inputs = inputs.to('cpu')
     if W_e2n==None:
-        with open('/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/W_e2n','rb') as f:
+        with open(Path(__file__).parent / 'W_e2n', 'rb') as f:
             W_e2n=pickle.load(f)
     W_e2n = W_e2n.to('cpu')
     model.eval()

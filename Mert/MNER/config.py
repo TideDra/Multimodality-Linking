@@ -31,7 +31,6 @@ class Config:
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     MultiEncoder_no_MCA_model_path='/home/zero_lag/Document/srtp/exp_data/MultiEncoder_pretrained/me-flickr_2.pkl'
-    MultiEncoderV1_model_path='/home/zero_lag/Document/srtp/exp_data/MultiEncoder_pretrained/mev1-flickr_1.pkl'
     checkpoint_path='/home/zero_lag/Document/srtp/Multimodality-Link/Mert/MNER/checkpoint'
     max_checkpoint_num=2
 

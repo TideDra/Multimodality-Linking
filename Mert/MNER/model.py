@@ -5,11 +5,10 @@ import torch
 from transformers import FlavaModel, FlavaTextModel
 
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
-import sys
-from pathlib import Path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 from MNER.config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
-from multi_encoder.model import MultiEncoder,MultiEncoderOutput,MultiEncoderConfig, MultiEncoderV1
+from multi_encoder.model import MultiEncoder, MultiEncoderV1
+
 
 class ModelForTokenClassification(nn.Module):
     '''
@@ -35,7 +34,7 @@ class ModelForTokenClassification(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.is_encoder_frozen = is_encoder_frozen
 
-    def forward(self, inputs, labels:Tensor=None):
+    def forward(self, inputs, labels: Tensor = None):
         '''
         Args:
             inputs: the input required by encoder. For example, it should be the output of FlavaProcessor if the encoder is FlavaModel.
@@ -58,9 +57,7 @@ class ModelForTokenClassification(nn.Module):
         hidden_states = self.dropout(hidden_states)
         logits = self.classifier(hidden_states)
         if labels != None:
-            loss = self.crf(logits,
-                            labels,
-                            mask=inputs['attention_mask'].bool())
+            loss = self.crf(logits, labels, mask=inputs['attention_mask'].bool())
             loss = -1 * loss
         else:
             loss = None
@@ -130,6 +127,12 @@ class ModelForNERwithESD(nn.Module):
             total_loss = loss + self.ratio * ESD_loss
             return logits, total_loss
 
+    @classmethod
+    def from_pretrained(cls, f, *args, **kwargs):
+        model = cls(*args, **kwargs)
+        model.load_state_dict(torch.load(f, map_location="cpu"))
+        return model
+
 
 class ModelForNERwithESD_ComplexedVer(nn.Module):
     '''
@@ -151,8 +154,7 @@ class ModelForNERwithESD_ComplexedVer(nn.Module):
         self.crf = CRF(num_tags=num_tags, batch_first=True)
         self.ESD_crf = CRF(num_tags=ESD_num_tags, batch_first=True)
         self.classifier = nn.Linear(encoder.config.hidden_size, num_tags)
-        self.ESD_classifier = nn.Linear(encoder.config.hidden_size,
-                                        ESD_num_tags)
+        self.ESD_classifier = nn.Linear(encoder.config.hidden_size, ESD_num_tags)
         self.ratio = ratio
         self.is_encoder_frozen = is_encoder_frozen
         self.is_ESD_encoder_frozen = is_ESD_encoder_frozen
@@ -173,17 +175,14 @@ class ModelForNERwithESD_ComplexedVer(nn.Module):
 
         if self.is_ESD_encoder_frozen:
             with torch.no_grad():
-                ESD_hidden_states = self.ESD_encoder(
-                    **inputs).last_hidden_state
+                ESD_hidden_states = self.ESD_encoder(**inputs).last_hidden_state
 
         else:
             ESD_hidden_states = self.ESD_encoder(**inputs).last_hidden_state
 
         ESD_hidden_states = self.dropout(ESD_hidden_states)
         ESD_logits = self.ESD_classifier(ESD_hidden_states)
-        ESD_loss = self.ESD_crf(ESD_logits,
-                                ESD_labels,
-                                mask=inputs['attention_mask'].bool())
+        ESD_loss = self.ESD_crf(ESD_logits, ESD_labels, mask=inputs['attention_mask'].bool())
         ESD_loss = -1 * ESD_loss
         batch_size = ESD_logits.shape[0]
         W_e2n = W_e2n.repeat(batch_size, 1, 1)
@@ -199,7 +198,7 @@ class BiLSTM(nn.Module):
     '''
     A implementation of BiLSTM. Reference: https://github.com/luopeixiang/named_entity_recognition
     '''
-    def __init__(self, input_size:int, hidden_size:int, dropout:float=0.1) -> None:
+    def __init__(self, input_size: int, hidden_size: int, dropout: float = 0.1) -> None:
         '''
         Args:
             input_size(int): the hidden size of the input embeddings.
@@ -207,31 +206,23 @@ class BiLSTM(nn.Module):
             dropout(float): dropout of LSTM.
         '''
         super().__init__()
-        self.bilstm = nn.LSTM(input_size=input_size,
-                              hidden_size=hidden_size,
-                              batch_first=True,
-                              dropout=dropout,
-                              bidirectional=True)
+        self.bilstm = nn.LSTM(
+            input_size=input_size, hidden_size=hidden_size, batch_first=True, dropout=dropout, bidirectional=True
+        )
 
-    def forward(self, inputs:Tensor, mask:Tensor):
+    def forward(self, inputs: Tensor, mask: Tensor):
         '''
         Args:
             inputs(Tensor): the input embeddings. its shape should be (batch_size, seq_length, embeding_size)
             mask(Tensor): mask for the input.
         '''
-        length = mask.type(float32).norm(1, dim=1).type(
-            torch.int64).cpu().detach().numpy().tolist()
-        packed = pack_padded_sequence(inputs,
-                                      length,
-                                      batch_first=True,
-                                      enforce_sorted=False)
+        length = mask.type(float32).norm(1, dim=1).type(torch.int64).cpu().detach().numpy().tolist()
+        packed = pack_padded_sequence(inputs, length, batch_first=True, enforce_sorted=False)
         rnn_out, _ = self.bilstm(packed)
         rnn_out, _ = pad_packed_sequence(rnn_out, batch_first=True)
         max_length = mask.shape[1]
         if max_length > rnn_out.shape[1]:
-            pad = torch.zeros((rnn_out.shape[0], max_length - rnn_out.shape[1],
-                               rnn_out.shape[2]),
-                              dtype=float32)
+            pad = torch.zeros((rnn_out.shape[0], max_length - rnn_out.shape[1], rnn_out.shape[2]), dtype=float32)
             rnn_out = torch.cat((rnn_out, pad.to(config.device)), dim=1)
         return rnn_out
 
@@ -243,11 +234,12 @@ class BertBiLSTMEncoder(nn.Module):
     def __init__(self, config: BertBiLSTMEncoderConfig) -> None:
         super().__init__()
         self.config = config
-        self.bert_encoder = FlavaTextModel.from_pretrained(
-            'facebook/flava-full')
-        self.blstm = BiLSTM(input_size=self.bert_encoder.config.hidden_size,
-                            hidden_size=config.blstm_hidden_size,
-                            dropout=config.blstm_dropout)
+        self.bert_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
+        self.blstm = BiLSTM(
+            input_size=self.bert_encoder.config.hidden_size,
+            hidden_size=config.blstm_hidden_size,
+            dropout=config.blstm_dropout
+        )
         self.fc = nn.Linear(config.blstm_hidden_size * 2, config.hidden_size)
 
     def forward(self, **inputs):
@@ -270,9 +262,7 @@ class FlavaForNER(ModelForTokenClassification):
     '''
     A NER model with Flava as encoder.
     '''
-    def __init__(self,
-                 is_encoder_frozen: bool = True,
-                 dropout: float = 0.1) -> None:
+    def __init__(self, is_encoder_frozen: bool = True, dropout: float = 0.1) -> None:
         encoder = FlavaModel.from_pretrained("facebook/flava-full")
         super().__init__(encoder=encoder,
                          num_tags=len(config.tag2id),
@@ -303,11 +293,10 @@ class FlavaForNERwithESD_bert_only(ModelForNERwithESD):
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)
-        super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
-                         is_encoder_frozen, is_ESD_encoder_frozen, dropout)
-        self.trained_epoch = torch.tensor([0],
-                                          dtype=float32,
-                                          requires_grad=False)
+        super().__init__(
+            encoder, ESD_encoder, num_tags, ESD_num_tags, ratio, is_encoder_frozen, is_ESD_encoder_frozen, dropout
+        )
+        self.trained_epoch = torch.tensor([0], dtype=float32, requires_grad=False)
 
 
 class FlavaForNERwithESD_bert_blstm(ModelForNERwithESD):
@@ -352,7 +341,7 @@ class Mert_no_MCA_ForNERwithESD_bert_only(ModelForNERwithESD):
             is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
             dropout(float): dropout of the classifier.
         '''
-        encoder = MultiEncoder.from_pretrained(config.MultiEncoder_no_MCA_model_path,MultiEncoderConfig())
+        encoder = MultiEncoder()
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)
@@ -371,7 +360,8 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
                  ratio: float = 0.5,
                  is_encoder_frozen: bool = True,
                  is_ESD_encoder_frozen: bool = True,
-                 dropout: float = 0.4) -> None:
+        dropout: float = 0.4
+    ) -> None:
         '''
         Args:
             ratio(float): the weight of ESD_loss.
@@ -379,31 +369,12 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
             is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
             dropout(float): dropout of the classifier.
         '''
-        encoder = MultiEncoderV1.from_pretrained(config.MultiEncoderV1_model_path,MultiEncoderConfig())
+        encoder = MultiEncoderV1()
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)
         super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
                          is_encoder_frozen, is_ESD_encoder_frozen, dropout)
-        self.trained_epoch = torch.tensor([0],
-                                          dtype=float32,
-                                          requires_grad=False)
-
-class MertForNER(ModelForTokenClassification):
-    '''
-    A NER model with Mert as encoder.
-    '''
-    def __init__(self,
-                 is_encoder_frozen: bool = True,
-                 dropout: float = 0.4) -> None:
-        encoder = MultiEncoderV1.from_pretrained(config.MultiEncoderV1_model_path,MultiEncoderConfig())
-        output=MultiEncoderOutput(encoder)
-        output.load_state_dict(torch.load(config.MultiEncoder_no_MCA_model_path)["model_state_dict"])
-        encoder=output.encoder
-        super().__init__(encoder=encoder,
-                         num_tags=len(config.tag2id),
-                         is_encoder_frozen=is_encoder_frozen,
-                         dropout=dropout)
         self.trained_epoch = torch.tensor([0],
                                           dtype=float32,
                                           requires_grad=False)

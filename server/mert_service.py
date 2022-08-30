@@ -1,5 +1,7 @@
 import os
 
+from Mert.common_config import PretrainedModelConfig
+
 os.environ['TRANSFORMERS_CACHE'] = 'F:/Multimodality-Link/.cache/'
 
 from PIL import Image
@@ -12,10 +14,8 @@ from Mert.EntityLinkPipeline import EntityLinkPipeline_step1, EntityLinkPipeline
 from Mert.MNER.model import MertForNERwithESD_bert_only
 from Mert.multi_encoder.model import MultiEncoder
 
-NER_model = MertForNERwithESD_bert_only.from_pretrained(
-    r"F:\Multimodality-Link\.ckpt\MertForNERwithESD_bert_only_epoch_44_macrof1_81.089_microf1_85.714_1661235521.bin"
-).eval()
-multi_model = MultiEncoder.from_pretrained("F:/Multimodality-Link/.ckpt/me2-flickr_1.pkl", forward_link=True).eval()
+NER_model = MertForNERwithESD_bert_only.from_pretrained(PretrainedModelConfig.nermodel_path).eval()
+multi_model = MultiEncoder.from_pretrained(PretrainedModelConfig.multiencoder_path, forward_link=True).eval()
 entity_model = BertModel.from_pretrained('bert-base-uncased').eval()
 multi_processor = FlavaProcessor.from_pretrained('facebook/flava-full')
 entity_processor = BertTokenizer.from_pretrained('bert-base-uncased')
