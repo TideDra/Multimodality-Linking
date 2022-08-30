@@ -49,3 +49,26 @@ def EntityLinkPipeline_step2(preoutput: ELPreprocessOutput, entity_model, entity
         #del entities[idx]['type']
         #del entities[idx]['token_ids']
     return entities
+
+def EntityLinkPipelineV2(query_text,query_img,candidate_abs,model,processor):
+    '''
+    Link query to one of the candidate
+    Args:
+      query_text(str):the query text.
+      query_img(Image): the image of query_text
+      candidate_abs(list of str): the abstracts of candidates, made by abs_dict_to_str().
+      model: model for EL.
+      processor: processor matched with the model. Default is FlavaProcessor.from_pretrained('facebook/flava-full') 
+    '''
+    text_input=[[query_text,candidate] for candidate in candidate_abs]
+    img_input=[query_img]*len(text_input)
+    multi_input=processor(text=text_input,
+                          images=img_input,
+                          return_tensors="pt",
+                          padding="max_length",
+                          max_length=160,
+                          truncation=True)
+    multi_input=multi_input.to(model.device)
+    logits=model(**multi_input)
+    probs=logits[:,0]
+    return probs.argmax().item()
