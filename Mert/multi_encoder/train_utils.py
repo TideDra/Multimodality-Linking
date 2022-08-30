@@ -94,7 +94,7 @@ def save_model(model: MultiEncoderOutput, epoch: int, config: MultiEncoderTrainC
             del_path.unlink()
 
     ckpt = {
-        "config": unwrapped_model.encoder.config,
+        "config": unwrapped_model.encoder.config.to_json(),
         "model_state_dict": unwrapped_model.state_dict(),
         "epoch": epoch,
     }

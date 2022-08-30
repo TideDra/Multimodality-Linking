@@ -2,23 +2,24 @@ import os
 
 os.environ['TRANSFORMERS_CACHE'] = 'F:/Multimodality-Link/.cache/'
 
-from Mert.EntityLinkPipeline import EntityLinkPipeline_step1, EntityLinkPipeline_step2
-
 from PIL import Image
-from Mert.multi_encoder.model import MultiEncoderV2_2
-from Mert.MNER.model import MertForNERwithESD_bert_only
-from transformers import logging, BertModel, BertTokenizer, FlavaProcessor
-import torch
+from transformers import logging
 
 logging.set_verbosity_warning()
+
+from transformers import BertModel, BertTokenizer, FlavaProcessor
+from Mert.EntityLinkPipeline import EntityLinkPipeline_step1, EntityLinkPipeline_step2
+from Mert.MNER.model import MertForNERwithESD_bert_only
+from Mert.multi_encoder.model import MultiEncoder
 
 NER_model = MertForNERwithESD_bert_only.from_pretrained(
     r"F:\Multimodality-Link\.ckpt\MertForNERwithESD_bert_only_epoch_44_macrof1_81.089_microf1_85.714_1661235521.bin"
 ).eval()
-multi_model = MultiEncoderV2_2.from_pretrained("F:/Multimodality-Link/.ckpt/me2-flickr_1.pkl").eval()
+multi_model = MultiEncoder.from_pretrained("F:/Multimodality-Link/.ckpt/me2-flickr_1.pkl", forward_link=True).eval()
 entity_model = BertModel.from_pretrained('bert-base-uncased').eval()
 multi_processor = FlavaProcessor.from_pretrained('facebook/flava-full')
 entity_processor = BertTokenizer.from_pretrained('bert-base-uncased')
+print("Service Init Complete")
 
 g_querykey = 0
 pipeline_cache = {}

@@ -1,12 +1,20 @@
 from dataclasses import dataclass
+from typing import Tuple, Union
 
 import torch
 from torch import Tensor, nn
-from transformers import FlavaModel, FlavaTextModel, FlavaImageModel, FlavaMultimodalModel, FlavaFeatureExtractor
+from transformers import FlavaModel, FlavaTextModel, FlavaImageModel, FlavaMultimodalModel
 from transformers.models.flava.modeling_flava import FlavaModelOutput, BaseModelOutputWithPooling
 
 from .config import MultiEncoderConfig
 from .transformer import TransformerEncoderLayer2
+
+
+@dataclass
+class PairOutput:
+    text_embeddings: Tensor
+    image_embeddings: Tensor
+    prev: "PairOutput" = None
 
 
 @dataclass
@@ -104,75 +112,6 @@ class MultiFusionModel(nn.Module):
         return outputs
 
 
-class MultiEncoderBase(nn.Module):
-    '''Base MultiEncoder'''
-    def __init__(self, config: MultiEncoderConfig):
-        super().__init__()
-        self.config = config
-
-    @classmethod
-    def from_pretrained(cls, path: str, config: MultiEncoderConfig = None):
-        ckpt = torch.load(path)
-        if "config" in ckpt:
-            config = ckpt["config"]
-        encoder = cls(config)
-        model = MultiEncoderOutput(encoder=encoder)
-        model.load_state_dict(ckpt["model_state_dict"])
-        return model.encoder
-
-
-class MultiEncoder(MultiEncoderBase):
-    '''
-    Core of multimodal feature extraction and fusion. Outputs fusion embeddings.\\
-    Use output embeddings of text and image from FlavaModel, and then directly do fusion work.
-    '''
-    def __init__(self, config=MultiEncoderConfig()):
-        super().__init__(config)
-        self.flava = FlavaModel.from_pretrained('facebook/flava-full')
-        self.fusion = MultiFusionModel(config)
-
-    def forward(self, **batch_data) -> FusionModelOutput:
-        flava_output: FlavaModelOutput = self.flava(**batch_data)
-        # print(flava_output.text_embeddings.shape, flava_output.image_embeddings.shape)
-        # torch.Size([6, 128, 768]) torch.Size([6, 197, 768])
-        fusion_output = self.fusion(
-            text_embeddings=flava_output.text_embeddings,
-            image_embeddings=flava_output.image_embeddings,
-        )
-        return fusion_output
-
-
-class MultiEncoderV1(MultiEncoderBase):
-    '''
-    Add extra FlavaMultimodalModel before FusionModel.
-    '''
-    def __init__(self, config=MultiEncoderConfig()):
-        super().__init__(config)
-        self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
-        self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
-        self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
-        self.fusion = MultiFusionModel(config)
-
-    def forward(self, **batch_data) -> FusionModelOutput:
-        image_outputs: BaseModelOutputWithPooling = self.flava_image(pixel_values=batch_data["pixel_values"])
-        text_outputs: BaseModelOutputWithPooling = self.flava_text(
-            input_ids=batch_data["input_ids"],
-            token_type_ids=batch_data["token_type_ids"],
-            attention_mask=batch_data["attention_mask"]
-        )
-        image_embeddings = image_outputs.last_hidden_state
-        text_embeddings = text_outputs.last_hidden_state
-
-        flava_output: BaseModelOutputWithPooling = self.flava_multimodal(
-            torch.cat([text_embeddings, image_embeddings], dim=1)
-        )
-        fusion_output: FusionModelOutput = self.fusion(
-            *torch.split(flava_output.last_hidden_state,
-                         [text_embeddings.size(1), image_embeddings.size(1)], dim=1)
-        )
-        return fusion_output
-
-
 class PhraseLevelExtractor(nn.Module):
     '''Extract phrase level information with 3 conv kernels.'''
     def __init__(self, hidden_size: int):
@@ -187,7 +126,123 @@ class PhraseLevelExtractor(nn.Module):
         return x.permute(0, 2, 1)
 
 
-class MultiEncoderV2_1(MultiEncoderBase):
+class MultiEncoderBase(nn.Module):
+    '''Base MultiEncoder'''
+    def __init__(self, config: MultiEncoderConfig):
+        super().__init__()
+        self.config = config
+
+    def pass_flava(self, **batch_data) -> PairOutput:
+        image_outputs: BaseModelOutputWithPooling = self.flava_image(pixel_values=batch_data["pixel_values"])
+        text_outputs: BaseModelOutputWithPooling = self.flava_text(
+            input_ids=batch_data["input_ids"],
+            token_type_ids=batch_data["token_type_ids"],
+            attention_mask=batch_data["attention_mask"]
+        )
+        return PairOutput(text_outputs.last_hidden_state, image_outputs.last_hidden_state)
+
+    def pass_phrase(self, pair: PairOutput) -> PairOutput:
+        return PairOutput(
+            self.phrase_level(pair.text_embeddings),
+            pair.image_embeddings,
+            prev=pair if self.config.forward_link else None
+        )
+
+    def pass_multimodal(self, pair: PairOutput, return_dict=True) -> Union[PairOutput, Tuple[Tensor, Tensor]]:
+        flava_output: BaseModelOutputWithPooling = self.flava_multimodal(
+            torch.cat([pair.text_embeddings, pair.image_embeddings], dim=1)
+        )
+        text_embeddings, image_embeddings = torch.split(
+            flava_output.last_hidden_state,
+            [pair.text_embeddings.size(1), pair.image_embeddings.size(1)], dim=1
+        )
+        if return_dict:
+            return PairOutput(text_embeddings, image_embeddings, prev=pair if self.config.forward_link else None)
+        else:
+            return text_embeddings, image_embeddings
+
+    def pass_bottleneck(self, pair: PairOutput, return_dict=True) -> Union[PairOutput, Tuple[Tensor, Tensor]]:
+        fusion_output: FusionModelOutput = self.fusion(pair.text_embeddings, pair.image_embeddings)
+        text_embeddings, image_embeddings = fusion_output.text_embeddings, fusion_output.image_embeddings
+        if return_dict:
+            return PairOutput(text_embeddings, image_embeddings, prev=pair if self.config.forward_link else None)
+        else:
+            return text_embeddings, image_embeddings
+
+    @classmethod
+    def from_pretrained(cls, path: str, **config_args):
+        '''
+        Args:
+            param path (str): Path of checkpoint of pretrained model.  
+            config_args (optional): Supplement of MultiEncoderConfig arguments.
+        Returns:
+            Pretrained model.
+        '''
+        ckpt = torch.load(path, map_location="cpu")
+        if "config" in ckpt:
+            config = MultiEncoderConfig.from_json(ckpt["config"])
+        else:
+            config = MultiEncoderConfig()
+        for k, v in config_args.items():
+            setattr(config, k, v)
+        encoder = cls(config)
+        model = MultiEncoderOutput(encoder=encoder)
+        model.load_state_dict(ckpt["model_state_dict"])
+        return model.encoder
+
+
+class MultiEncoder(MultiEncoderBase):
+    '''
+    Core of multimodal feature extraction and fusion. Outputs fusion embeddings.\\
+    Use output embeddings of text and image from FlavaModel, and then directly do fusion work.
+    '''
+    def __init__(self, config=MultiEncoderConfig()):
+        super().__init__(config)
+        if config.sole_flava:
+            self.flava = FlavaModel.from_pretrained('facebook/flava-full')
+        else:
+            self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
+            self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
+            self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+        self.fusion = MultiFusionModel(config)
+        if config.augment_text:
+            self.phrase_level = PhraseLevelExtractor(config.hidden_size)
+
+    def forward(self, **batch_data) -> PairOutput:
+        if self.config.sole_flava:
+            flava_output: FlavaModelOutput = self.flava(**batch_data)
+            output = PairOutput(flava_output.text_embeddings, flava_output.image_embeddings)
+        else:
+            output = self.pass_flava(**batch_data)
+        if self.config.augment_text:
+            output = self.pass_phrase(output)
+        for p in self.config.passes:
+            if p == "mm":
+                output = self.pass_multimodal(output)
+            elif p == "bn":
+                output = self.pass_bottleneck(output)
+        return output
+
+
+class MultiEncoderV1(MultiEncoderBase):
+    '''
+    Add extra FlavaMultimodalModel before FusionModel.
+    '''
+    def __init__(self, config=MultiEncoderConfig()):
+        super().__init__(config)
+        self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
+        self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
+        self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+        self.fusion = MultiFusionModel(config)
+
+    def forward(self, **batch_data) -> PairOutput:
+        output0 = self.pass_flava(**batch_data)
+        output1 = self.pass_multimodal(output0)
+        output2 = self.pass_bottleneck(output1)
+        return output2
+
+
+class MultiEncoderV2(MultiEncoderBase):
     '''
     Add extra Conv1D to text embeddings process.\\
     Also add extra FlavaMultimodalModel to the end of FusionModel.
@@ -200,67 +255,35 @@ class MultiEncoderV2_1(MultiEncoderBase):
         self.fusion = MultiFusionModel(config)
         self.phrase_level = PhraseLevelExtractor(config.hidden_size)
 
-    def forward(self, **batch_data) -> FusionModelOutput:
-        image_outputs: BaseModelOutputWithPooling = self.flava_image(pixel_values=batch_data["pixel_values"])
-        text_outputs: BaseModelOutputWithPooling = self.flava_text(
-            input_ids=batch_data["input_ids"],
-            token_type_ids=batch_data["token_type_ids"],
-            attention_mask=batch_data["attention_mask"]
-        )
-        image_embeddings = image_outputs.last_hidden_state
-        text_embeddings = text_outputs.last_hidden_state
-        text_embeddings = self.phrase_level(text_embeddings)
-        fusion_output: FusionModelOutput = self.fusion(text_embeddings, image_embeddings)
-        flava_output: BaseModelOutputWithPooling = self.flava_multimodal(
-            torch.cat([fusion_output.text_embeddings, fusion_output.image_embeddings], dim=1)
-        )
-        return FusionModelOutput(
-            *torch.split(flava_output.last_hidden_state,
-                         [text_embeddings.size(1), image_embeddings.size(1)], dim=1)
-        )
+
+class MultiEncoderV2_1(MultiEncoderV2):
+    '''
+    Add extra Conv1D to text embeddings process.\\
+    Also add extra FlavaMultimodalModel to the end of FusionModel.
+    '''
+    def forward(self, **batch_data) -> PairOutput:
+        output0 = self.pass_flava(**batch_data)
+        output00 = self.pass_phrase(output0)
+        output1 = self.pass_bottleneck(output00.text_embeddings, output00.image_embeddings)
+        output2 = self.pass_multimodal(output1.text_embeddings, output1.image_embeddings)
+        return output2
 
 
-class MultiEncoderV2_2(MultiEncoderBase):
+class MultiEncoderV2_2(MultiEncoderV2):
     '''
     Add extra Conv1D to text embeddings process.\\
     Also add extra FlavaMultimodalModel before FusionModel.
     '''
-    def __init__(self, config=MultiEncoderConfig()):
-        super().__init__(config)
-        self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
-        self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
-        self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
-        self.fusion = MultiFusionModel(config)
-        self.phrase_level = PhraseLevelExtractor(config.hidden_size)
-
-    def forward(self, **batch_data) -> FusionModelOutput:
-        image_outputs: BaseModelOutputWithPooling = self.flava_image(pixel_values=batch_data["pixel_values"])
-        text_outputs: BaseModelOutputWithPooling = self.flava_text(
-            input_ids=batch_data["input_ids"],
-            token_type_ids=batch_data["token_type_ids"],
-            attention_mask=batch_data["attention_mask"]
-        )
-        '''
-        last_hidden_state: torch.FloatTensor = None
-        image torch.Size([20, 197, 768]) torch.Size([20, 768])
-        text torch.Size([20, 64, 768]) torch.Size([20, 768])
-        '''
-        image_embeddings = image_outputs.last_hidden_state
-        text_embeddings = text_outputs.last_hidden_state
-        text_embeddings = self.phrase_level(text_embeddings)
-
-        flava_output: BaseModelOutputWithPooling = self.flava_multimodal(
-            torch.cat([text_embeddings, image_embeddings], dim=1)
-        )
-        fusion_output: FusionModelOutput = self.fusion(
-            *torch.split(flava_output.last_hidden_state,
-                         [text_embeddings.size(1), image_embeddings.size(1)], dim=1)
-        )
-        return fusion_output
+    def forward(self, **batch_data) -> PairOutput:
+        output0 = self.pass_flava(**batch_data)
+        output00 = self.pass_phrase(output0)
+        output1 = self.pass_multimodal(output00.text_embeddings, output00.image_embeddings)
+        output2 = self.pass_bottleneck(output1.text_embeddings, output1.image_embeddings)
+        return output2
 
 
 class MultiEncoderOutput(nn.Module):
-    '''Used for training MultiEncoder with contrastive loss.'''
+    '''Used for training MultiEncoder with contrastive loss. Adapted from CLIP.'''
     def __init__(self, encoder: MultiEncoder):
         super().__init__()
         self.encoder = encoder
@@ -269,7 +292,7 @@ class MultiEncoderOutput(nn.Module):
         self.crit_t = nn.CrossEntropyLoss()
 
     def forward(self, **batch_data) -> Tensor:
-        outputs: FusionModelOutput = self.encoder(**batch_data)
+        outputs: PairOutput = self.encoder(**batch_data)
         # default batch first
         image_features = outputs.image_embeddings[:, 0, :]
         text_features = outputs.text_embeddings[:, 0, :]
