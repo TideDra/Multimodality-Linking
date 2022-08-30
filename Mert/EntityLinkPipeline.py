@@ -1,12 +1,15 @@
 from dataclasses import dataclass
 
 import torch
+from PIL import Image
 
 from MNER.utils import NERpipeline
 
 
 @dataclass
 class ELPreprocessOutput:
+    query_text: str
+    query_image: Image
     query_embedding: torch.Tensor
     entities: list
 
@@ -20,7 +23,7 @@ def EntityLinkPipeline_step1(query_text, query_image, multi_model, NER_model, mu
     query_embedding = torch.squeeze(query_embedding, 0)
     NER_result = NERpipeline(model=NER_model, text=query_text, img=query_image)
     entities = NER_result[0]['entities']
-    return ELPreprocessOutput(query_embedding, entities)
+    return ELPreprocessOutput(query_text, query_image, query_embedding, entities)
 
 
 def EntityLinkPipeline_step2(preoutput: ELPreprocessOutput, entity_model, entity_processor, wikidata: list):
@@ -50,7 +53,7 @@ def EntityLinkPipeline_step2(preoutput: ELPreprocessOutput, entity_model, entity
         #del entities[idx]['token_ids']
     return entities
 
-def EntityLinkPipelineV2(query_text,query_img,candidate_abs,model,processor):
+def EntityLinkPipelineV2(query_text, query_img, candidate_abs, model, processor):
     '''
     Link query to one of the candidate
     Args:
@@ -60,15 +63,14 @@ def EntityLinkPipelineV2(query_text,query_img,candidate_abs,model,processor):
       model: model for EL.
       processor: processor matched with the model. Default is FlavaProcessor.from_pretrained('facebook/flava-full') 
     '''
-    text_input=[[query_text,candidate] for candidate in candidate_abs]
-    img_input=[query_img]*len(text_input)
-    multi_input=processor(text=text_input,
-                          images=img_input,
-                          return_tensors="pt",
-                          padding="max_length",
-                          max_length=160,
-                          truncation=True)
-    multi_input=multi_input.to(model.device)
-    logits=model(**multi_input)
-    probs=logits[:,0]
+    text_input = [[query_text, candidate] for candidate in candidate_abs]
+    img_input = [query_img] * len(text_input)
+    multi_input = processor(text=text_input,
+                            images=img_input,
+                            return_tensors="pt",
+                            padding="max_length",
+                            max_length=160,
+                            truncation=True)
+    logits = model(**multi_input)
+    probs = logits[:, 0]
     return probs.argmax().item()

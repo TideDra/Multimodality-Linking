@@ -16,12 +16,12 @@ def query_entities(queries: list):
             }
 
         query_result = client.get(query=query)
-        with futures.ThreadPoolExecutor(max_workers=8) as executor:
+        with futures.ThreadPoolExecutor() as executor:
             tasks = [executor.submit(runrun, cand) for cand in query_result]
             results = [task.result() for task in tasks]
         return results
 
-    with futures.ThreadPoolExecutor(max_workers=8) as executor:
+    with futures.ThreadPoolExecutor() as executor:
         tasks = [executor.submit(run, query) for query in queries]
         results = [task.result() for task in tasks]
     return results

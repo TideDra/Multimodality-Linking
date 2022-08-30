@@ -7,7 +7,7 @@ from PIL import Image
 
 from server_utils import create_app, create_server
 
-from server.mert_service import MEL_step1, MEL_step2
+from server.mert_service import MEL_step1, MEL_step2, MEL_step2V2
 from server.wiki_service import query_entities
 
 parser = ArgumentParser()
@@ -38,7 +38,7 @@ def query_controller():
     if args.wiki:
         query_result = query_entities(result["query"])
         app.logger.info(query_result)
-        answer = MEL_step2(result["key"], query_result)
+        answer = MEL_step2V2(result["key"], query_result)
         app.logger.info(answer)
         result = {"answer": answer, "wikidata": query_result}
 
@@ -49,7 +49,7 @@ def query_controller():
 def query_controller_back():
     key = request.json.get("key", type=int)
     query_results = request.json.get("data")
-    result = MEL_step2(key, query_results)
+    result = MEL_step2V2(key, query_results)
     return jsonify({"answer": result, "wikidata": query_results})
 
 
