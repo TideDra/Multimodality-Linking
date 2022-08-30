@@ -2,7 +2,9 @@
   <div>
     <template v-for="x in segregated">
       <template v-if="typeof x === 'string'">{{ x }}</template>
-      <v-chip v-else label @click="emit('query')"> {{ x.entity }} </v-chip>
+      <v-chip v-else label @click="emit('query', x)" :color="chipColor(x)">
+        {{ x.entity }}
+      </v-chip>
     </template>
   </div>
 </template>
@@ -35,6 +37,27 @@ const segregated = computed(() => {
   console.log(seg);
   return seg;
 });
+
+const chipColor = (entity: EntityAnswer) => {
+  console.log(entity.type);
+  switch (entity.type) {
+    case "ORG":
+      return "#BA68C8";
+    case "PER":
+      return "#4FC3F7";
+    case "LOC":
+      return "#81C784";
+    case "MISC":
+      return "#A1887F";
+    default:
+      return "#BDBDBD";
+  }
+};
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.v-chip.v-chip--size-default {
+  --v-chip-height: 2em !important;
+  padding: 0 4px !important;
+}
+</style>
