@@ -14,6 +14,7 @@ class ELPreprocessOutput:
     entities: list
 
 
+@torch.no_grad()
 def EntityLinkPipeline_step1(query_text, query_image, multi_model, NER_model, multi_processor):
     '''First to extract embeddings and entities'''
     query_input = multi_processor(
@@ -26,6 +27,7 @@ def EntityLinkPipeline_step1(query_text, query_image, multi_model, NER_model, mu
     return ELPreprocessOutput(query_text, query_image, query_embedding, entities)
 
 
+@torch.no_grad()
 def EntityLinkPipeline_step2(preoutput: ELPreprocessOutput, entity_model, entity_processor, wikidata: list):
     '''Third to get answers with wikidata'''
     query_embedding = preoutput.query_embedding
@@ -53,6 +55,8 @@ def EntityLinkPipeline_step2(preoutput: ELPreprocessOutput, entity_model, entity
         #del entities[idx]['token_ids']
     return entities
 
+
+@torch.no_grad()
 def EntityLinkPipelineV2(query_text, query_img, candidate_abs, model, processor):
     '''
     Link query to one of the candidate
