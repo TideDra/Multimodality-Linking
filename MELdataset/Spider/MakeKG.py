@@ -3,6 +3,7 @@ from tqdm import tqdm
 import json
 import sys
 from pathlib import Path
+from concurrent import futures
 
 sys.path.append(str(Path(__file__).resolve().parent))
 from wikidata import WikiClient
@@ -25,55 +26,55 @@ property_ids = {
 }
 
 
+def _get_birthdeath(entity, name: str, client: WikiClient):
+    try:
+        birthdata = entity['claims'][special_property_ids[f'{name}Date']
+                                     ][0]['mainsnak']['datavalue']['value']['time'][1 :].split('-')[0]
+    except:
+        birthdata = ''
+
+    try:
+        birthplace_id = entity['claims'][special_property_ids[f'{name}Place']
+                                         ][0]['mainsnak']['datavalue']['value']['id']
+        birthplace_entity = client.get(birthplace_id)
+        birthplace = birthplace_entity['labels']['en']['value']
+    except:
+        birthplace = ''
+
+    return birthdata + ',' + birthplace if birthdata or birthplace else None
+
+
 def make_abstract(entity_id: str, client: WikiClient):
     entity = client.get(entity_id)
     if not is_human(entity_id):
         try:
             return entity['descriptions']['en']['value']
         except:
-            return ""
+            return ''
 
     abstract = {}
-    for pk, pv in property_ids.items():
-        if entity['claims'].get(pv):
-            pk_value = ''
-            for item in entity['claims'][pv]:
-                if item['mainsnak'].get('datavalue'):
-                    pk_id = item['mainsnak']['datavalue']['value']['id']
-                    pk_entity = client.get(pk_id)
-                    if pk_entity['labels'].get('en'):
-                        if pk_value == '':
-                            pk_value = pk_entity['labels']['en']['value']
-                        else:
-                            pk_value += ',' + pk_entity['labels']['en']['value']
-            if pk_value != '':
-                abstract[pk] = pk_value
-    try:
-        birthdata = entity['claims'][special_property_ids['BirthDate']
-                                     ][0]['mainsnak']['datavalue']['value']['time'][1 :].split('-')[0]
-    except:
-        birthdata = ''
-    try:
-        birthplace_id = entity['claims'][special_property_ids['BirthPlace']][0]['mainsnak']['datavalue']['value']['id']
-        birthplace_entity = client.get(birthplace_id)
-        birthplace = birthplace_entity['labels']['en']['value']
-    except:
-        birthplace = ''
-    if birthdata != '' or birthplace != '':
-        abstract['Birth'] = birthdata + ',' + birthplace
-    try:
-        deathdata = entity['claims'][special_property_ids['DeathDate']
-                                     ][0]['mainsnak']['datavalue']['value']['time'][1 :].split('-')[0]
-    except:
-        deathdata = ''
-    try:
-        deathplace_id = entity['claims'][special_property_ids['DeathPlace']][0]['mainsnak']['datavalue']['value']['id']
-        deathplace_entity = client.get(deathplace_id)
-        deathplace = deathplace_entity['labels']['en']['value']
-    except:
-        deathplace = ''
-    if deathdata != '' or deathplace != '':
-        abstract['Death'] = deathdata + ',' + deathplace
+    with futures.ThreadPoolExecutor() as executor:
+        tasks = []
+        for pk, pv in property_ids.items():
+            if pv in entity['claims']:
+                for item in entity['claims'][pv]:
+                    if 'datavalue' in item['mainsnak']:
+                        pk_id = item['mainsnak']['datavalue']['value']['id']
+                        tasks.append((executor.submit(client.get, pk_id), pk))
+        task_birth = executor.submit(_get_birthdeath, entity, 'Birth', client)
+        task_death = executor.submit(_get_birthdeath, entity, 'Death', client)
+
+        for task, pk in tasks:
+            pk_entity = task.result()
+            if 'en' in pk_entity['labels']:
+                if not pk in abstract:
+                    abstract[pk] = ''
+                abstract[pk] += pk_entity['labels']['en']['value'] + ','
+        if task_birth.result():
+            abstract['Birth'] = task_birth.result()
+        if task_death.result():
+            abstract['Death'] = task_birth.result()
+
     return abstract
 
 

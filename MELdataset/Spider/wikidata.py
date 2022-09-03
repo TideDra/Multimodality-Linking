@@ -6,6 +6,7 @@ from requests import Session
 class WikiClient:
     def __init__(self) -> None:
         self.wait_time = 3
+        self.query_limit = 5
         self.session = Session()
 
     def tryget(self, url: str):
@@ -29,6 +30,6 @@ class WikiClient:
             return data['entities'][id]
         if query != None:
             data = self.tryget(
-                f"https://www.wikidata.org/w/api.php?action=wbsearchentities&search={quote(query)}&language=en&limit=10&format=json"
+                f"https://www.wikidata.org/w/api.php?action=wbsearchentities&search={quote(query)}&language=en&limit={self.query_limit}&format=json"
             )
             return data['search']
