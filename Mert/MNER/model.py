@@ -7,7 +7,7 @@ from transformers import FlavaModel, FlavaTextModel
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
 from MNER.config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
-from multi_encoder.model import MultiEncoder, MultiEncoderV1
+from multi_encoder.model import MultiEncoder
 
 
 class ModelForTokenClassification(nn.Module):
@@ -369,7 +369,7 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
             is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
             dropout(float): dropout of the classifier.
         '''
-        encoder = MultiEncoderV1()
+        encoder = MultiEncoder()
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)

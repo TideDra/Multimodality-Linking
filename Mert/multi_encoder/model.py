@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple, Union
+from typing import List, Tuple, Union
 
 import torch
 from torch import Tensor, nn
@@ -43,53 +43,10 @@ class MultiFusionLayer(nn.Module):
         # shape: batch_size * len * d_model
         cat_dim = 1
         y = self.trans_tb(torch.cat([src_text, bottleneck], dim=cat_dim))
-        src_text, bottleneck = torch.split(y, src_text.size(cat_dim), dim=cat_dim)
+        src_text, bottleneck = torch.split(y, [src_text.size(cat_dim), bottleneck.size(cat_dim)], dim=cat_dim)
         z = self.trans_vb(torch.cat([src_vision, bottleneck], dim=cat_dim))
-        src_vision, bottleneck = torch.split(z, src_vision.size(cat_dim), dim=cat_dim)
+        src_vision, bottleneck = torch.split(z, [src_vision.size(cat_dim), bottleneck.size(cat_dim)], dim=cat_dim)
         return FusionModelOutput(src_text, src_vision, bottleneck)
-
-
-class MultiFusionLayerV2(nn.Module):
-    '''
-    Use custom TransformerEncoderLayer to transform text, bottle, and image simultaneously.\\
-    Has faster loss decline but performs worse in downstream tasks.
-    '''
-    def __init__(self, config: MultiEncoderConfig):
-        super().__init__()
-        self.config = config
-
-        d_model = config.hidden_size
-        nhead = config.nhead
-
-        self.trans_tb = TransformerEncoderLayer2(
-            d_model,
-            nhead,
-            config.d_text + config.d_bottleneck,
-            config.d_text,
-            batch_first=config.batch_first,
-        )
-        self.trans_vb = TransformerEncoderLayer2(
-            d_model,
-            nhead,
-            config.d_vision + config.d_bottleneck,
-            config.d_vision,
-            batch_first=config.batch_first,
-        )
-        self.trans_tvb = TransformerEncoderLayer2(
-            d_model,
-            nhead,
-            config.d_text + config.d_vision + config.d_bottleneck,
-            config.d_bottleneck,
-            batch_first=config.batch_first
-        )
-
-    def forward(self, src_text: Tensor, src_vision: Tensor, bottleneck: Tensor) -> FusionModelOutput:
-        # shape: batch_size * len * d_model
-        cat_dim = 1
-        out_text = self.trans_tb(torch.cat([src_text, bottleneck], dim=cat_dim), src_text)
-        out_vision = self.trans_vb(torch.cat([src_vision, bottleneck], dim=cat_dim), src_vision)
-        out_btn = self.trans_tvb(torch.cat([src_text, src_vision, bottleneck], dim=cat_dim), bottleneck)
-        return FusionModelOutput(out_text, out_vision, out_btn)
 
 
 class MultiFusionModel(nn.Module):
@@ -112,6 +69,27 @@ class MultiFusionModel(nn.Module):
         return outputs
 
 
+class GlobalFusionModel(nn.Module):
+    def __init__(self, config: MultiEncoderConfig):
+        super().__init__()
+        self.config = config
+        # encoder_layer = nn.TransformerEncoderLayer(config.hidden_size, config.nhead)
+        # self.trans1 = nn.TransformerEncoder(encoder_layer, config.num_layers)
+        # self.trans2 = nn.TransformerEncoder(encoder_layer, config.num_layers)
+        self.trans1 = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+        self.trans2 = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+
+    def forward(self, token_embeddings: Tensor, image_embeddings: Tensor, phrase_embeddings: Tensor) -> PairOutput:
+        cat_dim = 1
+        x1 = self.trans1(torch.cat((token_embeddings, image_embeddings), dim=cat_dim)).last_hidden_state
+        x2 = self.trans2(torch.cat((phrase_embeddings, image_embeddings), dim=cat_dim)).last_hidden_state
+        x11, x12 = torch.split(x1, [token_embeddings.size(cat_dim), image_embeddings.size(cat_dim)], dim=cat_dim)
+        x21, x22 = torch.split(x2, [phrase_embeddings.size(cat_dim), image_embeddings.size(cat_dim)], dim=cat_dim)
+        y1 = torch.cat((x11, x21), dim=cat_dim)
+        y2 = torch.cat((x12, x22), dim=cat_dim)
+        return PairOutput(text_embeddings=y1, image_embeddings=y2)
+
+
 class PhraseLevelExtractor(nn.Module):
     '''Extract phrase level information with 3 conv kernels.'''
     def __init__(self, hidden_size: int):
@@ -124,6 +102,22 @@ class PhraseLevelExtractor(nn.Module):
         x = text_embeddings.permute(0, 2, 1)
         x = torch.maximum(torch.maximum(self.conv_1(x), self.conv_2(x)), self.conv_3(x))
         return x.permute(0, 2, 1)
+
+
+class PhraseLevelExtractorV2(nn.Module):
+    '''Extract phrase level information with multiple conv kernels.'''
+    def __init__(self, hidden_size: int, kernel_sizes: List[int]):
+        super().__init__()
+        self.convs = nn.ModuleList([
+            nn.Conv1d(hidden_size, hidden_size, kernel_size=kernel_size, dilation=0) for kernel_size in kernel_sizes
+        ])
+
+    def forward(self, text_embeddings: Tensor) -> Tensor:
+        x = text_embeddings.permute(0, 2, 1)
+        y: Tensor = self.convs[0](x)
+        for conv in self.convs[1 :]:
+            y = torch.maximum(conv(x), y)
+        return y.permute(0, 2, 1)
 
 
 class MultiEncoderBase(nn.Module):
@@ -141,12 +135,8 @@ class MultiEncoderBase(nn.Module):
         )
         return PairOutput(text_outputs.last_hidden_state, image_outputs.last_hidden_state)
 
-    def pass_phrase(self, pair: PairOutput) -> PairOutput:
-        return PairOutput(
-            self.phrase_level(pair.text_embeddings),
-            pair.image_embeddings,
-            prev=pair if self.config.forward_link else None
-        )
+    def pass_phrase(self, text_embeddings: Tensor) -> Tensor:
+        return self.phrase_level(text_embeddings)
 
     def pass_multimodal(self, pair: PairOutput, return_dict=True) -> Union[PairOutput, Tuple[Tensor, Tensor]]:
         flava_output: BaseModelOutputWithPooling = self.flava_multimodal(
@@ -160,6 +150,19 @@ class MultiEncoderBase(nn.Module):
             return PairOutput(text_embeddings, image_embeddings, prev=pair if self.config.forward_link else None)
         else:
             return text_embeddings, image_embeddings
+
+    def pass_globalfusion(self,
+                          pair: PairOutput,
+                          phrase: Tensor,
+                          return_dict=True) -> Union[PairOutput, Tuple[Tensor, Tensor]]:
+        output: PairOutput = self.global_fusion(
+            token_embeddings=pair.text_embeddings, image_embeddings=pair.image_embeddings, phrase_embeddings=phrase
+        )
+        if return_dict:
+            output.prev = pair if self.config.forward_link else None
+            return output
+        else:
+            return output.text_embeddings, output.image_embeddings
 
     def pass_bottleneck(self, pair: PairOutput, return_dict=True) -> Union[PairOutput, Tuple[Tensor, Tensor]]:
         fusion_output: FusionModelOutput = self.fusion(pair.text_embeddings, pair.image_embeddings)
@@ -203,10 +206,14 @@ class MultiEncoder(MultiEncoderBase):
         else:
             self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
             self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
-            self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
-        self.fusion = MultiFusionModel(config)
+            if "mm" in config.passes:
+                self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+        if "gf" in config.passes:
+            self.global_fusion = GlobalFusionModel(config)
+        if "bn" in config.passes:
+            self.fusion = MultiFusionModel(config)
         if config.augment_text:
-            self.phrase_level = PhraseLevelExtractor(config.hidden_size)
+            self.phrase_level = PhraseLevelExtractorV2(config.hidden_size, config.conv_kernel_sizes)
 
     def forward(self, **batch_data) -> PairOutput:
         if self.config.sole_flava:
@@ -215,76 +222,22 @@ class MultiEncoder(MultiEncoderBase):
         else:
             output = self.pass_flava(**batch_data)
         if self.config.augment_text:
-            output = self.pass_phrase(output)
+            phrase = self.phrase_level(output.text_embeddings)
         for p in self.config.passes:
             if p == "mm":
                 output = self.pass_multimodal(output)
+            elif p == "gf":
+                output = self.pass_globalfusion(output, phrase)
             elif p == "bn":
                 output = self.pass_bottleneck(output)
+            else:
+                raise
         return output
-
-
-class MultiEncoderV1(MultiEncoderBase):
-    '''
-    Add extra FlavaMultimodalModel before FusionModel.
-    '''
-    def __init__(self, config=MultiEncoderConfig()):
-        super().__init__(config)
-        self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
-        self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
-        self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
-        self.fusion = MultiFusionModel(config)
-
-    def forward(self, **batch_data) -> PairOutput:
-        output0 = self.pass_flava(**batch_data)
-        output1 = self.pass_multimodal(output0)
-        output2 = self.pass_bottleneck(output1)
-        return output2
-
-
-class MultiEncoderV2(MultiEncoderBase):
-    '''
-    Add extra Conv1D to text embeddings process.\\
-    Also add extra FlavaMultimodalModel to the end of FusionModel.
-    '''
-    def __init__(self, config=MultiEncoderConfig()):
-        super().__init__(config)
-        self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
-        self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
-        self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
-        self.fusion = MultiFusionModel(config)
-        self.phrase_level = PhraseLevelExtractor(config.hidden_size)
-
-
-class MultiEncoderV2_1(MultiEncoderV2):
-    '''
-    Add extra Conv1D to text embeddings process.\\
-    Also add extra FlavaMultimodalModel to the end of FusionModel.
-    '''
-    def forward(self, **batch_data) -> PairOutput:
-        output0 = self.pass_flava(**batch_data)
-        output00 = self.pass_phrase(output0)
-        output1 = self.pass_bottleneck(output00.text_embeddings, output00.image_embeddings)
-        output2 = self.pass_multimodal(output1.text_embeddings, output1.image_embeddings)
-        return output2
-
-
-class MultiEncoderV2_2(MultiEncoderV2):
-    '''
-    Add extra Conv1D to text embeddings process.\\
-    Also add extra FlavaMultimodalModel before FusionModel.
-    '''
-    def forward(self, **batch_data) -> PairOutput:
-        output0 = self.pass_flava(**batch_data)
-        output00 = self.pass_phrase(output0)
-        output1 = self.pass_multimodal(output00.text_embeddings, output00.image_embeddings)
-        output2 = self.pass_bottleneck(output1.text_embeddings, output1.image_embeddings)
-        return output2
 
 
 class MultiEncoderOutput(nn.Module):
     '''Used for training MultiEncoder with contrastive loss. Adapted from CLIP.'''
-    def __init__(self, encoder: MultiEncoder):
+    def __init__(self, encoder: MultiEncoderBase):
         super().__init__()
         self.encoder = encoder
         self.logit_scale = nn.Parameter(torch.log(torch.tensor([1 / 0.07])))

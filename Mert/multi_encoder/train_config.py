@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Tuple
 
-from datasets.DataLoaderX import DataLoaderX
-from datasets.flickr_dataset import getFlickrDataLoader
-from multi_encoder.config import MultiEncoderConfig
-from multi_encoder.model import MultiEncoder, MultiEncoderV2_2
+from Datasets.DataLoaderX import DataLoaderX
+from Datasets.flickr_dataset import getFlickrDataLoader
+from multi_encoder.model import MultiEncoder
 
 
 @dataclass
@@ -18,7 +17,5 @@ class MultiEncoderTrainConfig:
     max_ckpt_num = 5
     load_ckpt = True
 
-    encoder: MultiEncoderV2_2 = field(
-        default_factory=lambda: MultiEncoderV2_2(config=MultiEncoderConfig(d_text=64, d_vision=197))
-    )
+    encoder: MultiEncoder = field(default_factory=lambda: MultiEncoder())
     dataloader: Tuple[DataLoaderX, DataLoaderX] = field(default_factory=getFlickrDataLoader)
