@@ -81,12 +81,16 @@ class GlobalFusionModel(nn.Module):
 
     def forward(self, token_embeddings: Tensor, image_embeddings: Tensor, phrase_embeddings: Tensor) -> PairOutput:
         cat_dim = 1
-        x1 = self.trans1(torch.cat((token_embeddings, image_embeddings), dim=cat_dim)).last_hidden_state
-        x2 = self.trans2(torch.cat((phrase_embeddings, image_embeddings), dim=cat_dim)).last_hidden_state
-        x11, x12 = torch.split(x1, [token_embeddings.size(cat_dim), image_embeddings.size(cat_dim)], dim=cat_dim)
-        x21, x22 = torch.split(x2, [phrase_embeddings.size(cat_dim), image_embeddings.size(cat_dim)], dim=cat_dim)
-        y1 = torch.cat((x11, x21), dim=cat_dim)
-        y2 = torch.cat((x12, x22), dim=cat_dim)
+        if phrase_embeddings is not None:
+            x1 = self.trans1(torch.cat((token_embeddings, image_embeddings), dim=cat_dim)).last_hidden_state
+            x2 = self.trans2(torch.cat((phrase_embeddings, image_embeddings), dim=cat_dim)).last_hidden_state
+            x11, x12 = torch.split(x1, [token_embeddings.size(cat_dim), image_embeddings.size(cat_dim)], dim=cat_dim)
+            x21, x22 = torch.split(x2, [phrase_embeddings.size(cat_dim), image_embeddings.size(cat_dim)], dim=cat_dim)
+            y1 = torch.cat((x11, x21), dim=cat_dim)
+            y2 = torch.cat((x12, x22), dim=cat_dim)
+        else:
+            x1 = self.trans1(torch.cat((token_embeddings, image_embeddings), dim=cat_dim)).last_hidden_state
+            y1, y2 = torch.split(x1, [token_embeddings.size(cat_dim), image_embeddings.size(cat_dim)], dim=cat_dim)
         return PairOutput(text_embeddings=y1, image_embeddings=y2)
 
 
@@ -109,15 +113,19 @@ class PhraseLevelExtractorV2(nn.Module):
     def __init__(self, hidden_size: int, kernel_sizes: List[int]):
         super().__init__()
         self.convs = nn.ModuleList([
-            nn.Conv1d(hidden_size, hidden_size, kernel_size=kernel_size, dilation=0) for kernel_size in kernel_sizes
+            nn.Conv1d(hidden_size, hidden_size, kernel_size=kernel_size, padding=kernel_size // 2)
+            for kernel_size in kernel_sizes
         ])
+        self.relu = nn.ReLU()
 
     def forward(self, text_embeddings: Tensor) -> Tensor:
         x = text_embeddings.permute(0, 2, 1)
-        y: Tensor = self.convs[0](x)
-        for conv in self.convs[1 :]:
+        y = torch.zeros_like(x) - 1e6
+        for conv in self.convs:
             y = torch.maximum(conv(x), y)
-        return y.permute(0, 2, 1)
+        y = y.permute(0, 2, 1)
+        y = self.relu(y)
+        return y
 
 
 class MultiEncoderBase(nn.Module):
@@ -201,19 +209,17 @@ class MultiEncoder(MultiEncoderBase):
     '''
     def __init__(self, config=MultiEncoderConfig()):
         super().__init__(config)
+        print("Init MultiEncoder", config.to_json())
+        print(f"PhraseLevel: {config.augment_text}")
+        print(f"GlobalFusion: {'gf' in config.passes}, BottleneckFusion: {'bn' in config.passes}")
         if config.sole_flava:
             self.flava = FlavaModel.from_pretrained('facebook/flava-full')
         else:
             self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
             self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
-            if "mm" in config.passes:
-                self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
-        if "gf" in config.passes:
-            self.global_fusion = GlobalFusionModel(config)
-        if "bn" in config.passes:
-            self.fusion = MultiFusionModel(config)
-        if config.augment_text:
-            self.phrase_level = PhraseLevelExtractorV2(config.hidden_size, config.conv_kernel_sizes)
+        self.global_fusion = GlobalFusionModel(config)
+        self.fusion = MultiFusionModel(config)
+        self.phrase_level = PhraseLevelExtractorV2(config.hidden_size, config.conv_kernel_sizes)
 
     def forward(self, **batch_data) -> PairOutput:
         if self.config.sole_flava:
@@ -221,6 +227,7 @@ class MultiEncoder(MultiEncoderBase):
             output = PairOutput(flava_output.text_embeddings, flava_output.image_embeddings)
         else:
             output = self.pass_flava(**batch_data)
+        phrase = None    
         if self.config.augment_text:
             phrase = self.phrase_level(output.text_embeddings)
         for p in self.config.passes:
