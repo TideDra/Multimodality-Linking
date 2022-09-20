@@ -7,7 +7,7 @@ from Mert.Datasets.EntityLink_dataset import abs_dict_to_str
 client = WikiClient()
 
 
-def query_entities(queries: list):
+def query_entities(queries: list, search_limit: int = None):
     def run(query):
         def runrun(cand):
             return {
@@ -15,13 +15,13 @@ def query_entities(queries: list):
                 "abs": abs_dict_to_str(make_abstract(cand['id'], client)),
             }
 
-        query_result = client.get(query=query)
-        with futures.ThreadPoolExecutor() as executor:
+        query_result = client.get(query=query, search_limit=search_limit)
+        with futures.ThreadPoolExecutor(max_workers=256) as executor:
             tasks = [executor.submit(runrun, cand) for cand in query_result]
             results = [task.result() for task in tasks]
         return results
 
-    with futures.ThreadPoolExecutor() as executor:
+    with futures.ThreadPoolExecutor(max_workers=256) as executor:
         tasks = [executor.submit(run, query) for query in queries]
         results = [task.result() for task in tasks]
     return results

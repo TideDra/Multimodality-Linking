@@ -13,7 +13,7 @@ from server.wiki_service import query_entities
 parser = ArgumentParser()
 parser.add_argument("-a", "--address", help="The address of server", type=str, default="0.0.0.0")
 parser.add_argument("-p", "--port", help="The port of server", type=int, default=5001)
-parser.add_argument("-w", "--wiki", help="Access Wikidata in this server", action="store_true")
+parser.add_argument("-w", "--wiki", help="Access Wikidata in this server", action="store_true", default=True)
 args = parser.parse_args()
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -36,14 +36,16 @@ service = MertService(app.logger)
 def query_controller():
     caption = request.json.get("caption", "")
     image = request.json.get("image", None)
+    require_probs = request.json.get("require_probs", False)
+    search_limit = request.json.get("search_limit", None)
     image = base64_pil(image) if image else Image.new("RGB", (32, 32), (0, 0, 0))
     app.logger.info(caption)
     result = service.MEL_step1(caption, image)
     app.logger.info(result)
     if args.wiki:
-        query_result = query_entities(result["query"])
+        query_result = query_entities(result["query"], search_limit)
         app.logger.info("Get query results")
-        answer = service.MEL_step2V2(result["key"], query_result)
+        answer = service.MEL_step2V2(result["key"], query_result, require_probs)
         app.logger.info(answer)
         result = {"answer": answer, "wikidata": query_result}
 

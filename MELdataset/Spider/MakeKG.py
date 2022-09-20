@@ -36,7 +36,7 @@ def _get_birthdeath(entity, name: str, client: WikiClient):
     try:
         birthplace_id = entity['claims'][special_property_ids[f'{name}Place']
                                          ][0]['mainsnak']['datavalue']['value']['id']
-        birthplace_entity = client.get(birthplace_id)
+        birthplace_entity = client.get(id=birthplace_id)
         birthplace = birthplace_entity['labels']['en']['value']
     except:
         birthplace = ''
@@ -45,7 +45,7 @@ def _get_birthdeath(entity, name: str, client: WikiClient):
 
 
 def make_abstract(entity_id: str, client: WikiClient):
-    entity = client.get(entity_id)
+    entity = client.get(id=entity_id)
     if not is_human(entity_id):
         try:
             return entity['descriptions']['en']['value']
@@ -53,14 +53,14 @@ def make_abstract(entity_id: str, client: WikiClient):
             return ''
 
     abstract = {}
-    with futures.ThreadPoolExecutor() as executor:
+    with futures.ThreadPoolExecutor(max_workers=256) as executor:
         tasks = []
         for pk, pv in property_ids.items():
             if pv in entity['claims']:
                 for item in entity['claims'][pv]:
                     if 'datavalue' in item['mainsnak']:
                         pk_id = item['mainsnak']['datavalue']['value']['id']
-                        tasks.append((executor.submit(client.get, pk_id), pk))
+                        tasks.append((executor.submit(client.get, id=pk_id), pk))
         task_birth = executor.submit(_get_birthdeath, entity, 'Birth', client)
         task_death = executor.submit(_get_birthdeath, entity, 'Death', client)
 

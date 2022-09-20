@@ -57,9 +57,10 @@ def EntityLinkPipeline_step2(preoutput: ELPreprocessOutput, entity_model, entity
 
 
 @torch.no_grad()
-def EntityLinkPipelineV2(query_text, query_img, candidate_abs, model, processor):
+def EntityLinkPipelineV2(query_text, query_img, candidate_abs, model, processor, output_probs: bool = False):
     '''
     Link query to one of the candidate
+
     Args:
       query_text(str):the query text.
       query_img(Image): the image of query_text
@@ -69,12 +70,12 @@ def EntityLinkPipelineV2(query_text, query_img, candidate_abs, model, processor)
     '''
     text_input = [[query_text, candidate] for candidate in candidate_abs]
     img_input = [query_img] * len(text_input)
-    multi_input = processor(text=text_input,
-                            images=img_input,
-                            return_tensors="pt",
-                            padding="max_length",
-                            max_length=160,
-                            truncation=True)
-    logits = model(**multi_input)
-    probs = logits[:, 0]
-    return probs.argmax().item()
+    multi_input = processor(
+        text=text_input, images=img_input, return_tensors="pt", padding="max_length", max_length=160, truncation=True
+    )
+    logits: torch.Tensor = model(**multi_input)
+    probs = logits[:, 0] - logits[:, 1]
+    if output_probs:
+        return probs.argmax().item(), probs.tolist()
+    else:
+        return probs.argmax().item()
