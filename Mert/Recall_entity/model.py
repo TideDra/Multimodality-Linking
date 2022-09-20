@@ -39,9 +39,11 @@ class ProjectLayer(nn.Module):
 
 
 class MertForEL(nn.Module):
-    def __init__(self) -> None:
+    def __init__(self, mert_config: dict = None) -> None:
         super().__init__()
-        self.multi_encoder = MultiEncoder.from_pretrained(PretrainedModelConfig.multiencoder_path)
+        if not mert_config:
+            mert_config = {}
+        self.multi_encoder = MultiEncoder.from_pretrained(PretrainedModelConfig.multiencoder_path, **mert_config)
         self.seq = nn.Sequential(nn.Linear(768, 768), nn.Tanh(), nn.Linear(768, 2))
 
     def forward(self, **input) -> Tensor:

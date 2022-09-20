@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 from dataclasses_json import dataclass_json
 
@@ -19,7 +19,7 @@ class MultiEncoderConfig:
     '''只使用一个FlavaModel而非三合一。使用此选项时不能进行Flava多模态融合'''
     augment_text: bool = True
     '''使用多层级表示增强text'''
-    conv_kernel_sizes = [3, 3, 3]
+    conv_kernel_sizes: List[int] = field(default_factory=lambda: [3, 3, 3])
     '''phrase_level使用的kernel大小'''
-    passes = ["gf", "bn"]
+    passes: List[str] = field(default_factory=lambda: ["gf", "bn"])
     '''融合顺序; Options: gf(GlobalFusion), mm(FlavaMultimodal), bn(BottleneckFusion), none'''

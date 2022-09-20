@@ -217,9 +217,14 @@ class MultiEncoder(MultiEncoderBase):
         else:
             self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
             self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
-        self.global_fusion = GlobalFusionModel(config)
+        if "mm" in config.passes:
+            self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+        else:
+            self.global_fusion = GlobalFusionModel(config)
         self.fusion = MultiFusionModel(config)
-        self.phrase_level = PhraseLevelExtractorV2(config.hidden_size, config.conv_kernel_sizes)
+        if config.augment_text:
+            self.phrase_level = PhraseLevelExtractor(config.hidden_size) if "mm" in config.passes \
+                else PhraseLevelExtractorV2(config.hidden_size, config.conv_kernel_sizes)
 
     def forward(self, **batch_data) -> PairOutput:
         if self.config.sole_flava:
@@ -227,7 +232,7 @@ class MultiEncoder(MultiEncoderBase):
             output = PairOutput(flava_output.text_embeddings, flava_output.image_embeddings)
         else:
             output = self.pass_flava(**batch_data)
-        phrase = None    
+        phrase = None
         if self.config.augment_text:
             phrase = self.phrase_level(output.text_embeddings)
         for p in self.config.passes:

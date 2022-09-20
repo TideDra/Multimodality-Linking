@@ -7,6 +7,7 @@ from transformers import FlavaModel, FlavaTextModel
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
 from MNER.config import config, BertBiLSTMEncoderConfig, BertBiLSTMEncoderConfigforFNEBB
+from Mert.multi_encoder.config import MultiEncoderConfig
 from multi_encoder.model import MultiEncoder
 
 
@@ -360,7 +361,8 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
                  ratio: float = 0.5,
                  is_encoder_frozen: bool = True,
                  is_ESD_encoder_frozen: bool = True,
-        dropout: float = 0.4
+                 mert_config: dict = None,
+                 dropout: float = 0.4
     ) -> None:
         '''
         Args:
@@ -369,7 +371,9 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
             is_ESD_encoder_frozen(bool): whether to freeze the ESD_encoder when forwarding.
             dropout(float): dropout of the classifier.
         '''
-        encoder = MultiEncoder()
+        if not mert_config:
+            mert_config = {}
+        encoder = MultiEncoder(MultiEncoderConfig(**mert_config))
         ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)
