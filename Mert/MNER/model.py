@@ -2,7 +2,7 @@ from torch import Tensor
 from torch import float32, nn
 from torchcrf import CRF
 import torch
-from transformers import FlavaModel, FlavaTextModel, FlavaTextConfig
+from transformers import FlavaModel, FlavaTextModel
 
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
@@ -130,7 +130,7 @@ class ModelForNERwithESD(nn.Module):
 
     @classmethod
     def from_pretrained(cls, f, *args, **kwargs):
-        model = cls(*args, **kwargs, as_pretrained=True)
+        model = cls(*args, **kwargs)
         model.load_state_dict(torch.load(f, map_location="cpu"))
         return model
 
@@ -361,9 +361,8 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
                  ratio: float = 0.5,
                  is_encoder_frozen: bool = True,
                  is_ESD_encoder_frozen: bool = True,
-                 dropout: float = 0.4,
                  mert_config: dict = None,
-                 as_pretrained: bool = False,
+                 dropout: float = 0.4
     ) -> None:
         '''
         Args:
@@ -375,8 +374,7 @@ class MertForNERwithESD_bert_only(ModelForNERwithESD):
         if not mert_config:
             mert_config = {}
         encoder = MultiEncoder(MultiEncoderConfig(**mert_config))
-        ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full') if not as_pretrained \
-            else FlavaTextModel(FlavaTextConfig())
+        ESD_encoder = FlavaTextModel.from_pretrained('facebook/flava-full')
         num_tags = len(config.tag2id)
         ESD_num_tags = len(config.ESD_id2tag)
         super().__init__(encoder, ESD_encoder, num_tags, ESD_num_tags, ratio,
