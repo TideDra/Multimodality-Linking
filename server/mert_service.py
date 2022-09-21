@@ -23,7 +23,7 @@ class MertService:
     def __init__(self, logger: Logger) -> None:
         self.logger = logger
         logger.info("Initialize models")
-        mert_args = {"passes": ["mm"], "nhead": 4}
+        mert_args = {"passes": ["mm", "bn"], "nhead": 4}
         self.NER_model = MertForNERwithESD_bert_only.from_pretrained(
             PretrainedModelConfig.nermodel_path, mert_config={
                 "augment_text": False,

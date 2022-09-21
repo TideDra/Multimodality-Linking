@@ -43,7 +43,11 @@ def query_controller():
     result = service.MEL_step1(caption, image)
     app.logger.info(result)
     if args.wiki:
-        query_result = query_entities(result["query"], search_limit)
+        query_result = query_entities(
+            result["query"],
+            search_limit,
+            mner_entities=service.pipeline_cache[result["key"]].entities,
+        )
         app.logger.info("Get query results")
         answer = service.MEL_step2V2(result["key"], query_result, require_probs)
         app.logger.info(answer)

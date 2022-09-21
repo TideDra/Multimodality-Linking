@@ -8,7 +8,6 @@ from concurrent import futures
 sys.path.append(str(Path(__file__).resolve().parent))
 from wikidata import WikiClient
 import threading
-from MakeMELv2 import is_human
 
 special_property_ids = {
     'BirthDate': 'P569',
@@ -44,9 +43,8 @@ def _get_birthdeath(entity, name: str, client: WikiClient):
     return birthdata + ',' + birthplace if birthdata or birthplace else None
 
 
-def make_abstract(entity_id: str, client: WikiClient):
-    entity = client.get(id=entity_id)
-    if not is_human(entity_id):
+def make_abstract(entity: dict, client: WikiClient):
+    if not 'P21' in entity['claims']:  # is not human
         try:
             return entity['descriptions']['en']['value']
         except:

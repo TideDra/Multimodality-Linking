@@ -74,7 +74,7 @@ def EntityLinkPipelineV2(query_text, query_img, candidate_abs, model, processor,
         text=text_input, images=img_input, return_tensors="pt", padding="max_length", max_length=160, truncation=True
     )
     logits: torch.Tensor = model(**multi_input)
-    probs = logits[:, 0] - logits[:, 1]
+    probs = logits[:, 0]
     if output_probs:
         return probs.argmax().item(), probs.tolist()
     else:
