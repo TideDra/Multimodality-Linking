@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Tuple, Union
 from torch.utils.data import Dataset
 from PIL import Image,ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -27,21 +27,15 @@ class EntityLinkDatasetConfig:
     num_workers: int = 20
     shuffle_seed: int = 10086
 
-def abs_dict_to_str(x: dict):
-    if type(x)==type('str'):
+def abs_dict_to_str(x: Union[dict, str]):
+    if isinstance(x, str):
         return x
-    else:
-        if x.get('Birth')!=None:
-            del x['Birth']
-        if x.get('Death')!=None:
-            del x['Death']
-        if x.get('Religion')!=None:
-            del x['Religion']
-        if x.get('Spouse')!=None:
-            del x['Spouse']
-        if x.get('Alma mater')!=None:
-            del x['Alma mater']
-        return str(x).replace('{', '').replace('}', '').replace('\'', '').replace(':','is')
+    if 'Birth' in x: del x['Birth']
+    if 'Death' in x: del x['Death']
+    if 'Religion' in x: del x['Religion']
+    if 'Spouse' in x: del x['Spouse']
+    if 'Alma mater' in x: del x['Alma mater']
+    return ''.join(f'{k} is {v}.' for k, v in x.items()).replace(',.', '. ')
 
 class EntityLinkDataset(Dataset):
     def __init__(self, MEL_path, KG_path, img_path) -> None:
