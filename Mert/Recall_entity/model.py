@@ -1,5 +1,6 @@
 import torch
 from torch import nn, Tensor
+from Mert.multi_encoder.config import MultiEncoderConfig
 
 from Mert.multi_encoder.model import MultiEncoder
 from Mert.common_config import PretrainedModelConfig
@@ -39,11 +40,12 @@ class ProjectLayer(nn.Module):
 
 
 class MertForEL(nn.Module):
-    def __init__(self, mert_config: dict = None) -> None:
+    def __init__(self, mert_config: dict = None, as_pretrained: bool = False) -> None:
         super().__init__()
         if not mert_config:
             mert_config = {}
-        self.multi_encoder = MultiEncoder.from_pretrained(PretrainedModelConfig.multiencoder_path, **mert_config)
+        self.multi_encoder = MultiEncoder.from_pretrained(PretrainedModelConfig.multiencoder_path, **mert_config) if not as_pretrained \
+            else MultiEncoder(MultiEncoderConfig(**mert_config))
         self.seq = nn.Sequential(nn.Linear(768, 768), nn.Tanh(), nn.Linear(768, 2))
 
     def forward(self, **input) -> Tensor:
@@ -53,7 +55,7 @@ class MertForEL(nn.Module):
 
     @classmethod
     def from_pretrained(cls, f, *args, **kwargs):
-        model = cls(*args, **kwargs)
+        model = cls(*args, **kwargs, as_pretrained=True)
         state_dict = torch.load(f, map_location="cpu")
         if "fc.weight" in state_dict:
             state_dict2 = {

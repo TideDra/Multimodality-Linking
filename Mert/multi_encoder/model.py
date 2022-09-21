@@ -3,7 +3,7 @@ from typing import List, Tuple, Union
 
 import torch
 from torch import Tensor, nn
-from transformers import FlavaModel, FlavaTextModel, FlavaImageModel, FlavaMultimodalModel
+from transformers import FlavaModel, FlavaTextModel, FlavaImageModel, FlavaMultimodalModel, FlavaConfig, FlavaTextConfig, FlavaImageConfig, FlavaMultimodalConfig
 from transformers.models.flava.modeling_flava import FlavaModelOutput, BaseModelOutputWithPooling
 
 from .config import MultiEncoderConfig
@@ -207,18 +207,28 @@ class MultiEncoder(MultiEncoderBase):
     Core of multimodal feature extraction and fusion. Outputs fusion embeddings.\\
     Use output embeddings of text and image from FlavaModel, and then directly do fusion work.
     '''
-    def __init__(self, config=MultiEncoderConfig()):
+    def __init__(self, config=MultiEncoderConfig(), as_pretrained: bool = False):
         super().__init__(config)
         print("Init MultiEncoder", config.to_json())
         print(f"PhraseLevel: {config.augment_text}")
         print(f"GlobalFusion: {'gf' in config.passes}, BottleneckFusion: {'bn' in config.passes}")
-        if config.sole_flava:
-            self.flava = FlavaModel.from_pretrained('facebook/flava-full')
+        if not as_pretrained:
+            if config.sole_flava:
+                self.flava = FlavaModel.from_pretrained('facebook/flava-full')
+            else:
+                self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
+                self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
         else:
-            self.flava_text = FlavaTextModel.from_pretrained('facebook/flava-full')
-            self.flava_image = FlavaImageModel.from_pretrained('facebook/flava-full')
+            if config.sole_flava:
+                self.flava = FlavaModel(FlavaConfig())
+            else:
+                self.flava_text = FlavaTextModel(FlavaTextConfig())
+                self.flava_image = FlavaImageModel(FlavaImageConfig())
         if "mm" in config.passes:
-            self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+            if not as_pretrained:
+                self.flava_multimodal = FlavaMultimodalModel.from_pretrained('facebook/flava-full', use_cls_token=False)
+            else:
+                self.flava_multimodal = FlavaMultimodalModel(FlavaMultimodalConfig(use_cls_token=False))
         else:
             self.global_fusion = GlobalFusionModel(config)
         self.fusion = MultiFusionModel(config)
