@@ -35,7 +35,8 @@ def abs_dict_to_str(x: Union[dict, str]):
     if 'Religion' in x: del x['Religion']
     if 'Spouse' in x: del x['Spouse']
     if 'Alma mater' in x: del x['Alma mater']
-    return ''.join(f'{k} is {v}.' for k, v in x.items()).replace(',.', '. ')
+    return ''.join(f'{k} is {v}.' if k else f'{v}.' for k, v in x.items()).replace(',.', '. ')
+
 
 class EntityLinkDataset(Dataset):
     def __init__(self, MEL_path, KG_path, img_path) -> None:
@@ -174,11 +175,11 @@ class EntityLinkDatasetCollateFnV3ForEval:
         self.config = config
         self.dataset=dataset.data
         self.callback_num=callback_num
-    def __call__(self, sample):     
+    def __call__(self, sample):
         sentence=sample[0]['sentence']
         positive=sample[0]['positive_abstract']
         img=Image.open(sample[0]['image']).convert('RGB')
-        
+
         candidate_data=random.sample(self.dataset,self.callback_num)
         candidates=[]
         for d in candidate_data:
@@ -196,7 +197,7 @@ class EntityLinkDatasetCollateFnV3ForEval:
                                            max_length=160,
                                            truncation=True)
         return multi_input
-        
+
 class EntityLinkDatasetCollateFnV3:
     def __init__(self, multi_processor: FlavaProcessor,
                  config: EntityLinkDatasetConfig) -> None:

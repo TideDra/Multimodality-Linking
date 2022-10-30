@@ -70,11 +70,22 @@ def EntityLinkPipelineV2(query_text, query_img, candidate_abs, model, processor,
     '''
     text_input = [[query_text, candidate] for candidate in candidate_abs]
     img_input = [query_img] * len(text_input)
-    multi_input = processor(
-        text=text_input, images=img_input, return_tensors="pt", padding="max_length", max_length=160, truncation=True
-    )
+    try:
+        multi_input = processor(
+            text=text_input,
+            images=img_input,
+            return_tensors="pt",
+            padding="max_length",
+            max_length=160,
+            truncation=True
+        )
+    except:
+        print(query_text)
+        print(candidate_abs)
+        raise ValueError("BertTokenizer encounters error!")
     logits: torch.Tensor = model(**multi_input)
     probs = logits[:, 0]
+    print(logits)
     if output_probs:
         return probs.argmax().item(), probs.tolist()
     else:

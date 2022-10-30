@@ -33,6 +33,7 @@ class WikiClient:
                     "action": "wbsearchentities",
                     "search": query,
                     "language": "en",
+                    'type': 'item',
                     "limit": search_limit or self.query_limit
                 }
             )

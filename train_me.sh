@@ -1,0 +1,1 @@
+accelerate launch Mert/multi_encoder/main_train.py --args_for_the_script

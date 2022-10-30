@@ -15,13 +15,14 @@ def image_to_base64(image: Image.Image, fmt='png') -> str:
 
 
 base_dir = Path(r"E:\学校的的的的\对比学习SRTP\Mert-MEL-test\autotest")
-with open(base_dir / "totest.json", "r", encoding="utf8") as fin:
+with open(base_dir / "totest4.json", "r", encoding="utf8") as fin:
     td = json.load(fin)
 
 ses = Session()
 
 for idx, item in enumerate(td):
     print(idx)
+    #if idx < 6: continue
     img = Image.open(base_dir / item["image"])
     res = ses.post(
         "http://127.0.0.1:5001/mert/query",

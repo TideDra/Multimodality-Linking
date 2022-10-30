@@ -21,6 +21,8 @@ def query_entities(queries: list, search_limit: int = None, mner_entities: List[
                 return None
             entity = client.get(id=cand["id"])
             # 在类别是人的情况下，剔除不是人的
+            if mner_entity["type"] != "PER":
+                return None  # 目前不考虑非人
             if mner_entity and mner_entity["type"] == "PER" and 'P21' not in entity['claims']:
                 return None
             return {

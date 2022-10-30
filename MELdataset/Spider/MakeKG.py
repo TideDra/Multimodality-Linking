@@ -50,7 +50,10 @@ def make_abstract(entity: dict, client: WikiClient):
         except:
             return ''
 
-    abstract = {}
+    try:
+        abstract = {'': entity['descriptions']['en']['value']}
+    except:
+        abstract = {}
     with futures.ThreadPoolExecutor(max_workers=256) as executor:
         tasks = []
         for pk, pv in property_ids.items():

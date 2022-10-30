@@ -74,17 +74,23 @@ class MertService:
         with futures.ThreadPoolExecutor() as executor:
             tasks = []
             for idx, q in enumerate(query_results):
-                task = executor.submit(
-                    EntityLinkPipelineV2,
-                    query_text=preoutput.query_text,
-                    query_img=preoutput.query_image,
-                    candidate_abs=[cand["abs"] for cand in q],
-                    model=self.el_model,
-                    processor=self.flava_processor,
-                    output_probs=require_probs,
-                )
+                # 问题可能在于，有的实体没找到候选项没abs
+                if q:
+                    task = executor.submit(
+                        EntityLinkPipelineV2,
+                        query_text=preoutput.query_text,
+                        query_img=preoutput.query_image,
+                        candidate_abs=[cand["abs"] for cand in q],
+                        model=self.el_model,
+                        processor=self.flava_processor,
+                        output_probs=require_probs,
+                    )
+                else:
+                    task = None
                 tasks.append((task, idx))
             for task, idx in tasks:
+                if not task:
+                    continue
                 if require_probs:
                     ans, probs = task.result()
                     entities[idx]["answer"] = query_results[idx][ans]["id"]
